@@ -1,0 +1,151 @@
+﻿@page "/"
+
+<PageTitle>Index</PageTitle>
+
+<div class="container d-flex align-items-center justify-content-center position-relative flex-wrap">
+    <div @onclick="() => SelectMovie(1)" class="card d-flex position-relative flex-column">
+        <div class='imgContainer'>
+            <img src="img/The-Lord-Of-The-Rings-The-Fellowship-Of-The-Ring.jpg">
+        </div>
+        <div class="content">
+            <h4>Hier komt een korte omschrijving van de film te staan</h4>
+            <button>Meer informatie</button>
+            <button>Kaartjes bestellen</button>
+        </div>
+    </div>
+
+    <div @onclick="() => SelectMovie(2)" class="card d-flex position-relative flex-column">
+        <div class='imgContainer'>
+            <img src="img/The-Lord-Of-The-Rings-The-Two-Towers.jpg">
+        </div>
+        <div class="content">
+            <h4>Hier komt een korte omschrijving van de film te staan</h4>
+            <button>Meer informatie</button>
+            <button>Kaartjes bestellen</button>
+        </div>
+    </div>
+    <div @onclick="() => SelectMovie(3)" class="card d-flex position-relative flex-column">
+        <div class='imgContainer'>
+            <img src="img/The-Lord-Of-The-Rings-The-Return-Of-The-King.jpg">
+        </div>
+        <div class="content">
+            <h4>Hier komt een korte omschrijving van de film te staan</h4>
+            <button>Meer informatie</button>
+            <button>Kaartjes bestellen</button>
+        </div>
+    </div>
+   <div @onclick="() => SelectMovie(1)" class="card d-flex position-relative flex-column">
+           <div class='imgContainer'>
+               <img src="img/The-Lord-Of-The-Rings-The-Fellowship-Of-The-Ring.jpg">
+           </div>
+           <div class="content">
+               <h4>Hier komt een korte omschrijving van de film te staan</h4>
+               <button>Meer informatie</button>
+               <button>Kaartjes bestellen</button>
+           </div>
+       </div>
+   
+   <div @onclick="() => SelectMovie(3)" class="card d-flex position-relative flex-column">
+       <div class='imgContainer'>
+           <img src="img/The-Lord-Of-The-Rings-The-Two-Towers.jpg">
+       </div>
+       <div class="content">
+           <h4>Hier komt een korte omschrijving van de film te staan</h4>
+           <button>Meer informatie</button>
+           <button>Kaartjes bestellen</button>
+       </div>
+   </div>
+    <div @onclick="() => SelectMovie(3)" class="card d-flex position-relative flex-column">
+        <div class='imgContainer'>
+            <img src="img/The-Lord-Of-The-Rings-The-Return-Of-The-King.jpg">
+        </div>
+        <div class="content">
+            <h4>Hier komt een korte omschrijving van de film te staan</h4>
+            <button>Meer informatie</button>
+            <button>Kaartjes bestellen</button>
+        </div>
+    </div>
+    <div @onclick="() => SelectMovie(1)" class="card d-flex position-relative flex-column">
+        <div class='imgContainer'>
+            <img src="img/The-Lord-Of-The-Rings-The-Fellowship-Of-The-Ring.jpg">
+        </div>
+        <div class="content">
+            <h4>Hier komt een korte omschrijving van de film te staan</h4>
+            <button>Meer informatie</button>
+            <button>Kaartjes bestellen</button>
+        </div>
+    </div>
+
+    <div @onclick="() => SelectMovie(3)" class="card d-flex position-relative flex-column">
+        <div class='imgContainer'>
+            <img src="img/The-Lord-Of-The-Rings-The-Two-Towers.jpg">
+        </div>
+        <div class="content">
+            <h4>Hier komt een korte omschrijving van de film te staan</h4>
+            <button>Meer informatie</button>
+            <button>Kaartjes bestellen</button>
+        </div>
+    </div>
+    <div @onclick="() => SelectMovie(3)" class="card d-flex position-relative flex-column">
+        <div class='imgContainer'>
+            <img src="img/The-Lord-Of-The-Rings-The-Return-Of-The-King.jpg">
+        </div>
+        <div class="content">
+            <h4>Hier komt een korte omschrijving van de film te staan</h4>
+            <button>Meer informatie</button>
+            <button>Kaartjes bestellen</button>
+        </div>
+    </div>
+   <div @onclick="() => SelectMovie(1)" class="card d-flex position-relative flex-column">
+           <div class='imgContainer'>
+               <img src="img/The-Lord-Of-The-Rings-The-Fellowship-Of-The-Ring.jpg">
+           </div>
+           <div class="content">
+               <h4>Hier komt een korte omschrijving van de film te staan</h4>
+               <button>Meer informatie</button>
+               <button>Kaartjes bestellen</button>
+           </div>
+       </div>
+   
+   <div @onclick="() => SelectMovie(3)" class="card d-flex position-relative flex-column">
+       <div class='imgContainer'>
+           <img src="img/The-Lord-Of-The-Rings-The-Two-Towers.jpg">
+       </div>
+       <div class="content">
+           <h4>Hier komt een korte omschrijving van de film te staan</h4>
+           <button>Meer informatie</button>
+           <button>Kaartjes bestellen</button>
+       </div>
+   </div>
+   <div @onclick="() => SelectMovie(3)" class="card d-flex position-relative flex-column">
+       <div class='imgContainer'>
+           <img src="img/The-Lord-Of-The-Rings-The-Return-Of-The-King.jpg">
+       </div>
+       <div class="content">
+           <h4>Hier komt een korte omschrijving van de film te staan</h4>
+           <button>Meer informatie</button>
+           <button>Kaartjes bestellen</button>
+       </div>
+   </div>
+</div>
+
+
+
+@code {
+
+    private string? _image;
+    private bool HideImage { get; set; } = false;
+    private int _num = 0;
+    private string? _imageText;
+
+
+    private void HideImageHandler()
+    {
+        HideImage = !HideImage;
+    }
+
+    private void SelectMovie(int number)
+    {
+
+    }
+}
