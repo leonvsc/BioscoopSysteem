@@ -1,6 +1,10 @@
 ﻿@page "/"
+@inject IModalService modal 
 
 <PageTitle>Index</PageTitle>
+
+<button @onclick="@(()=>modal.Show<OrderTickets>("Bestellen"))" class="btn btn-primary">Kaartjes bestellen</button>
+<a href="/MovieDetails"><button class="btn btn-primary">Meer informatie</button></a>
 
 <div class="container d-flex align-items-center justify-content-center position-relative flex-wrap">
     <div @onclick="() => SelectMovie(1)" class="card d-flex position-relative flex-column">
@@ -9,8 +13,8 @@
         </div>
         <div class="content">
             <h4>Hier komt een korte omschrijving van de film te staan</h4>
-            <button>Meer informatie</button>
-            <button>Kaartjes bestellen</button>
+            <button @onclick="@(()=>modal.Show<OrderTickets>("Bestellen"))" class="btn btn-primary">Kaartjes bestellen</button>
+            <button href="/MovieDetails" class="btn btn-primary">Meer informatie</button>
         </div>
     </div>
 
@@ -21,7 +25,7 @@
         <div class="content">
             <h4>Hier komt een korte omschrijving van de film te staan</h4>
             <button>Meer informatie</button>
-            <button>Kaartjes bestellen</button>
+            <button @onclick="() => SelectMovie(2)">Kaartjes bestellen</button>
         </div>
     </div>
     <div @onclick="() => SelectMovie(3)" class="card d-flex position-relative flex-column">
