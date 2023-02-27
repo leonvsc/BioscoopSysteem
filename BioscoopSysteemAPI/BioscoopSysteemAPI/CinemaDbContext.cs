@@ -213,7 +213,7 @@ namespace BioscoopSysteemAPI
 
 
 
-        public DbSet<Movie> movies => Set<Movie>();
+        public DbSet<Movie> Movies => Set<Movie>();
         public DbSet<Payment> Payments => Set<Payment>();
         public DbSet<Reservation> Reservations => Set<Reservation>();
         public DbSet<Room> Rooms => Set<Room>();
