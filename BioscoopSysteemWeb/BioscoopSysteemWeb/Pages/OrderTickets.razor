@@ -6,25 +6,25 @@
 
 <p>Hier kunnen de kaartjes besteld worden</p>
 <form action="/ticket">
-<label for="amount"><strong>Aantal tickets:</strong></label> 
-<br/>
-<input @bind="amount" type="number" id="amount" name="Aantal tickets" class="form-control" required placeholder="Aantal..." min="1" max="10">
+    <label for="amount"><strong>Aantal tickets:</strong></label> 
+    <br/>
+    <input @bind="amount" type="number" id="amount" name="AantalTickets" class="form-control" required placeholder="Aantal..." min="1" max="10">
 
-<label for="age-group"><strong>Leeftijd:</strong></label>
-<select @onchange="SelectedAgeChanged" name="age-group" id="age-group" class="form-select" required>
-    <option value="">Maak keuze</option>
-    <option value="t/m 11">t/m 11</option>
-    <option value="12 t/m 65">12 t/m 65</option>
-    <option value="65 +">65 +</option>
-</select>
-@* <input class="form-check-input" type="checkbox" id="student" name="student" value="Student" @bind="@Student"> *@
-@* <label class="form-check-label" for="student">Student</label> *@
-<Check TValue="bool" @bind-Checked="@Student">Student</Check>
-<br/>
-<label class="form-check-label"><strong>Totaal:</strong></label>
-<input class="form-control" type="text" placeholder="€ @CalculatePrice()" readonly>
-<br/>
-<button type="submit" class="btn btn-primary">Betalen</button>
+    <label for="age-group"><strong>Leeftijd:</strong></label>
+    <select @onchange="SelectedAgeChanged" name="age-group" id="age-group" class="form-select" required>
+        <option value="">Maak keuze</option>
+        <option value="t/m 11">t/m 11</option>
+        <option value="12 t/m 65">12 t/m 65</option>
+        <option value="65 +">65 +</option>
+    </select>
+    @* <input class="form-check-input" type="checkbox" id="student" name="student" value="Student" @bind="@Student"> *@
+    @* <label class="form-check-label" for="student">Student</label> *@
+    <Check TValue="bool" @bind-Checked="@Student">Student</Check>
+    <br/>
+    <label class="form-check-label"><strong>Totaal:</strong></label>
+    <input class="form-control" type="text" placeholder="€ @CalculatePrice()" readonly>
+    <br/>
+    <button type="submit" class="btn btn-primary">Betalen</button>
 </form>
 
 @code {

@@ -1,9 +1,9 @@
 ﻿@page "/ticket"
 @inject IJSRuntime Js
 
-<h3>Betaling geslaagd</h3>
+<h3 class="d-print-none">Betaling geslaagd</h3>
 
-<p>Uw betaling is geslaagd. Hieronder kunt u uw ticket printen.</p>
+<p class="d-print-none">Uw betaling is geslaagd. Hieronder kunt u uw ticket printen.</p>
 <button type="button" class="btn btn-primary d-print-none" @onclick="PrintTicket">Print Ticket</button>
 
 <Ticket></Ticket>
