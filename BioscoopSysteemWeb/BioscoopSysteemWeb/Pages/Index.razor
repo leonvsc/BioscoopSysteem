@@ -1,10 +1,24 @@
 ﻿@page "/"
-@inject IModalService modal 
+@inject IModalService modal
 
 <PageTitle>Index</PageTitle>
 
-<button @onclick="@(()=>modal.Show<OrderTickets>("Bestellen"))" class="btn btn-primary">Kaartjes bestellen</button>
+@* <button @onclick="@(()=>modal.Show<OrderTickets>("Bestellen"))" class="btn btn-primary">Kaartjes bestellen</button> *@
+<Button Color="Color.Primary" Clicked="@ShowModal">Kaartjes bestellen</Button>
+
 <a href="/MovieDetails"><button class="btn btn-primary">Meer informatie</button></a>
+
+<Modal @ref="modalRef">
+    <ModalContent Centered>
+        <ModalHeader>
+            <ModalTitle>Kaartjes bestellen</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            <OrderTickets></OrderTickets>
+        </ModalBody>
+    </ModalContent>
+</Modal>
 
 <div class="container d-flex align-items-center justify-content-center position-relative flex-wrap">
     <div @onclick="() => SelectMovie(1)" class="card d-flex position-relative flex-column">
@@ -151,5 +165,17 @@
     private void SelectMovie(int number)
     {
 
+    }
+    
+    private Modal modalRef;
+
+    private Task ShowModal()
+    {
+        return modalRef.Show();
+    }
+
+    private Task HideModal()
+    {
+        return modalRef.Hide();
     }
 }

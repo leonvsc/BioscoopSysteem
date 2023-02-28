@@ -1,0 +1,17 @@
+﻿@page "/ticket"
+@inject IJSRuntime Js
+
+<h3>Betaling geslaagd</h3>
+
+<p>Uw betaling is geslaagd. Hieronder kunt u uw ticket printen.</p>
+<button type="button" class="btn btn-primary d-print-none" @onclick="PrintTicket">Print Ticket</button>
+
+<Ticket></Ticket>
+
+@code {
+    private async Task PrintTicket()
+    {
+        await Js.InvokeVoidAsync("printPage");
+    }
+
+}

@@ -5,7 +5,7 @@
 <h1>Kaartjes bestellen</h1>
 
 <p>Hier kunnen de kaartjes besteld worden</p>
-<form>
+<form action="/ticket">
 <label for="amount"><strong>Aantal tickets:</strong></label> 
 <br/>
 <input @bind="amount" type="number" id="amount" name="Aantal tickets" class="form-control" required placeholder="Aantal..." min="1" max="10">
@@ -17,8 +17,9 @@
     <option value="12 t/m 65">12 t/m 65</option>
     <option value="65 +">65 +</option>
 </select>
-<input class="form-check-input" type="checkbox" id="student" name="student" value="Student" @bind="@Student">
-<label class="form-check-label" for="student">Student</label>
+@* <input class="form-check-input" type="checkbox" id="student" name="student" value="Student" @bind="@Student"> *@
+@* <label class="form-check-label" for="student">Student</label> *@
+<Check TValue="bool" @bind-Checked="@Student">Student</Check>
 <br/>
 <label class="form-check-label"><strong>Totaal:</strong></label>
 <input class="form-control" type="text" placeholder="€ @CalculatePrice()" readonly>

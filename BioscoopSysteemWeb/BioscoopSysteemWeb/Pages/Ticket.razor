@@ -1,0 +1,20 @@
+@foreach (string ticketInfo in ticketInfoList)
+{
+    <div class="border border-primary p-5">
+      <h1>Concert Name</h1>
+      <p>Date: May 1, 2023</p>
+      <p>Time: 7:00 PM</p>
+      <p>Venue: Madison Square Garden</p>
+      <QRCode Value="@ticketInfo" />
+    </div>
+
+}
+
+
+@code {
+  List<string> ticketInfoList = new List<string> {
+    "Ticket 1",
+    "Ticket 2",
+    "Ticket 3"
+  };
+}
