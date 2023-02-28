@@ -1,0 +1,76 @@
+@page "/MovieDetails"
+@inject IModalService modal 
+
+<PageTitle>Details</PageTitle>
+
+
+<div class="container">
+ 
+     <!-- Portfolio Item Heading -->
+     <h1 class="my-4">@moviename
+       <small>Nu te zien</small>
+     </h1>
+   
+     <!-- Portfolio Item Row -->
+     <div class="row">
+   
+       <div class="col-md-8">
+         <img class="img-fluid" src="https://via.placeholder.com/750x500" alt="">
+       </div>
+   
+       <div class="col-md-4">
+         <h3 class="my-3">Informatie over de film</h3>
+         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
+         <h3 class="my-3">Film details</h3>
+         <ul>
+           <li>Tijd van de film: 130 min</li>
+           <li>Datum en tijd: 27 feb 2023, 21:00</li>
+           <li>Film in 3D? Ja</li>
+           <li>Leeftijdsindicatie: 12 jaar</li>
+         </ul>
+         <button @onclick="@(()=>modal.Show<OrderTickets>("Bestellen"))" class="btn btn-primary">Kaartjes bestellen</button>
+       </div>
+   
+     </div>
+     <!-- /.row -->
+   
+     <!-- Related Projects Row -->
+     <h3 class="my-4">Andere films</h3>
+   
+     <div class="row">
+   
+       <div class="col-md-3 col-sm-6 mb-4">
+         <a href="#">
+               <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
+             </a>
+       </div>
+   
+       <div class="col-md-3 col-sm-6 mb-4">
+         <a href="#">
+               <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
+             </a>
+       </div>
+   
+       <div class="col-md-3 col-sm-6 mb-4">
+         <a href="#">
+               <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
+             </a>
+       </div>
+   
+       <div class="col-md-3 col-sm-6 mb-4">
+         <a href="#">
+               <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
+             </a>
+       </div>
+   
+     </div>
+     <!-- /.row -->
+   
+   </div>
+   <!-- /.container -->
+
+@code {
+    string moviename = "Lord of the rings the fellowship of the ring";
+    
+
+}
