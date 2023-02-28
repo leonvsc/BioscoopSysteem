@@ -2,14 +2,14 @@
 using BioscoopSysteemAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BioscoopSysteemAPI.Repository
+namespace BioscoopSysteemAPI.Dal.Repository
 {
-	public class VisitorRepository
-	{
+    public class VisitorRepository
+    {
         private readonly CinemaDbContext cinemaDbContext;
 
         public VisitorRepository(CinemaDbContext cinemaDbContext)
-		{
+        {
             this.cinemaDbContext = cinemaDbContext;
         }
 
@@ -18,6 +18,6 @@ namespace BioscoopSysteemAPI.Repository
             var visitors = await cinemaDbContext.Visitors.ToListAsync();
             return visitors;
         }
-	}
+    }
 }
 

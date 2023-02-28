@@ -2,14 +2,14 @@
 using BioscoopSysteemAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BioscoopSysteemAPI.Repository
+namespace BioscoopSysteemAPI.Dal.Repository
 {
-	public class PaymentRepository
-	{
+    public class PaymentRepository
+    {
         private readonly CinemaDbContext cinemaDbContext;
 
         public PaymentRepository(CinemaDbContext cinemaDbContext)
-		{
+        {
             this.cinemaDbContext = cinemaDbContext;
         }
 
@@ -18,6 +18,6 @@ namespace BioscoopSysteemAPI.Repository
             var payments = await cinemaDbContext.Payments.ToListAsync();
             return payments;
         }
-	}
+    }
 }
 

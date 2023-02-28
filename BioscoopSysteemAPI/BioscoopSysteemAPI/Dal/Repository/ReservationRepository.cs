@@ -2,14 +2,14 @@
 using BioscoopSysteemAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BioscoopSysteemAPI.Repository
+namespace BioscoopSysteemAPI.Dal.Repository
 {
-	public class ReservationRepository
-	{
+    public class ReservationRepository
+    {
         private readonly CinemaDbContext cinemaDbContext;
 
         public ReservationRepository(CinemaDbContext cinemaDbContext)
-		{
+        {
             this.cinemaDbContext = cinemaDbContext;
         }
 
@@ -33,7 +33,7 @@ namespace BioscoopSysteemAPI.Repository
 
         public async Task<Reservation> MakeReservation(Reservation aReservation)
         {
-            var reservation = await (from Reservation in this.cinemaDbContext.Reservations
+            var reservation = await (from Reservation in cinemaDbContext.Reservations
                                      select new Reservation
                                      {
                                          ReservationId = aReservation.ReservationId,
@@ -43,7 +43,7 @@ namespace BioscoopSysteemAPI.Repository
                                          MovieId = aReservation.MovieId,
                                          VisitorId = aReservation.VisitorId
                                      }).SingleOrDefaultAsync();
-            if(reservation != null)
+            if (reservation != null)
             {
                 var result = await cinemaDbContext.Reservations.AddAsync(reservation);
                 await cinemaDbContext.SaveChangesAsync();
@@ -51,6 +51,6 @@ namespace BioscoopSysteemAPI.Repository
             }
             return null;
         }
-	}
+    }
 }
 

@@ -1,5 +1,5 @@
 using BioscoopSysteemAPI;
-using BioscoopSysteemAPI.Repository;
+using BioscoopSysteemAPI.Dal.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
