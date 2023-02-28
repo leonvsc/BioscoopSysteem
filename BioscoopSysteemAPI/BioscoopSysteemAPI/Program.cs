@@ -12,7 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var connection = builder.Configuration.GetConnectionString("ConnectionString");
-builder.Services.AddDbContext<CinemaDbContext>(options => options.UseSqlServer(connection));
+builder.Services.AddDbContextPool<CinemaDbContext>(options => options.UseSqlServer(connection));
 builder.Services.AddScoped<MovieRepository>();
 builder.Services.AddScoped<PaymentRepository>();
 builder.Services.AddScoped<ReservationRepository>();
