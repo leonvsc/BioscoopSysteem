@@ -1,5 +1,7 @@
 ﻿@page "/"
+@using BioscoopSysteemWeb.Service
 @inject IModalService modal
+@inject HttpService HttpService
 
 <PageTitle>Index</PageTitle>
 
@@ -28,6 +30,7 @@
             <a href="/MovieDetails"><button class="btn btn-primary">Meer informatie</button></a>
             <div class="content">
                 <p>@description[movie.i]</p>
+                <p>@dataFromApi</p>
             </div>
         </div>
     }
@@ -41,6 +44,13 @@
     private bool HideImage { get; set; } = false;
     private int _num = 0;
     private string? _imageText;
+    
+    private string dataFromApi;
+
+    private async Task GetData()
+    {
+        dataFromApi = await HttpService.GetDataFromApi();
+    }
 
 
     private void HideImageHandler()
