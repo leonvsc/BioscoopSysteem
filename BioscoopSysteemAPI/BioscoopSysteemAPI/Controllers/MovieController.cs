@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BioscoopSysteemAPI.Dal.Repository;
 using BioscoopSysteemAPI.Models;
-using BioscoopSysteemAPI.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

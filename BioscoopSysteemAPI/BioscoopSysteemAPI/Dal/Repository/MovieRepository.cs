@@ -2,14 +2,14 @@
 using BioscoopSysteemAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BioscoopSysteemAPI.Repository
+namespace BioscoopSysteemAPI.Dal.Repository
 {
-	public class MovieRepository
-	{
+    public class MovieRepository
+    {
         private readonly CinemaDbContext cinemaDbContext;
 
         public MovieRepository(CinemaDbContext cinemaDbContext)
-		{
+        {
             this.cinemaDbContext = cinemaDbContext;
         }
 
@@ -27,7 +27,7 @@ namespace BioscoopSysteemAPI.Repository
 
         public async Task<Movie> AddMovie(Movie movie)
         {
-            var cinemaMovie = await (from Movie in this.cinemaDbContext.Movies
+            var cinemaMovie = await (from Movie in cinemaDbContext.Movies
                                      select new Movie
                                      {
                                          MovieId = movie.MovieId,
@@ -61,7 +61,7 @@ namespace BioscoopSysteemAPI.Repository
             return movie;
         }
 
-        public async Task<Movie> UpdateMovie(int id) 
+        public async Task<Movie> UpdateMovie(int id)
         {
             var movie = await cinemaDbContext.Movies.FindAsync(id);
 
@@ -73,6 +73,6 @@ namespace BioscoopSysteemAPI.Repository
             }
             return null;
         }
-	}
+    }
 }
 
