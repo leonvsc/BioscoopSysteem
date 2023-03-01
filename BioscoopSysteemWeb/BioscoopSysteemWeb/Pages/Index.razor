@@ -5,6 +5,10 @@
 
 <PageTitle>Index</PageTitle>
 
+
+
+<button @onclick="GetMovies">get data</button>
+
 <Modal @ref="modalRef">
     <ModalContent Centered>
         <ModalHeader>
@@ -47,9 +51,9 @@
     
     private string dataFromApi;
 
-    private async Task GetData()
+    private async Task GetMovies()
     {
-        dataFromApi = await HttpService.GetDataFromApi();
+        dataFromApi = await HttpService.GetMovies();
     }
 
 

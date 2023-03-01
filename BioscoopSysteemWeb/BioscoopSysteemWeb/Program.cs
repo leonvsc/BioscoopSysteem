@@ -1,5 +1,5 @@
 using BioscoopSysteemWeb;
-
+using BioscoopSysteemWeb.Service;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -20,5 +20,7 @@ builder.Services
     } )
     .AddBootstrap5Providers()
     .AddFontAwesomeIcons();
+
+builder.Services.AddScoped<HttpService, HttpService>();
 
 await builder.Build().RunAsync();

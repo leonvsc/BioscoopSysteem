@@ -11,9 +11,9 @@ public class HttpService
         _httpClient = httpClient;
     }
 
-    public async Task<string> GetDataFromApi()
+    public async Task<string> GetMovies()
     {
-        var response = await _httpClient.GetAsync("http://www.omdbapi.com/?apikey=e3573bce&i=tt1285016");
+        var response = await _httpClient.GetAsync("https://localhost:44307/api/movie");
 
         if (response.IsSuccessStatusCode)
         {
