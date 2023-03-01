@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BioscoopSysteemAPI.Models;
-using BioscoopSysteemAPI.Repository;
+using BioscoopSysteemAPI.Dal.Repository;
 
 namespace BioscoopSysteemAPI.Services
 {
@@ -16,9 +16,9 @@ namespace BioscoopSysteemAPI.Services
 			this.reservationRepository = reservationRepository; 
 		}
 
-		public IsNumerable<Reservation> getReservations()
+		public async Task <IEnumerable<Reservation>> GetReservations()
 		{
-			var reservation = reservationRepository.GetReservations();
+			var reservation = await reservationRepository.GetReservations();
 			if (reservation == null)
 			{
 				return null;
@@ -26,23 +26,23 @@ namespace BioscoopSysteemAPI.Services
 			return reservation;
 		}
 
-		public Reservation deleteReservation(int reservationId)
+		public async Task <Reservation> DeleteReservation(int id)
 		{
-			var reservation = reservationRepositiory.GetReservation(reservationId);
+			var reservation = await reservationRepository.GetReservationById(id);
 			if (reservation == null)
 			{
 				return null;
 			}
-			reservationRepository.DeleteReservation(reservationId);
+			reservationRepository.DeleteReservation(id);
 			return reservation;
 		}
 
-		public Reservation createReservation(Reservation reservation)
+		public async Task <Reservation> createReservation(Reservation reservationInput)
 		{ 
-			if (reservation	!= null)
+			if (reservationInput != null)
 			{
-				reservationB = reservationRepository.CreateReservation();
-				return reservation;
+				var reservationB = await reservationRepository.CreateReservation(reservationInput);
+				return reservationInput;
 			}
 			return null;
 		}
