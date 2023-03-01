@@ -1,19 +1,17 @@
-@foreach (string ticketInfo in ticketInfoList)
-{
     <div class="border border-primary p-5 mt-5">
-        <h1>Concert Name</h1>
+        <h1>Lord of the rings</h1>
         <p>Date: May 1, 2023</p>
         <p>Time: 7:00 PM</p>
-        <p>Venue: Madison Square Garden</p>
-        <QRCode Value="@ticketInfo"/>
+        <p>Venue: Pathé Amsterdam</p>
+        <p>Total price: @TotalPrice</p>
+        <QRCode Value="@TicketNumber.ToString()"/>
     </div>
-}
 
 
 @code {
-    List<string> ticketInfoList = new List<string> {
-    "Ticket 1",
-    "Ticket 2",
-    "Ticket 3"
-  };
+    [Parameter]
+    public int TicketNumber { get; set; }
+    
+    [Parameter]
+    public double TotalPrice { get; set; }
 }
