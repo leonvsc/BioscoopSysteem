@@ -1,5 +1,5 @@
 using BioscoopSysteemWeb;
-// using Blazored.Modal;
+
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
