@@ -1,5 +1,5 @@
 ﻿using BioscoopSysteemAPI.Models;
-using BioscoopSysteemAPI.Repository;
+using BioscoopSysteemAPI.Dal.Repository;
 using System;
 
 
@@ -14,9 +14,9 @@ namespace BioscoopSysteemAPI.Service
 			this.movieRepository = movieRepository;
 		}
 
-		public IEnumerable<Movie> GetMovies()
+		public async Task <IEnumerable<Movie>> GetMovies()
 		{
-			var movies = this.movieRepository.GetMovies();
+			var movies = await this.movieRepository.GetMovies();
 			if(movies != null)
             {
 				return movies;
@@ -25,9 +25,9 @@ namespace BioscoopSysteemAPI.Service
 		}
 
 
-		public Movie GetMovie(int id)
+		public async Task <Movie> GetMovie(int id)
         {
-			var movie = this.movieRepository.getMovie(id);
+			var movie = await this.movieRepository.GetMovieById(id);
 			if(movie != null)
             {
 				return movie;
@@ -35,9 +35,9 @@ namespace BioscoopSysteemAPI.Service
 			return null;
         }		
 		
-		public Movie Delete(int id)
+		public async Task <Movie> Delete(int id)
 		{
-			var movies = this.movieRepository.DeleteMovie(id);
+			var movies = await this.movieRepository.DeleteMovie(id);
 			if(movies != null)
             {
 				return movies;
@@ -46,9 +46,9 @@ namespace BioscoopSysteemAPI.Service
 		}
 
 
-		public Movie Update(int id)
+		public async Task<Movie> Update(int id)
         {
-			var movie = this.movieRepository.UpdateMovie(id);
+			var movie = await this.movieRepository.UpdateMovie(id);
 			if(movie != null)
             {
 				return movie;
@@ -56,9 +56,9 @@ namespace BioscoopSysteemAPI.Service
 			return null;
         }
 		
-		public Movie Add(Movie movie)
+		public async Task<Movie> Add(Movie movieInput)
         {
-			var movie = this.movieRepository.AddMovie(movie);
+			var movie = await this.movieRepository.AddMovie(movieInput);
 			if(movie != null)
             {
 				return movie;

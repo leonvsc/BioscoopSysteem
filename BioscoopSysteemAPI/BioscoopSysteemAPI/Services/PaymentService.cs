@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BioscoopSysteemAPI.Models;
-using BioscoopSysteemAPI.Repository;
+using BioscoopSysteemAPI.Dal.Repository;
 using System;
 
 public class PaymentService
@@ -14,15 +14,15 @@ public class PaymentService
 		this.paymentRepository = paymentRepository;
 	}
 
-	private IsEnumerable<Payment> GetPayments()
+	private async Task <IEnumerable<Payment>> GetPayments()
     {
-		var payments = this.paymentRepository.GetPayments();
+		var payments = await this.paymentRepository.GetPayments();
 		return payments;
 	}
 
-	private Payment GetPayment()
+	private async Task <Payment> GetPaymentById(int id)
     {
-		var payment = this.paymentRepository.GetPayment();
+		var payment = await this.paymentRepository.GetPaymentById(id);
 		return payment;
     }
 }

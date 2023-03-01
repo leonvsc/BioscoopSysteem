@@ -18,6 +18,12 @@ namespace BioscoopSysteemAPI.Dal.Repository
             var payments = await cinemaDbContext.Payments.ToListAsync();
             return payments;
         }
+
+        public async Task <Payment> GetPaymentById(int id)
+        {
+            var payments = await cinemaDbContext.Payments.FindAsync(id);
+            return payments;
+        }
     }
 }
 
