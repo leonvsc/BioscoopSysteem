@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BioscoopSysteemAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -42,4 +42,3 @@ namespace BioscoopSysteemAPI
 
     }
 }
-
