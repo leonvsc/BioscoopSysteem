@@ -22,4 +22,16 @@ public class HttpService
 
         return string.Empty;
     }
+    
+    public async Task<string> GetMovieById(int id)
+    {
+        var response = await _httpClient.GetAsync($"https://localhost:44307/api/movie/{id}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadAsStringAsync();
+        }
+
+        return string.Empty;
+    }
 }

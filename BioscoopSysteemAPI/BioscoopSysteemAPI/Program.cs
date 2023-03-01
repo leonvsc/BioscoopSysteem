@@ -18,8 +18,9 @@ builder.Services.AddScoped<PaymentRepository>();
 builder.Services.AddScoped<ReservationRepository>();
 builder.Services.AddScoped<VisitorRepository>();
 
-
 var app = builder.Build();
+
+app.UseCors( o => o.AllowAnyOrigin());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

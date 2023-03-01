@@ -1,13 +1,8 @@
 ﻿@page "/"
 @using BioscoopSysteemWeb.Service
-@inject IModalService modal
 @inject HttpService HttpService
 
 <PageTitle>Index</PageTitle>
-
-
-
-<button @onclick="GetMovies">get data</button>
 
 <Modal @ref="modalRef">
     <ModalContent Centered>
@@ -25,6 +20,7 @@
     
     @foreach (var movie in movies.Select((value, i) => new { i, value }))
     {
+        <button @onclick="() => GetMovieById(movie.i)">get data</button>
         <div class="card d-flex position-relative flex-column">
             <div class='imgContainer'>
                 <img src="img/The-Lord-Of-The-Rings-The-Fellowship-Of-The-Ring.jpg">
@@ -54,6 +50,11 @@
     private async Task GetMovies()
     {
         dataFromApi = await HttpService.GetMovies();
+    }
+
+    private async Task GetMovieById(int id)
+    {
+        dataFromApi = await HttpService.GetMovieById(id);
     }
 
 
