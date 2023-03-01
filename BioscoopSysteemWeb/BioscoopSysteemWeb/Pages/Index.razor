@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using BioscoopSysteemWeb.Service
 @inject HttpService HttpService
+@inject Movies Movies
 
 <PageTitle>Index</PageTitle>
 
@@ -16,11 +17,13 @@
     </ModalContent>
 </Modal>
 
+<button @onclick="GetMovies">get data</button>
+
 <div class="container d-flex align-items-center justify-content-center position-relative flex-wrap">
     
     @foreach (var movie in movies.Select((value, i) => new { i, value }))
     {
-        <button @onclick="() => GetMovieById(movie.i)">get data</button>
+        <button @onclick="() => GetMovieById(movie.i + 1)">get data</button>
         <div class="card d-flex position-relative flex-column">
             <div class='imgContainer'>
                 <img src="img/The-Lord-Of-The-Rings-The-Fellowship-Of-The-Ring.jpg">
@@ -45,7 +48,7 @@
     private int _num = 0;
     private string? _imageText;
     
-    private string dataFromApi;
+    private string? dataFromApi;
 
     private async Task GetMovies()
     {
