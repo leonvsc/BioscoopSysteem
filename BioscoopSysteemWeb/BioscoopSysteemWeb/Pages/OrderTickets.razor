@@ -28,14 +28,13 @@
 </form>
 
 @code {
-
     double amount = 0;
     public bool Student { get; set; }
     bool film3D = true;
     DayOfWeek dag;
 
     public string? SelectedAge { get; set; }
-    
+
     private void SelectedAgeChanged(ChangeEventArgs e)
     {
         if (e.Value is not null)
@@ -49,13 +48,13 @@
         double price = 0;
         int movieTime = 130;
         dag = DayOfWeek.Monday;
-        
+
 
         if (movieTime > 120)
         {
             price = 9;
         }
-        
+
         if (dag is DayOfWeek.Monday or DayOfWeek.Tuesday or DayOfWeek.Wednesday or DayOfWeek.Thursday)
         {
             if (Student || SelectedAge == "t/m 11" || SelectedAge == "65 +")
@@ -73,5 +72,11 @@
 
         return totalprice;
     }
-    
+
+    /* Nog verder testen
+     * public double GetTicketAmount()
+    {
+        return amount;
+    }*/
+
 }
