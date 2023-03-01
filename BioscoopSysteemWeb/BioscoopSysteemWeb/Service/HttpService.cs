@@ -13,7 +13,7 @@ public class HttpService
 
     public async Task<string> GetDataFromApi()
     {
-        var response = await _httpClient.GetAsync("http://www.omdbapi.com/?apikey=e3573bce&");
+        var response = await _httpClient.GetAsync("http://www.omdbapi.com/?apikey=e3573bce&i=tt1285016");
 
         if (response.IsSuccessStatusCode)
         {
