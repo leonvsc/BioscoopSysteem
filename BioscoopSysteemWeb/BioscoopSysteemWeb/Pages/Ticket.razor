@@ -1,0 +1,17 @@
+    <div class="border border-primary p-5 mt-5">
+        <h1>Lord of the rings</h1>
+        <p>Date: May 1, 2023</p>
+        <p>Time: 7:00 PM</p>
+        <p>Venue: Pathé Amsterdam</p>
+        <p>Total price: @TotalPrice</p>
+        <QRCode Value="@TicketNumber.ToString()"/>
+    </div>
+
+
+@code {
+    [Parameter]
+    public int TicketNumber { get; set; }
+    
+    [Parameter]
+    public double TotalPrice { get; set; }
+}

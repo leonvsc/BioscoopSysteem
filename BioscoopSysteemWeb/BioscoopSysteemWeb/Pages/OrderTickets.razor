@@ -1,0 +1,79 @@
+@page "/OrderTickets"
+@inject NavigationManager NavigationManager
+
+<PageTitle>Bestellen</PageTitle>
+
+<h1>Kaartjes bestellen</h1>
+
+<p>Hier kunnen de kaartjes besteld worden</p>
+<form onsubmit="@(() => OnSubmit(amount, CalculatePrice()))">
+    <label for="amount"><strong>Aantal tickets:</strong></label> 
+    <br/>
+    <input @bind="amount" type="number" id="amount" name="AantalTickets" class="form-control" required placeholder="Aantal..." min="1" max="10">
+
+    <label for="age-group"><strong>Leeftijd:</strong></label>
+    <select @onchange="SelectedAgeChanged" name="age-group" id="age-group" class="form-select" required>
+        <option value="">Maak keuze</option>
+        <option value="t/m 11">t/m 11</option>
+        <option value="12 t/m 65">12 t/m 65</option>
+        <option value="65 +">65 +</option>
+    </select>
+    <Check TValue="bool" @bind-Checked="@Student">Student</Check>
+    <br/>
+    <label class="form-check-label"><strong>Totaal:</strong></label>
+    <input class="form-control" type="text" placeholder="€ @CalculatePrice()" readonly>
+    <br/>
+    <button type="submit" class="btn btn-primary">Betalen</button>
+</form>
+
+@code {
+    int amount = 0;
+    public bool Student { get; set; }
+    bool film3D = true;
+    DayOfWeek dag;
+
+    public string? SelectedAge { get; set; }
+
+    private void SelectedAgeChanged(ChangeEventArgs e)
+    {
+        if (e.Value is not null)
+        {
+            SelectedAge = e.Value.ToString();
+        }
+    }
+
+    private double CalculatePrice()
+    {
+        double price = 0;
+        int movieTime = 130;
+        dag = DayOfWeek.Monday;
+
+
+        if (movieTime > 120)
+        {
+            price = 9;
+        }
+
+        if (dag is DayOfWeek.Monday or DayOfWeek.Tuesday or DayOfWeek.Wednesday or DayOfWeek.Thursday)
+        {
+            if (Student || SelectedAge == "t/m 11" || SelectedAge == "65 +")
+            {
+                price = price - 1.5;
+            }
+        }
+
+        if (film3D)
+        {
+            price = price + 3.5;
+        }
+
+        double totalprice = price * amount;
+
+        return totalprice;
+    }
+
+    private void OnSubmit(int amount, double price)
+    {
+        NavigationManager.NavigateTo($"/ticket?amount={amount}&price={price}");
+    }
+}

@@ -55,7 +55,7 @@ namespace BioscoopSysteemAPI.Migrations
 
                     b.HasKey("MovieId");
 
-                    b.ToTable("movies");
+                    b.ToTable("Movies");
 
                     b.HasData(
                         new
@@ -121,7 +121,7 @@ namespace BioscoopSysteemAPI.Migrations
                         {
                             PaymentId = 1,
                             Amount = 24,
-                            DateTime = new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6830),
+                            DateTime = new DateTime(2023, 2, 28, 21, 42, 3, 301, DateTimeKind.Local).AddTicks(5978),
                             PaymentMethod = "Ideal",
                             ReservationId = 1
                         },
@@ -129,7 +129,7 @@ namespace BioscoopSysteemAPI.Migrations
                         {
                             PaymentId = 2,
                             Amount = 12,
-                            DateTime = new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6880),
+                            DateTime = new DateTime(2023, 2, 28, 21, 42, 3, 301, DateTimeKind.Local).AddTicks(6033),
                             PaymentMethod = "CreditCard",
                             ReservationId = 2
                         },
@@ -137,7 +137,7 @@ namespace BioscoopSysteemAPI.Migrations
                         {
                             PaymentId = 3,
                             Amount = 12,
-                            DateTime = new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6890),
+                            DateTime = new DateTime(2023, 2, 28, 21, 42, 3, 301, DateTimeKind.Local).AddTicks(6042),
                             PaymentMethod = "CreditCard",
                             ReservationId = 3
                         });
@@ -176,7 +176,7 @@ namespace BioscoopSysteemAPI.Migrations
                         new
                         {
                             ReservationId = 1,
-                            DateTime = new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6900),
+                            DateTime = new DateTime(2023, 2, 28, 21, 42, 3, 301, DateTimeKind.Local).AddTicks(6059),
                             Location = "Amsterdam",
                             MovieId = 1,
                             SeatId = 6,
@@ -185,7 +185,7 @@ namespace BioscoopSysteemAPI.Migrations
                         new
                         {
                             ReservationId = 2,
-                            DateTime = new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6910),
+                            DateTime = new DateTime(2023, 2, 28, 21, 42, 3, 301, DateTimeKind.Local).AddTicks(6070),
                             Location = "Haarlem",
                             MovieId = 2,
                             SeatId = 5,
@@ -194,7 +194,7 @@ namespace BioscoopSysteemAPI.Migrations
                         new
                         {
                             ReservationId = 3,
-                            DateTime = new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6920),
+                            DateTime = new DateTime(2023, 2, 28, 21, 42, 3, 301, DateTimeKind.Local).AddTicks(6079),
                             Location = "Zaandam",
                             MovieId = 3,
                             SeatId = 4,
@@ -325,7 +325,7 @@ namespace BioscoopSysteemAPI.Migrations
                         new
                         {
                             TicketId = 1,
-                            DateTime = new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6970),
+                            DateTime = new DateTime(2023, 2, 28, 21, 42, 3, 301, DateTimeKind.Local).AddTicks(6147),
                             MovieName = "ScaryMovie",
                             PaymentId = 1,
                             Quantity = 2,
@@ -336,7 +336,7 @@ namespace BioscoopSysteemAPI.Migrations
                         new
                         {
                             TicketId = 2,
-                            DateTime = new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6980),
+                            DateTime = new DateTime(2023, 2, 28, 21, 42, 3, 301, DateTimeKind.Local).AddTicks(6160),
                             MovieName = "AntMan",
                             PaymentId = 2,
                             Quantity = 1,
@@ -347,7 +347,7 @@ namespace BioscoopSysteemAPI.Migrations
                         new
                         {
                             TicketId = 3,
-                            DateTime = new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6990),
+                            DateTime = new DateTime(2023, 2, 28, 21, 42, 3, 301, DateTimeKind.Local).AddTicks(6170),
                             MovieName = "Plane",
                             PaymentId = 3,
                             Quantity = 1,
