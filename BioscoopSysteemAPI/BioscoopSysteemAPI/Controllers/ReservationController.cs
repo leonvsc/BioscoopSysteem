@@ -63,7 +63,7 @@ namespace BioscoopSysteemAPI.Controllers
         {
             try
             {
-                var aReservation = await this.reservationRepository.MakeReservation(reservation);
+                var aReservation = await this.reservationRepository.CreateReservation(reservation);
 
                 if (aReservation == null)
                 {
