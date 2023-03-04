@@ -1,7 +1,10 @@
-﻿namespace BioscoopSysteemAPI.Services
+﻿using BioscoopSysteemAPI.Dal.Repository;
+
+namespace BioscoopSysteemAPI.Services
 {
     public abstract class SeatReservation
     {
+        private RoomRepository roomRepository;
         public void AssignRandomSeat(int roomNumber, int visitorAmount)
         {
             if (roomNumber > 0 || roomNumber <= 6 && visitorAmount > 0)

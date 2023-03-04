@@ -1,6 +1,6 @@
 using System.Net.Mime;
 using AutoMapper;
-using BioscoopSysteemAPI.DTOs.MovieDTOs;
+using BioscoopSysteemAPI.DTOs.SeatDTOs;
 using BioscoopSysteemAPI.Interfaces;
 using BioscoopSysteemAPI.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -8,44 +8,44 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace BioscoopSysteemAPI.Controllers
 {
-    [Route("api/movies")]
+    [Route("api/seats")]
     [ApiController]
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
-    public class MovieController : ControllerBase
+    public class SeatController : ControllerBase
     {
         
-        private readonly IMovieRepository _movieRepository;
+        private readonly ISeatRepository _seatRepository;
         private readonly IMapper _mapper;
 
-        public MovieController(IMovieRepository movieRepository, IMapper mapper )
+        public SeatController(ISeatRepository seatRepository, IMapper mapper )
         {
-            _movieRepository = movieRepository;
+            _seatRepository = seatRepository;
             _mapper = mapper;
         }
 
-        // GET: api/movies
+        // GET: api/Seats
         /// <summary>
-        /// Get all movies.
+        /// Get all Seats.
         /// </summary>
-        /// <response code="200">Succesfully returns a movie object.</response>
-        /// <returns>A list of movie objects.</returns>
+        /// <response code="200">Succesfully returns a Seat object.</response>
+        /// <returns>A list of Seat objects.</returns>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MovieReadDTO>>> GetMovies()
+        public async Task<ActionResult<IEnumerable<SeatReadDTO>>> GetSeats()
         {
             try
             {
-                var domainMovies = await _movieRepository.GetMoviesAsync();
+                var domainSeats = await _seatRepository.GetSeatsAsync();
 
-                if (domainMovies == null)
+                if (domainSeats == null)
                 {
                     return NotFound();
                 }
 
-                var dtoMovies = _mapper.Map<List<MovieReadDTO>>(domainMovies.Value);
+                var dtoSeats = _mapper.Map<List<SeatReadDTO>>(domainSeats.Value);
 
-                return Ok(dtoMovies);
+                return Ok(dtoSeats);
 
             }
             catch (Exception)
@@ -54,29 +54,29 @@ namespace BioscoopSysteemAPI.Controllers
             }
         }
 
-        // GET: api/movies/1
+        // GET: api/Seats/1
         /// <summary>
-        /// Get a movie by ID.
+        /// Get a Seat by ID.
         /// </summary>
-        /// <param name="id">Id of the movie.</param>
-        /// <returns>A movie object.</returns>
-        /// <response code="200">Succesfully returns a movie object.</response>
+        /// <param name="id">Id of the Seat.</param>
+        /// <returns>A Seat object.</returns>
+        /// <response code="200">Succesfully returns a Seat object.</response>
         /// <response code="404">Error: The object you are looking for is not found.</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{id}")]
-        public async Task<ActionResult<MovieReadDTO>> GetMovie(int id)
+        public async Task<ActionResult<SeatReadDTO>> GetSeat(int id)
         {
             try
             {
-                var domainMovie = await _movieRepository.GetMovieByIdAsync(id);
-                var dtoMovie = _mapper.Map<MovieReadDTO>(domainMovie.Value);
+                var domainSeat = await _seatRepository.GetSeatByIdAsync(id);
+                var dtoSeat = _mapper.Map<SeatReadDTO>(domainSeat.Value);
 
-                if (dtoMovie == null)
+                if (dtoSeat == null)
                 {
                     return NotFound();
                 }
-                return Ok(dtoMovie);
+                return Ok(dtoSeat);
             }
             catch (Exception)
             {
@@ -84,7 +84,7 @@ namespace BioscoopSysteemAPI.Controllers
             }
         }
 
-        // DELETE: api/movies/1
+        // DELETE: api/Seats/1
         /// <summary>
         /// Delete an object by Id in the database.
         /// </summary>
@@ -92,17 +92,17 @@ namespace BioscoopSysteemAPI.Controllers
         /// <returns></returns>
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpDelete("{id}")]
-        public async Task<ActionResult<MovieDeleteDTO>> DeleteMovie(int id)
+        public async Task<ActionResult<SeatDeleteDTO>> DeleteSeat(int id)
         {
             try
             {
-                var movie = await _movieRepository.DeleteMovieAsync(id);
+                var seat = await _seatRepository.DeleteSeatAsync(id);
 
-                if (movie == null)
+                if (seat == null)
                 {
                     return NotFound();
                 }
-                return Ok(movie);
+                return Ok(seat);
             }
             catch (Exception)
             {
@@ -111,10 +111,10 @@ namespace BioscoopSysteemAPI.Controllers
         }
 
         /// <summary>
-        /// Update a movie.
+        /// Update a Seat.
         /// </summary>
-        /// <param name="id">Id of the movie</param>
-        /// <param name="movie">Movie object</param>
+        /// <param name="id">Id of the Seat</param>
+        /// <param name="Seat">Seat object</param>
         /// <returns>Action result without content.</returns>
         /// <response code="204">Succesfully updated object.</response>
         /// <response code="404">Error: The object you are looking for is not found.</response>
@@ -123,23 +123,23 @@ namespace BioscoopSysteemAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPut("{id}")]
-        public async Task<ActionResult<Movie>> PutMovie(int id, Movie movie)
+        public async Task<ActionResult<Seat>> PutSeat(int id, Seat seat)
         {
 
-            if (id != movie.MovieId)
+            if (id != seat.SeatId)
             {
                 return BadRequest();
             }
 
             try
             {
-                var domainMovie = await _movieRepository.PutMovieAsync(id, movie);
+                var domainSeat = await _seatRepository.PutSeatAsync(id, seat);
 
-                if (domainMovie == null)
+                if (domainSeat == null)
                 {
                     return NotFound();
                 }
-                return Ok(movie);
+                return Ok(seat);
             }
             catch (Exception)
             {
@@ -147,29 +147,29 @@ namespace BioscoopSysteemAPI.Controllers
             }
         }
 
-        // POST: api/movies
+        // POST: api/Seats
         /// <summary>
-        /// Creates a new movie object.
+        /// Creates a new Seat object.
         /// </summary>
-        /// <param name="payment">A movie object.</param>
-        /// <returns>The new movie object.</returns>
+        /// <param name="payment">A Seat object.</param>
+        /// <returns>The new Seat object.</returns>
         /// <response code="201">Succesfully created object.</response>
         [ProducesResponseType(StatusCodes.Status201Created)]
         [HttpPost]
-        public async Task<ActionResult<MovieCreateDTO>> PostMovie(MovieCreateDTO movieDto)
+        public async Task<ActionResult<SeatCreateDTO>> PostSeat(SeatCreateDTO seatDto)
         {
             try
             {
-                var domainMovie = _mapper.Map<Movie>(movieDto);
+                var domainSeat = _mapper.Map<Seat>(seatDto);
 
-                if (domainMovie == null)
+                if (domainSeat == null)
                 {
                     return NoContent();
                 }
 
-                int movieId = _movieRepository.PostMovieAsync(domainMovie).Id;
+                int seatId = _seatRepository.PostSeatAsync(domainSeat).Id;
 
-                return CreatedAtAction("GetMovie", new { id = movieId }, movieDto);
+                return CreatedAtAction("GetSeat", new { id = seatId }, seatDto);
 
             }
             catch (Exception)
