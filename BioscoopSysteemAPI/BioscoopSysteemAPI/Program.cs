@@ -19,6 +19,7 @@ builder.Services.AddDbContext<CinemaDbContext>(options => options.UseSqlServer(c
 // Injection of AutoMapper.
 builder.Services.AddAutoMapper(typeof(Program));
 // Injection of Repositories
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
