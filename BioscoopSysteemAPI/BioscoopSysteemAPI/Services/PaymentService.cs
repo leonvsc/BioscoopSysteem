@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,15 +14,16 @@ public class PaymentService
 		this.paymentRepository = paymentRepository;
 	}
 
-	private async Task <IEnumerable<Payment>> GetPayments()
-    {
+	private async Task<IEnumerable<Payment>> GetPayments()
+	{
 		var payments = await this.paymentRepository.GetPayments();
 		return payments;
 	}
 
-	private async Task <Payment> GetPaymentById(int id)
-    {
+	private async Task<Payment> GetPaymentById(int id)
+	{
 		var payment = await this.paymentRepository.GetPaymentById(id);
 		return payment;
-    }
+	}
 }
+*/
