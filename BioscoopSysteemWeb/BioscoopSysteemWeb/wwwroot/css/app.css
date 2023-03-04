@@ -88,28 +88,35 @@ body
 .container .card
 {
     align-items: center;
-    width: 250px;
-    height: 200px;
-    margin: 20px 20px;
-    padding: 20px 20px;
+    width: 300px;
+    height: 400px;
+    margin: 10px 10px;
+    padding: 10px 10px;
     transition: 0.6s ease-in-out;
     background: none;
 }
 .container .card:hover
 {
-    height: 500px;
+    height: 600px;
     background: white;
     box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+}
+
+.btn
+{
+    margin-bottom: 10px;
+    width: 200px;
 }
 
 .imgContainer
 {
     display: flex;
     align-items: center;
-    width:150px;
-    height:150px;
+    width:auto;
+    height:250px;
     top:-50px;
     left:10px;
+    margin-bottom: 10px;
     z-index: 1;
 }
 .container .card .imgContainer img
@@ -121,27 +128,13 @@ body
 .container .card .content
 {
     position: relative;
-    margin-top: -140px;
+    /*margin-top: -140px;*/
     /*padding: 10px 15px;*/
     text-align: center;
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
     transition: 0.4s ease-in-out;
-}
-
-.image-view
-{
-    visibility: hidden;
-    z-index: 20;
-    transition: 0.2s ease-in-out;
-    align-content: center;
-    animation: fadeOut 0.5s;
-}
-
-.image-show
-{
-    border-radius: 10%;
 }
 
 .container .card:hover .content
@@ -152,34 +145,29 @@ body
     transition-delay: 0.3s;
 }
 
-/*.fade-in-image */
-/*{ */
-/*    animation: fadeIn 5s; */
+/*.container .card:hover .image-view*/
+/*{*/
+/*    visibility: visible;*/
+/*    opacity: 1;*/
+/*    margin-top: 10px;*/
+/*    transition-delay: 0.3s;*/
+/*    animation: fadeIn 2s;*/
 /*}*/
 
-.container .card:hover .image-view
-{
-    visibility: visible;
-    opacity: 1;
-    margin-top: 10px;
-    transition-delay: 0.3s;
-    animation: fadeIn 2s;
-}
+/*@keyframes fadeIn {*/
+/*    0% { opacity: 0; }*/
+/*    30% { opacity: 0 }*/
+/*    100% { opacity: 1; }*/
+/*}*/
 
-@keyframes fadeIn {
-    0% { opacity: 0; }
-    30% { opacity: 0 }
-    100% { opacity: 1; }
-}
+/*@keyframes fadeOut {*/
+/*    0% { opacity: 1; }*/
+/*    100% { opacity: 0; }*/
+/*}*/
 
-@keyframes fadeOut {
-    0% { opacity: 1; }
-    100% { opacity: 0; }
-}
-
-@media (max-width: 330px){
-    .container .card .imgContainer{
-        left: -2px;
-    }
-}
+/*@media (max-width: 330px){*/
+/*    .container .card .imgContainer{*/
+/*        left: -2px;*/
+/*    }*/
+/*}*/
 
