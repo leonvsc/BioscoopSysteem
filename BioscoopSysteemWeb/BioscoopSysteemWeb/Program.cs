@@ -22,5 +22,6 @@ builder.Services
     .AddFontAwesomeIcons();
 
 builder.Services.AddScoped<HttpService, HttpService>();
+builder.Services.AddSingleton<GetTicketInfoService>();
 
 await builder.Build().RunAsync();

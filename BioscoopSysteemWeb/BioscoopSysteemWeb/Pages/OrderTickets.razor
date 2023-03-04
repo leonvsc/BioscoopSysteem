@@ -1,4 +1,6 @@
 @page "/OrderTickets"
+@using BioscoopSysteemWeb.Service
+@inject GetTicketInfoService GetTicketInfoService
 @inject NavigationManager NavigationManager
 
 <PageTitle>Bestellen</PageTitle>
@@ -85,8 +87,11 @@
         return totalprice;
     }
 
-    private void OnSubmit(int amount, double price, double popcornAmount)
+    private void OnSubmit(int amount, double price, int popcornAmount)
     {
-        NavigationManager.NavigateTo($"/ticket?amount={amount}&price={price}&popcorn={popcornAmount}");
+        NavigationManager.NavigateTo("/ticket");
+        GetTicketInfoService.SetTicketAmount(amount);
+        GetTicketInfoService.SetPopcornAmount(popcornAmount);
+        GetTicketInfoService.SetTotalPrice(price);
     }
 }
