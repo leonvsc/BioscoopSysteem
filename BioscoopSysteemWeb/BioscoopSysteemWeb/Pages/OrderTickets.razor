@@ -6,7 +6,7 @@
 <h1>Kaartjes bestellen</h1>
 
 <p>Hier kunnen de kaartjes besteld worden</p>
-<form onsubmit="@(() => OnSubmit(amount, CalculatePrice()))">
+<form onsubmit="@(() => OnSubmit(amount, CalculatePrice(), popcornAmount))">
     <label for="amount"><strong>Aantal tickets:</strong></label> 
     <br/>
     <input @bind="amount" type="number" id="amount" name="AantalTickets" class="form-control" required placeholder="Aantal..." min="1" max="10">
@@ -19,6 +19,12 @@
         <option value="65 +">65 +</option>
     </select>
     <Check TValue="bool" @bind-Checked="@Student">Student</Check>
+    <Check TValue="bool" @bind-Checked="@Popcorn">Popcorn arrangement</Check>
+    @if (Popcorn)
+    {
+        <label class="form-check-label"><strong>Aantal:</strong></label>
+        <input @bind="popcornAmount" type="number" id="popcornAmount" name="popcornAmount" class="form-control" min="1">
+    }
     <br/>
     <label class="form-check-label"><strong>Totaal:</strong></label>
     <input class="form-control" type="text" placeholder="€ @CalculatePrice()" readonly>
@@ -28,7 +34,9 @@
 
 @code {
     int amount = 0;
-    public bool Student { get; set; }
+    int popcornAmount = 1;
+    private bool Student { get; set; }
+    private bool Popcorn { get; set; }
     bool film3D = true;
     DayOfWeek dag;
 
@@ -62,6 +70,11 @@
             }
         }
 
+        if (Popcorn)
+        {
+            price = price + 4.5;
+        }
+
         if (film3D)
         {
             price = price + 3.5;
@@ -72,8 +85,8 @@
         return totalprice;
     }
 
-    private void OnSubmit(int amount, double price)
+    private void OnSubmit(int amount, double price, double popcornAmount)
     {
-        NavigationManager.NavigateTo($"/ticket?amount={amount}&price={price}");
+        NavigationManager.NavigateTo($"/ticket?amount={amount}&price={price}&popcorn={popcornAmount}");
     }
 }
