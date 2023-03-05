@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@*@page "/"
 @using BioscoopSysteemWeb.Service
 @inject HttpService HttpService
 
@@ -19,7 +19,7 @@
 <button @onclick="GetMovies">get data</button>
 
 <div class="container d-flex align-items-center justify-content-center position-relative flex-wrap">
-    
+
     @foreach (var movie in movies.Select((value, i) => new { i, value }))
     {
         <button @onclick="() => GetMovieById(movie.i + 1)">get data</button>
@@ -46,7 +46,7 @@
     private bool HideImage { get; set; } = false;
     private int _num = 0;
     private string? _imageText;
-    
+
     private string? dataFromApi;
 
     private async Task GetMovies()
@@ -67,17 +67,17 @@
 
     List<string> movies = new List<string>
     {
-        "Movie 1",
-        "Movie 2",
-        "Movie 3"
-    };
+            "Movie 1",
+            "Movie 2",
+            "Movie 3"
+        };
 
     List<string> description = new List<string>
     {
-        "Dit is de omschijving",
-        "Dit is de omschijving",
-        "Dit is de omschijving"
-    };
+            "Dit is de omschijving",
+            "Dit is de omschijving",
+            "Dit is de omschijving"
+        };
 
     private Modal modalRef;
 
@@ -90,4 +90,4 @@
     {
         return modalRef.Hide();
     }
-}
+}*@
