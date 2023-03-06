@@ -25,4 +25,6 @@ builder.Services
     .AddBootstrap5Providers()
     .AddFontAwesomeIcons();
 
+builder.Services.AddSingleton<GetTicketInfoService>();
+
 await builder.Build().RunAsync();
