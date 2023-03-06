@@ -2,6 +2,7 @@ using BioscoopSysteemAPI;
 using BioscoopSysteemAPI.Dal.Repository;
 using BioscoopSysteemAPI.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,8 +26,9 @@ builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
 builder.Services.AddScoped<IVisitorRepository, VisitorRepository>();
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 
-
 var app = builder.Build();
+
+app.UseCors(o => o.AllowAnyOrigin());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

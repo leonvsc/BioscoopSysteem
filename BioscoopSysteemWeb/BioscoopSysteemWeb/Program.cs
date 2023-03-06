@@ -1,18 +1,22 @@
 using BioscoopSysteemWeb;
-// using Blazored.Modal;
+using BioscoopSysteemWeb.Service;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 using Blazorise;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
+using BioscoopSysteemWeb.Service.Contracts;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7083/") });
 // builder.Services.AddBlazoredModal();
+//builder.Services.AddScoped<HttpService, HttpService>();
+builder.Services.AddScoped<IMovieService, MovieService>();
+
 builder.Services
     .AddBlazorise( options =>
     {
