@@ -1,5 +1,10 @@
 ﻿@page "/ticket"
 @using Microsoft.AspNetCore.WebUtilities
+@using Mollie.Api.Client
+@using Mollie.Api.Client.Abstract
+@using Mollie.Api.Models
+@using Mollie.Api.Models.Payment.Request
+@using Mollie.Api.Models.Payment.Response
 @inject IJSRuntime Js
 @inject NavigationManager NavigationManager
 
@@ -8,6 +13,8 @@
 
 <p class="d-print-none">Uw betaling is geslaagd. Hieronder kunt u uw ticket printen.</p>
 <button type="button" class="btn btn-primary d-print-none" @onclick="PrintTicket">Print Ticket</button>
+
+<button type="button" class="btn btn-primary" @onclick="PayMollie">Pay with Mollie</button>
 
 @for (int i = 1; i <= amount; i++)
 {
@@ -18,6 +25,18 @@
     private async Task PrintTicket()
     {
         await Js.InvokeVoidAsync("printPage");
+    }
+
+    private async Task PayMollie()
+    {
+        IPaymentClient paymentClient = new PaymentClient("{APIKey}");
+        PaymentRequest paymentRequest = new PaymentRequest() {
+            Amount = new Amount(Currency.EUR, 100.00m),
+            Description = "Test payment of the example project",
+            RedirectUrl = "http://google.com"
+        };
+
+        PaymentResponse paymentResponse = await paymentClient.CreatePaymentAsync(paymentRequest);
     }
     
     private int amount;
