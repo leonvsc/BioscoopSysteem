@@ -1,51 +1,57 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Mime;
+using System.Threading.Tasks;
 using AutoMapper;
-using BioscoopSysteemAPI.DTOs.MovieDTOs;
+using BioscoopSysteemAPI.Dal.Repository;
+using BioscoopSysteemAPI.DTOs.RoomDTOs;
 using BioscoopSysteemAPI.Interfaces;
 using BioscoopSysteemAPI.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace BioscoopSysteemAPI.Controllers
 {
-    [Route("api/movies")]
+    [Route("api/rooms")]
     [ApiController]
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
-    public class MovieController : ControllerBase
+    public class RoomController : ControllerBase
     {
         
-        private readonly IMovieRepository _movieRepository;
+        private readonly IRoomRepository _roomRepository;
         private readonly IMapper _mapper;
 
-        public MovieController(IMovieRepository movieRepository, IMapper mapper )
+        public RoomController(IRoomRepository roomRepository, IMapper mapper )
         {
-            _movieRepository = movieRepository;
+            _roomRepository = roomRepository;
             _mapper = mapper;
         }
 
-        // GET: api/movies
+        // GET: api/Rooms
         /// <summary>
-        /// Get all movies.
+        /// Get all Rooms.
         /// </summary>
-        /// <response code="200">Succesfully returns a movie object.</response>
-        /// <returns>A list of movie objects.</returns>
+        /// <response code="200">Succesfully returns a Room object.</response>
+        /// <returns>A list of Room objects.</returns>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MovieReadDTO>>> GetMovies()
+        public async Task<ActionResult<IEnumerable<RoomReadDTO>>> GetRooms()
         {
             try
             {
-                var domainMovies = await _movieRepository.GetMoviesAsync();
+                var domainRooms = await _roomRepository.GetRoomsAsync();
 
-                if (domainMovies == null)
+                if (domainRooms == null)
                 {
                     return NotFound();
                 }
 
-                var dtoMovies = _mapper.Map<List<MovieReadDTO>>(domainMovies.Value);
+                var dtoRooms = _mapper.Map<List<RoomReadDTO>>(domainRooms.Value);
 
-                return Ok(dtoMovies);
+                return Ok(dtoRooms);
 
             }
             catch (Exception)
@@ -54,29 +60,29 @@ namespace BioscoopSysteemAPI.Controllers
             }
         }
 
-        // GET: api/movies/1
+        // GET: api/Rooms/1
         /// <summary>
-        /// Get a movie by ID.
+        /// Get a Room by ID.
         /// </summary>
-        /// <param name="id">Id of the movie.</param>
-        /// <returns>A movie object.</returns>
-        /// <response code="200">Succesfully returns a movie object.</response>
+        /// <param name="id">Id of the Room.</param>
+        /// <returns>A Room object.</returns>
+        /// <response code="200">Succesfully returns a Room object.</response>
         /// <response code="404">Error: The object you are looking for is not found.</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{id}")]
-        public async Task<ActionResult<MovieReadDTO>> GetMovie(int id)
+        public async Task<ActionResult<RoomReadDTO>> GetRoom(int id)
         {
             try
             {
-                var domainMovie = await _movieRepository.GetMovieByIdAsync(id);
-                var dtoMovie = _mapper.Map<MovieReadDTO>(domainMovie.Value);
+                var domainRoom = await _roomRepository.GetRoomByIdAsync(id);
+                var dtoRoom = _mapper.Map<RoomReadDTO>(domainRoom.Value);
 
-                if (dtoMovie == null)
+                if (dtoRoom == null)
                 {
                     return NotFound();
                 }
-                return Ok(dtoMovie);
+                return Ok(dtoRoom);
             }
             catch (Exception)
             {
@@ -84,7 +90,7 @@ namespace BioscoopSysteemAPI.Controllers
             }
         }
 
-        // DELETE: api/movies/1
+        // DELETE: api/Rooms/1
         /// <summary>
         /// Delete an object by Id in the database.
         /// </summary>
@@ -92,17 +98,17 @@ namespace BioscoopSysteemAPI.Controllers
         /// <returns></returns>
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpDelete("{id}")]
-        public async Task<ActionResult<MovieDeleteDTO>> DeleteMovie(int id)
+        public async Task<ActionResult<RoomDeleteDTO>> DeleteRoom(int id)
         {
             try
             {
-                var movie = await _movieRepository.DeleteMovieAsync(id);
+                var Room = await _roomRepository.DeleteRoomAsync(id);
 
-                if (movie == null)
+                if (Room == null)
                 {
                     return NotFound();
                 }
-                return Ok(movie);
+                return Ok(Room);
             }
             catch (Exception)
             {
@@ -111,10 +117,10 @@ namespace BioscoopSysteemAPI.Controllers
         }
 
         /// <summary>
-        /// Update a movie.
+        /// Update a Room.
         /// </summary>
-        /// <param name="id">Id of the movie</param>
-        /// <param name="movie">Movie object</param>
+        /// <param name="id">Id of the Room</param>
+        /// <param name="Room">Room object</param>
         /// <returns>Action result without content.</returns>
         /// <response code="204">Succesfully updated object.</response>
         /// <response code="404">Error: The object you are looking for is not found.</response>
@@ -123,23 +129,23 @@ namespace BioscoopSysteemAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPut("{id}")]
-        public async Task<ActionResult<Movie>> PutMovie(int id, Movie movie)
+        public async Task<ActionResult<Room>> PutRoom(int id, Room Room)
         {
 
-            if (id != movie.MovieId)
+            if (id != Room.RoomId)
             {
                 return BadRequest();
             }
 
             try
             {
-                var domainMovie = await _movieRepository.PutMovieAsync(id, movie);
+                var domainRoom = await _roomRepository.PutRoomAsync(id, Room);
 
-                if (domainMovie == null)
+                if (domainRoom == null)
                 {
                     return NotFound();
                 }
-                return Ok(movie);
+                return Ok(Room);
             }
             catch (Exception)
             {
@@ -147,29 +153,29 @@ namespace BioscoopSysteemAPI.Controllers
             }
         }
 
-        // POST: api/movies
+        // POST: api/Rooms
         /// <summary>
-        /// Creates a new movie object.
+        /// Creates a new Room object.
         /// </summary>
-        /// <param name="payment">A movie object.</param>
-        /// <returns>The new movie object.</returns>
+        /// <param name="payment">A Room object.</param>
+        /// <returns>The new Room object.</returns>
         /// <response code="201">Succesfully created object.</response>
         [ProducesResponseType(StatusCodes.Status201Created)]
         [HttpPost]
-        public async Task<ActionResult<MovieCreateDTO>> PostMovie(MovieCreateDTO movieDto)
+        public async Task<ActionResult<RoomCreateDTO>> PostRoom(RoomCreateDTO roomDto)
         {
             try
             {
-                var domainMovie = _mapper.Map<Movie>(movieDto);
+                var domainRoom = _mapper.Map<Room>(roomDto);
 
-                if (domainMovie == null)
+                if (domainRoom == null)
                 {
                     return NoContent();
                 }
 
-                int movieId = _movieRepository.PostMovieAsync(domainMovie).Id;
+                int roomId = _roomRepository.PostRoomAsync(domainRoom).Id;
 
-                return CreatedAtAction("GetMovie", new { id = movieId }, movieDto);
+                return CreatedAtAction("GetRoom", new { id = roomId }, roomDto);
 
             }
             catch (Exception)
