@@ -1,6 +1,5 @@
-﻿@*@page "/"
-@using BioscoopSysteemWeb.Service
-@inject HttpService HttpService
+﻿@page "/"
+@inject IMovieService MovieService
 
 <PageTitle>Index</PageTitle>
 
@@ -16,13 +15,10 @@
     </ModalContent>
 </Modal>
 
-<button @onclick="GetMovies">get data</button>
-
 <div class="container d-flex align-items-center justify-content-center position-relative flex-wrap">
 
     @foreach (var movie in movies.Select((value, i) => new { i, value }))
     {
-        <button @onclick="() => GetMovieById(movie.i + 1)">get data</button>
         <div class="card d-flex position-relative flex-column">
             <div class='imgContainer'>
                 <img src="img/The-Lord-Of-The-Rings-The-Fellowship-Of-The-Ring.jpg">
@@ -32,7 +28,7 @@
             <a href="/MovieDetails"><button class="btn btn-primary">Meer informatie</button></a>
             <div class="content">
                 <p>@description[movie.i]</p>
-                <p>@dataFromApi</p>
+                <p>@Films</p>
             </div>
         </div>
     }
@@ -47,23 +43,18 @@
     private int _num = 0;
     private string? _imageText;
 
-    private string? dataFromApi;
-
-    private async Task GetMovies()
-    {
-        dataFromApi = await HttpService.GetMovies();
-    }
-
-    private async Task GetMovieById(int id)
-    {
-        dataFromApi = await HttpService.GetMovieById(id);
-    }
-
-
     private void HideImageHandler()
     {
         HideImage = !HideImage;
     }
+    
+    public IEnumerable<MovieReadDTO>? Films { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Films = await MovieService.GetMovies();
+    }
+    
 
     List<string> movies = new List<string>
     {
@@ -90,4 +81,4 @@
     {
         return modalRef.Hide();
     }
-}*@
+}

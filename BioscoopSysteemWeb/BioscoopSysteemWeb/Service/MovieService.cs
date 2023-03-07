@@ -20,19 +20,19 @@ namespace BioscoopSysteemWeb.Service
         {
             try
             {
-                var respone = await _httpClient.GetAsync("api/movies");
+                var respose = await _httpClient.GetAsync("api/movies");
 
-                if (respone.IsSuccessStatusCode)
+                if (respose.IsSuccessStatusCode)
                 {
-                    if (respone.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    if (respose.StatusCode == System.Net.HttpStatusCode.NoContent)
                     {
                         return Enumerable.Empty<MovieReadDTO>();
                     }
-                    return await respone.Content.ReadFromJsonAsync<IEnumerable<MovieReadDTO>>();
+                    return await respose.Content.ReadFromJsonAsync<IEnumerable<MovieReadDTO>>();
                 }
                 else
                 {
-                    var message = await respone.Content.ReadAsStringAsync();
+                    var message = await respose.Content.ReadAsStringAsync();
                     throw new Exception(message);
                 }
             }
@@ -46,19 +46,20 @@ namespace BioscoopSysteemWeb.Service
         {
             try
             {
-                var respone = await _httpClient.GetAsync($"api/movies/{id}");
+                var respose = await _httpClient.GetAsync($"api/movies/{id}");
 
-                if (respone.IsSuccessStatusCode)
+                if (respose.IsSuccessStatusCode)
                 {
-                    if (respone.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    if (respose.StatusCode == System.Net.HttpStatusCode.NoContent)
                     {
                         return default(MovieReadDTO);
+                        
                     }
-                    return await respone.Content.ReadFromJsonAsync<MovieReadDTO>();
+                    return await respose.Content.ReadFromJsonAsync<MovieReadDTO>();
                 }
                 else
                 {
-                    var message = await respone.Content.ReadAsStringAsync();
+                    var message = await respose.Content.ReadAsStringAsync();
                     throw new Exception(message);
                 }
             }
