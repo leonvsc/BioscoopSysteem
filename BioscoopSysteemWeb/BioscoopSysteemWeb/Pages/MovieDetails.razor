@@ -1,5 +1,7 @@
 @page "/MovieDetails"
 @inject IModalService modal 
+@using BioscoopSysteemWeb.Service
+@inject ppopie LanguageService
 
 <PageTitle>Details</PageTitle>
 
@@ -19,7 +21,7 @@
        </div>
    
        <div class="col-md-4">
-         <h3 class="my-3">Informatie over de film</h3>
+         <h3 class="my-3">@filmInfo(taal)</h3>
          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
          <h3 class="my-3">Film details</h3>
          <ul>
@@ -70,5 +72,6 @@
    <!-- /.container -->
 
 @code { 
+    string taal = "eng"
   string moviename = "Lord of the rings the fellowship of the ring";
 }

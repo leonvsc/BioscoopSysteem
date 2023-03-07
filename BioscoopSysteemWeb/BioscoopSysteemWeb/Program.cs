@@ -7,6 +7,8 @@ using Blazorise;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
 using BioscoopSysteemWeb.Service.Contracts;
+using BioscoopSysteemWeb.Service.LanguageService;
+using Microsoft.Extensions.Localization;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -26,5 +28,7 @@ builder.Services
     .AddFontAwesomeIcons();
 
 builder.Services.AddSingleton<GetTicketInfoService>();
+builder.Services.AddScoped<BiosLanguageNotifier>();
+builder.Services.AddScoped(typeof(IStringLocalizer<>), typeof(StringLocalizer<>));
 
 await builder.Build().RunAsync();
