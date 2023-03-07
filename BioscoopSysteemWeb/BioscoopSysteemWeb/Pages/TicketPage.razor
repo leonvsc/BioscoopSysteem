@@ -10,6 +10,10 @@
 @inject NavigationManager NavigationManager
 @inject GetTicketInfoService GetTicketInfoService
 
+@using System.Net.Http;
+@using System.Net.Http.Json;
+@using System.Threading.Tasks;
+
 
 <h3 class="d-print-none">Betaling geslaagd</h3>
 
@@ -30,15 +34,25 @@
 
     private async Task PayMollie()
     {
-        IPaymentClient paymentClient = new PaymentClient("APIKEY");
-        PaymentRequest paymentRequest = new PaymentRequest() {
-            Amount = new Amount(Currency.EUR, 100.00m),
-            Description = "Test payment of the example project",
-            RedirectUrl = "https://google.com",
-            Method = Mollie.Api.Models.Payment.PaymentMethod.Ideal // instead of "Ideal"
+        var httpClient = new HttpClient();
+        httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer {APIKEY}");
+        httpClient.DefaultRequestHeaders.Add("Access-Control-Allow-Origin","*");
+
+        var paymentRequest = new
+        {
+            amount = new
+            {
+                currency = "EUR",
+                value = "10.00"
+            },
+            description = "Test payment",
+            redirectUrl = "https://yourwebsite.com/redirect",
+            webhookUrl = "https://yourwebsite.com/webhook"
         };
 
-        PaymentResponse paymentResponse = await paymentClient.CreatePaymentAsync(paymentRequest);
+        var response = await httpClient.PostAsJsonAsync("https://api.mollie.com/v2/payments", paymentRequest);
+        var paymentResponse = await response.Content.ReadFromJsonAsync<dynamic>();
+
     }
     
     private int amount;
