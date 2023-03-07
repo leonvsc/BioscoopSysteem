@@ -30,11 +30,12 @@
 
     private async Task PayMollie()
     {
-        IPaymentClient paymentClient = new PaymentClient("{APIKey}");
+        IPaymentClient paymentClient = new PaymentClient("APIKEY");
         PaymentRequest paymentRequest = new PaymentRequest() {
             Amount = new Amount(Currency.EUR, 100.00m),
             Description = "Test payment of the example project",
-            RedirectUrl = "http://google.com"
+            RedirectUrl = "https://google.com",
+            Method = Mollie.Api.Models.Payment.PaymentMethod.Ideal // instead of "Ideal"
         };
 
         PaymentResponse paymentResponse = await paymentClient.CreatePaymentAsync(paymentRequest);
