@@ -5,6 +5,7 @@ public class GetTicketInfoService
     private int _ticketAmount;
     private int _popcornAmount;
     private double _totalPrice;
+    private string _paymentMethod;
     
     public int GetTicketAmount()
     {
@@ -34,5 +35,15 @@ public class GetTicketInfoService
     public void SetTotalPrice(double totalPrice)
     {
         _totalPrice = totalPrice;
+    }
+    
+    public string GetPaymentMethod()
+    {
+        return _paymentMethod;
+    }
+
+    public void SetPaymentMethod(string paymentMethod)
+    {
+        _paymentMethod = paymentMethod;
     }
 }

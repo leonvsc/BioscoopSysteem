@@ -19,7 +19,7 @@
 
 @for (int i = 1; i <= TicketAmount; i++)
 {
-    <Ticket TicketNumber="@i" TotalPrice="TotalPrice" PopcornAmount="PopcornAmount"/>
+    <Ticket TicketNumber="@i" TotalPrice="TotalPrice" PopcornAmount="PopcornAmount" PaymentMethod="@PaymentMethod"/>
 }
 
 @code {
@@ -43,16 +43,19 @@
     
     private int amount;
     private double price;
+    private string paymentMethod;
     
     private int TicketAmount { get; set; }
     private double TotalPrice { get; set; }
     private int PopcornAmount { get; set; }
+    private string PaymentMethod { get; set; }
 
     protected override void OnInitialized()
     {
         TicketAmount = GetTicketInfoService.GetTicketAmount();
         TotalPrice = GetTicketInfoService.GetTotalPrice();
         PopcornAmount = GetTicketInfoService.GetPopcornAmount();
+        PaymentMethod = GetTicketInfoService.GetPaymentMethod();
     }
 
 }

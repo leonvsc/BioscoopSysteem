@@ -8,7 +8,7 @@
 <h1>Kaartjes bestellen</h1>
 
 <p>Hier kunnen de kaartjes besteld worden</p>
-<form onsubmit="@(() => OnSubmit(amount, CalculatePrice(), popcornAmount))">
+<form onsubmit="@(() => OnSubmit(amount, CalculatePrice(), popcornAmount, paymentMethod))">
     <label for="amount"><strong>Aantal tickets:</strong></label> 
     <br/>
     <input @bind="amount" type="number" id="amount" name="AantalTickets" class="form-control" required placeholder="Aantal..." min="1" max="10">
@@ -25,18 +25,27 @@
     @if (Popcorn)
     {
         <label class="form-check-label"><strong>Aantal:</strong></label>
-        <input @bind="popcornAmount" type="number" id="popcornAmount" name="popcornAmount" class="form-control" min="1">
+        <input @bind="popcornAmount" type="number" id="popcornAmount" name="popcornAmount" class="form-control" min="0">
     }
     <br/>
     <label class="form-check-label"><strong>Totaal:</strong></label>
     <input class="form-control" type="text" placeholder="€ @CalculatePrice()" readonly>
+    <br/>
+    <label for="PaymentType"><strong>Betaalmethode:</strong></label>
+    <select @bind="@paymentMethod" name="PaymentType" id="PaymentType" class="form-select" required>
+        <option value="">Maak keuze</option>
+        <option value="Pin">Pin</option>
+        <option value="Ideal">Ideal</option>
+        <option value="Creditcard">Creditcard</option>
+    </select>
     <br/>
     <button type="submit" class="btn btn-primary">Betalen</button>
 </form>
 
 @code {
     int amount = 0;
-    int popcornAmount = 1;
+    int popcornAmount = 0;
+    string paymentMethod = "";
     private bool Student { get; set; }
     private bool Popcorn { get; set; }
     bool film3D = true;
@@ -87,11 +96,12 @@
         return totalprice;
     }
 
-    private void OnSubmit(int amount, double price, int popcornAmount)
+    private void OnSubmit(int amount, double price, int popcornAmount, string paymentMethod)
     {
         NavigationManager.NavigateTo("/ticket");
         GetTicketInfoService.SetTicketAmount(amount);
         GetTicketInfoService.SetPopcornAmount(popcornAmount);
         GetTicketInfoService.SetTotalPrice(price);
+        GetTicketInfoService.SetPaymentMethod(paymentMethod);
     }
 }
