@@ -1,11 +1,8 @@
-﻿@page "/"
-@inject IModalService modal
+﻿@*@page "/"
+@using BioscoopSysteemWeb.Service
+@inject HttpService HttpService
 
 <PageTitle>Index</PageTitle>
-
-<Button Color="Color.Primary" Clicked="@ShowModal">Kaartjes bestellen</Button>
-
-<a href="/MovieDetails"><button class="btn btn-primary">Meer informatie</button></a>
 
 <Modal @ref="modalRef">
     <ModalContent Centered>
@@ -19,131 +16,26 @@
     </ModalContent>
 </Modal>
 
+<button @onclick="GetMovies">get data</button>
+
 <div class="container d-flex align-items-center justify-content-center position-relative flex-wrap">
-    <div @onclick="() => SelectMovie(1)" class="card d-flex position-relative flex-column">
-        <div class='imgContainer'>
-            <img src="img/The-Lord-Of-The-Rings-The-Fellowship-Of-The-Ring.jpg">
-        </div>
-        <div class="content">
-            <h4>Hier komt een korte omschrijving van de film te staan</h4>
-            <button @onclick="@(()=>modal.Show<OrderTickets>("Bestellen"))" class="btn btn-primary">Kaartjes bestellen</button>
-            <button href="/MovieDetails" class="btn btn-primary">Meer informatie</button>
-        </div>
-    </div>
 
-    <div @onclick="() => SelectMovie(2)" class="card d-flex position-relative flex-column">
-        <div class='imgContainer'>
-            <img src="img/The-Lord-Of-The-Rings-The-Two-Towers.jpg">
+    @foreach (var movie in movies.Select((value, i) => new { i, value }))
+    {
+        <button @onclick="() => GetMovieById(movie.i + 1)">get data</button>
+        <div class="card d-flex position-relative flex-column">
+            <div class='imgContainer'>
+                <img src="img/The-Lord-Of-The-Rings-The-Fellowship-Of-The-Ring.jpg">
+            </div>
+            <h4>@movie.value</h4>
+            <Button Color="Color.Primary" Clicked="@ShowModal">Kaartjes bestellen</Button>
+            <a href="/MovieDetails"><button class="btn btn-primary">Meer informatie</button></a>
+            <div class="content">
+                <p>@description[movie.i]</p>
+                <p>@dataFromApi</p>
+            </div>
         </div>
-        <div class="content">
-            <h4>Hier komt een korte omschrijving van de film te staan</h4>
-            <button>Meer informatie</button>
-            <button @onclick="() => SelectMovie(2)">Kaartjes bestellen</button>
-        </div>
-    </div>
-    <div @onclick="() => SelectMovie(3)" class="card d-flex position-relative flex-column">
-        <div class='imgContainer'>
-            <img src="img/The-Lord-Of-The-Rings-The-Return-Of-The-King.jpg">
-        </div>
-        <div class="content">
-            <h4>Hier komt een korte omschrijving van de film te staan</h4>
-            <button>Meer informatie</button>
-            <button>Kaartjes bestellen</button>
-        </div>
-    </div>
-   <div @onclick="() => SelectMovie(1)" class="card d-flex position-relative flex-column">
-           <div class='imgContainer'>
-               <img src="img/The-Lord-Of-The-Rings-The-Fellowship-Of-The-Ring.jpg">
-           </div>
-           <div class="content">
-               <h4>Hier komt een korte omschrijving van de film te staan</h4>
-               <button>Meer informatie</button>
-               <button>Kaartjes bestellen</button>
-           </div>
-       </div>
-   
-   <div @onclick="() => SelectMovie(3)" class="card d-flex position-relative flex-column">
-       <div class='imgContainer'>
-           <img src="img/The-Lord-Of-The-Rings-The-Two-Towers.jpg">
-       </div>
-       <div class="content">
-           <h4>Hier komt een korte omschrijving van de film te staan</h4>
-           <button>Meer informatie</button>
-           <button>Kaartjes bestellen</button>
-       </div>
-   </div>
-    <div @onclick="() => SelectMovie(3)" class="card d-flex position-relative flex-column">
-        <div class='imgContainer'>
-            <img src="img/The-Lord-Of-The-Rings-The-Return-Of-The-King.jpg">
-        </div>
-        <div class="content">
-            <h4>Hier komt een korte omschrijving van de film te staan</h4>
-            <button>Meer informatie</button>
-            <button>Kaartjes bestellen</button>
-        </div>
-    </div>
-    <div @onclick="() => SelectMovie(1)" class="card d-flex position-relative flex-column">
-        <div class='imgContainer'>
-            <img src="img/The-Lord-Of-The-Rings-The-Fellowship-Of-The-Ring.jpg">
-        </div>
-        <div class="content">
-            <h4>Hier komt een korte omschrijving van de film te staan</h4>
-            <button>Meer informatie</button>
-            <button>Kaartjes bestellen</button>
-        </div>
-    </div>
-
-    <div @onclick="() => SelectMovie(3)" class="card d-flex position-relative flex-column">
-        <div class='imgContainer'>
-            <img src="img/The-Lord-Of-The-Rings-The-Two-Towers.jpg">
-        </div>
-        <div class="content">
-            <h4>Hier komt een korte omschrijving van de film te staan</h4>
-            <button>Meer informatie</button>
-            <button>Kaartjes bestellen</button>
-        </div>
-    </div>
-    <div @onclick="() => SelectMovie(3)" class="card d-flex position-relative flex-column">
-        <div class='imgContainer'>
-            <img src="img/The-Lord-Of-The-Rings-The-Return-Of-The-King.jpg">
-        </div>
-        <div class="content">
-            <h4>Hier komt een korte omschrijving van de film te staan</h4>
-            <button>Meer informatie</button>
-            <button>Kaartjes bestellen</button>
-        </div>
-    </div>
-   <div @onclick="() => SelectMovie(1)" class="card d-flex position-relative flex-column">
-           <div class='imgContainer'>
-               <img src="img/The-Lord-Of-The-Rings-The-Fellowship-Of-The-Ring.jpg">
-           </div>
-           <div class="content">
-               <h4>Hier komt een korte omschrijving van de film te staan</h4>
-               <button>Meer informatie</button>
-               <button>Kaartjes bestellen</button>
-           </div>
-       </div>
-   
-   <div @onclick="() => SelectMovie(3)" class="card d-flex position-relative flex-column">
-       <div class='imgContainer'>
-           <img src="img/The-Lord-Of-The-Rings-The-Two-Towers.jpg">
-       </div>
-       <div class="content">
-           <h4>Hier komt een korte omschrijving van de film te staan</h4>
-           <button>Meer informatie</button>
-           <button>Kaartjes bestellen</button>
-       </div>
-   </div>
-   <div @onclick="() => SelectMovie(3)" class="card d-flex position-relative flex-column">
-       <div class='imgContainer'>
-           <img src="img/The-Lord-Of-The-Rings-The-Return-Of-The-King.jpg">
-       </div>
-       <div class="content">
-           <h4>Hier komt een korte omschrijving van de film te staan</h4>
-           <button>Meer informatie</button>
-           <button>Kaartjes bestellen</button>
-       </div>
-   </div>
+    }
 </div>
 
 
@@ -155,17 +47,38 @@
     private int _num = 0;
     private string? _imageText;
 
+    private string? dataFromApi;
+
+    private async Task GetMovies()
+    {
+        dataFromApi = await HttpService.GetMovies();
+    }
+
+    private async Task GetMovieById(int id)
+    {
+        dataFromApi = await HttpService.GetMovieById(id);
+    }
+
 
     private void HideImageHandler()
     {
         HideImage = !HideImage;
     }
 
-    private void SelectMovie(int number)
+    List<string> movies = new List<string>
     {
+            "Movie 1",
+            "Movie 2",
+            "Movie 3"
+        };
 
-    }
-    
+    List<string> description = new List<string>
+    {
+            "Dit is de omschijving",
+            "Dit is de omschijving",
+            "Dit is de omschijving"
+        };
+
     private Modal modalRef;
 
     private Task ShowModal()
@@ -177,4 +90,4 @@
     {
         return modalRef.Hide();
     }
-}
+}*@

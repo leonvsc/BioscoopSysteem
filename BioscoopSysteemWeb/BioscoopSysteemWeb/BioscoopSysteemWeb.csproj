@@ -6,6 +6,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' ">
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' ">
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Blazorise" Version="1.2.1" />
     <PackageReference Include="Blazorise.Bootstrap5" Version="1.2.1" />
@@ -19,4 +25,15 @@
     <PackageReference Include="Mollie.Api" Version="2.2.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Service\Contracts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Service\Contracts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BioscoopSysteemAPI\BioscoopSysteemApi.Models\BioscoopSysteemApi.Models.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

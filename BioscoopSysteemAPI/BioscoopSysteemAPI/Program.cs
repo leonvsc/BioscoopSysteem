@@ -2,6 +2,7 @@ using BioscoopSysteemAPI;
 using BioscoopSysteemAPI.Dal.Repository;
 using BioscoopSysteemAPI.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,14 +20,17 @@ builder.Services.AddDbContext<CinemaDbContext>(options => options.UseSqlServer(c
 // Injection of AutoMapper.
 builder.Services.AddAutoMapper(typeof(Program));
 // Injection of Repositories
+builder.Services.AddScoped<ISeatRepository, SeatRepository>();
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
 builder.Services.AddScoped<IVisitorRepository, VisitorRepository>();
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 
-
 var app = builder.Build();
+
+app.UseCors(o => o.AllowAnyOrigin());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

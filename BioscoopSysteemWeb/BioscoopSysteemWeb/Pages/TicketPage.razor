@@ -5,20 +5,21 @@
 @using Mollie.Api.Models
 @using Mollie.Api.Models.Payment.Request
 @using Mollie.Api.Models.Payment.Response
+@using BioscoopSysteemWeb.Service
 @inject IJSRuntime Js
 @inject NavigationManager NavigationManager
+@inject GetTicketInfoService GetTicketInfoService
 
 
 <h3 class="d-print-none">Betaling geslaagd</h3>
 
 <p class="d-print-none">Uw betaling is geslaagd. Hieronder kunt u uw ticket printen.</p>
 <button type="button" class="btn btn-primary d-print-none" @onclick="PrintTicket">Print Ticket</button>
-
 <button type="button" class="btn btn-primary" @onclick="PayMollie">Pay with Mollie</button>
 
-@for (int i = 1; i <= amount; i++)
+@for (int i = 1; i <= TicketAmount; i++)
 {
-    <Ticket TicketNumber="@i" TotalPrice="price" />
+    <Ticket TicketNumber="@i" TotalPrice="TotalPrice" PopcornAmount="PopcornAmount"/>
 }
 
 @code {
@@ -41,24 +42,16 @@
     
     private int amount;
     private double price;
+    
+    private int TicketAmount { get; set; }
+    private double TotalPrice { get; set; }
+    private int PopcornAmount { get; set; }
 
     protected override void OnInitialized()
     {
-        var uri = new Uri(NavigationManager.Uri);
-        var query = QueryHelpers.ParseQuery(uri.Query);
-
-        var amountString = query.TryGetValue("amount", out var amountValues) ? amountValues[0] : null;
-        var priceString = query.TryGetValue("price", out var priceValues) ? priceValues[0] : null;
-
-        if (amountString != null && int.TryParse(amountString, out var amountValue))
-        {
-            amount = amountValue;
-        }
-
-        if (priceString != null && double.TryParse(priceString, out var priceValue))
-        {
-            price = priceValue;
-        }
+        TicketAmount = GetTicketInfoService.GetTicketAmount();
+        TotalPrice = GetTicketInfoService.GetTotalPrice();
+        PopcornAmount = GetTicketInfoService.GetPopcornAmount();
     }
 
 }
