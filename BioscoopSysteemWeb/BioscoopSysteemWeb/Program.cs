@@ -13,12 +13,6 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7083/") });
-
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-builder.Services.AddCors();
-
-// builder.Services.AddBlazoredModal();
-//builder.Services.AddScoped<HttpService, HttpService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
 
 builder.Services
