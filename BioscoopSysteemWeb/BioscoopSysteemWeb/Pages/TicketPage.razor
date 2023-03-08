@@ -1,18 +1,9 @@
 ﻿@page "/ticket"
-@using Microsoft.AspNetCore.WebUtilities
-@using Mollie.Api.Client
-@using Mollie.Api.Client.Abstract
-@using Mollie.Api.Models
-@using Mollie.Api.Models.Payment.Request
-@using Mollie.Api.Models.Payment.Response
 @using BioscoopSysteemWeb.Service
+@using System.Web
 @inject IJSRuntime Js
 @inject NavigationManager NavigationManager
 @inject GetTicketInfoService GetTicketInfoService
-
-@using System.Net.Http;
-@using System.Net.Http.Json;
-@using System.Threading.Tasks;
 
 
 <h3 class="d-print-none">Betaling geslaagd</h3>
@@ -35,24 +26,16 @@
     private async Task PayMollie()
     {
         var httpClient = new HttpClient();
-        httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer {APIKEY}");
-        httpClient.DefaultRequestHeaders.Add("Access-Control-Allow-Origin","*");
+        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
 
-        var paymentRequest = new
-        {
-            amount = new
-            {
-                currency = "EUR",
-                value = "10.00"
-            },
-            description = "Test payment",
-            redirectUrl = "https://yourwebsite.com/redirect",
-            webhookUrl = "https://yourwebsite.com/webhook"
-        };
+        var mollieAmount = new PaymentRequestModel { Amount = Convert.ToDecimal(TotalPrice) };
 
-        var response = await httpClient.PostAsJsonAsync("https://api.mollie.com/v2/payments", paymentRequest);
-        var paymentResponse = await response.Content.ReadFromJsonAsync<dynamic>();
-
+        var response = await httpClient.PostAsJsonAsync("http://localhost:5059/api/payments/payWithMollie", mollieAmount);
+        
+        var paymentLink = await response.Content.ReadAsStringAsync();
+        var mollieUrl = paymentLink.Trim('"');
+        mollieUrl = HttpUtility.UrlDecode(mollieUrl);
+        NavigationManager.NavigateTo(mollieUrl);
     }
     
     private int amount;
@@ -63,6 +46,11 @@
     private double TotalPrice { get; set; }
     private int PopcornAmount { get; set; }
     private string PaymentMethod { get; set; }
+    
+    public class PaymentRequestModel
+    {
+        public decimal Amount { get; set; }
+    }
 
     protected override void OnInitialized()
     {

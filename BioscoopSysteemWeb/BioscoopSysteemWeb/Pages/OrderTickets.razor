@@ -31,14 +31,14 @@
     <label class="form-check-label"><strong>Totaal:</strong></label>
     <input class="form-control" type="text" placeholder="€ @CalculatePrice()" readonly>
     <br/>
-    <label for="PaymentType"><strong>Betaalmethode:</strong></label>
-    <select @bind="@paymentMethod" name="PaymentType" id="PaymentType" class="form-select" required>
-        <option value="">Maak keuze</option>
-        <option value="Pin">Pin</option>
-        <option value="Ideal">Ideal</option>
-        <option value="Creditcard">Creditcard</option>
-    </select>
-    <br/>
+    @* <label for="PaymentType"><strong>Betaalmethode:</strong></label> *@
+    @* <select @bind="@paymentMethod" name="PaymentType" id="PaymentType" class="form-select" required> *@
+    @*     <option value="">Maak keuze</option> *@
+    @*     <option value="Pin">Pin</option> *@
+    @*     <option value="Ideal">Ideal</option> *@
+    @*     <option value="Creditcard">Creditcard</option> *@
+    @* </select> *@
+    @* <br/> *@
     <button type="submit" class="btn btn-primary">Betalen</button>
 </form>
 

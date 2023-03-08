@@ -1,16 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mime;
-using System.Threading.Tasks;
 using AutoMapper;
-using BioscoopSysteemAPI.Dal.Repository;
-using BioscoopSysteemAPI.DTOs.MovieDTOs;
 using BioscoopSysteemAPI.DTOs.PaymentDTOs;
 using BioscoopSysteemAPI.Interfaces;
 using BioscoopSysteemAPI.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Mollie.Api.Client;
+using Mollie.Api.Client.Abstract;
+using Mollie.Api.Models;
+using Mollie.Api.Models.Payment.Request;
+using Mollie.Api.Models.Payment.Response;
 
 namespace BioscoopSysteemAPI.Controllers
 {
@@ -184,6 +182,20 @@ namespace BioscoopSysteemAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
             }
         }
+
+        [HttpPost("payWithMollie")]
+        public async Task<IActionResult> PayWithMollie(PaymentRequestModel model)
+        {
+            IPaymentClient paymentClient = new PaymentClient("test_KKMaBKv5ngVQdxAUx6jpbe9Js5kGg2");
+            PaymentRequest paymentRequest = new PaymentRequest() {
+                Amount = new Amount(Currency.EUR, model.Amount),
+                Description = "Test payment of the example project",
+                RedirectUrl = "http://localhost:5047/ticket"
+            };
+
+            PaymentResponse paymentResponse = await paymentClient.CreatePaymentAsync(paymentRequest);
+
+            return Ok(paymentResponse.Links.Checkout.Href);
+        }
     }
 }
-
