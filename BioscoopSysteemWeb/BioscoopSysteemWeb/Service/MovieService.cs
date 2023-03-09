@@ -68,6 +68,30 @@ namespace BioscoopSysteemWeb.Service
                 throw;
             }
         }
+        
+        private async Task PostMovie(string name, string description, int price, byte allowedAge, string? imageUrl, int RoomId)
+        {
+            var movieInputDto = new MovieCreateDTO
+            {
+                Name = name,
+                Description = description,
+                Price = price,
+                AllowedAge = allowedAge,
+                ImageUrl = imageUrl,
+                RoomId = RoomId
+            };
+            var response = await _httpClient.PostAsJsonAsync("api/movies/", movieInputDto);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // succes
+                }
+                else
+                {
+                    // error
+                }
+                
+        }
     }
 }
 

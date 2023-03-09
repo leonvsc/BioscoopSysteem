@@ -52,11 +52,6 @@ else
     public IEnumerable<MovieReadDTO>? Films { get; set; }
     private Modal modalRef;
 
-    // private void SetMovieId(int movieId)
-    // {
-    //     GetTicketInfoService.SetMovieId(movieId);
-    // }
-
     protected override async Task OnInitializedAsync()
     {
         Films = await MovieService.GetMovies();

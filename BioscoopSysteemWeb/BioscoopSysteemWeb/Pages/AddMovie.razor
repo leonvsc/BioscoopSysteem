@@ -1,0 +1,68 @@
+﻿@page "/AddMovie"
+@using Microsoft.AspNetCore.Components
+@inject HttpClient httpClient
+@using BioscoopSysteemWeb.Service
+@inject IMovieService MovieService
+
+<h3>AddMovie</h3>
+
+<form onsubmit="@(() => OnSubmit(name, description, price, allowedAge, imageUrl, roomId))">
+    <label for="name"><strong>Naam:</strong></label> 
+    <br/>
+    <input @bind="name" type="text" id="name" name="NaamFilm" class="form-control" required placeholder="Naam">
+
+    <label for="age-group"><strong>Leeftijd:</strong></label>
+    <input @bind="allowedAge" type="text" id="age-group" name="AgeMovie" class="form-control" required placeholder="Leeftijd">
+    
+    <Check TValue="bool" @bind-Checked="@Student">Student</Check>
+    <Check TValue="bool" @bind-Checked="@Popcorn">Popcorn arrangement</Check>
+    @if (Popcorn)
+    {
+        <label class="form-check-label"><strong>Aantal:</strong></label>
+        <input @bind="popcornAmount" type="number" id="popcornAmount" name="popcornAmount" class="form-control" min="1">
+    }
+    <br/>
+    <button type="submit" class="btn btn-primary">Betalen</button>
+</form>
+
+@code {
+
+    int price;
+    int roomId;
+    string name;
+    string description;
+    byte allowedAge;
+    string? imageUrl;
+
+    private async Task PostMovie(string name, string description, int price, byte allowedAge, string? imageUrl, int roomId)
+    {
+        var movieInputDto = new MovieCreateDTO
+        {
+            Name = name,
+            Description = description,
+            Price = price,
+            AllowedAge = allowedAge,
+            ImageUrl = imageUrl,
+            RoomId = roomId
+        };
+        var response = await httpClient.PostAsJsonAsync("api/movies/", movieInputDto);
+
+        if (response.IsSuccessStatusCode)
+        {
+            // succes
+        }
+        else
+        {
+            // error
+        }
+                
+    }
+    
+    private void OnSubmit(string name, string description, int price, byte allowedAge, string? imageUrl, int roomId)
+    {
+        PostMovie(name, description, price, allowedAge, imageUrl, roomId);
+    }
+    
+
+
+}

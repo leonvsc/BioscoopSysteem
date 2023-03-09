@@ -1,0 +1,46 @@
+﻿@page "/Admin"
+@inject IMovieService MovieService
+ @using BioscoopSysteemWeb.Service
+ @inject GetTicketInfoService GetTicketInfoService
+ 
+<PageTitle>Admin</PageTitle>
+
+ <a href="/AddMovie"><button class="btn btn-primary">Film toevoegen</button></a>
+
+@if (Films == null)
+ {
+     <h3>Films worden opgehaald</h3>
+ }
+ else
+ {
+     <div class="container d-flex align-items-center justify-content-center position-relative flex-wrap">
+ 
+         @foreach (var movie in Films)
+         {
+             <div class="card d-flex position-relative flex-column">
+                 <div class='imgContainer'>
+                     <img src="@movie.ImageUrl">
+                 </div>
+                 <h4>@movie.Name</h4>
+                 <div class="content">
+                     <p><strong>Omschrijving: </strong>@movie.Description</p>
+                     <p><strong>Zaal: </strong>@movie.RoomId</p>
+                     <p><strong>Prijs: </strong>@movie.Price</p>
+                     <p><strong>Leeftijd: </strong>@movie.AllowedAge</p>
+                 </div>
+             </div>
+         }
+     </div>
+ }
+ 
+ 
+ 
+ @code {
+     public IEnumerable<MovieReadDTO>? Films { get; set; }
+     private Modal modalRef;
+
+     protected override async Task OnInitializedAsync()
+     {
+         Films = await MovieService.GetMovies();
+     }
+ }
