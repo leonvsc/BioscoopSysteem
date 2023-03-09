@@ -10,40 +10,73 @@
                 {
                 MovieId = 1,
                 Name = "ScaryMovie",
+                Date= DateTime.Now,
+                Add3DMovie = true,
                 Description = "Lorem ipsum dolor sit amet",
                 Price = 12,
                 AllowedAge = 16,
-                ImageUrl = "/Images/Movies/Movie1.jpeg",
-                RoomId = 5
+                ImageUrl = "/Images/Movies/Movie1.jpeg"
 
                 },
 
                 new Movie(){
                 MovieId = 2,
                 Name = "AntMan",
+                Date = DateTime.Now,
+                Add3DMovie = false,
                 Description = "Lorem ipsum dolor sit amet",
                 Price = 9,
                 AllowedAge = 8,
-                ImageUrl = "/Images/Movies/Movie2.jpeg",
-                RoomId = 4
-
+                ImageUrl = "/Images/Movies/Movie2.jpeg"
                 },
 
                 new Movie()
                 {
                 MovieId = 3,
                 Name = "Plane",
+                Date= DateTime.Now,
+                Add3DMovie = true,
                 Description = "Lorem ipsum dolor sit amet",
                 Price = 12,
                 AllowedAge = 12,
-                ImageUrl = "/Images/Movies/Movie3.jpeg",
-                RoomId = 3
+                ImageUrl = "/Images/Movies/Movie3.jpeg"
                 }
 
 
             };
 
             return movie;
+        }
+
+        public static IEnumerable<MovieRoom> GetMovieRoomSeeds()
+        {
+            var movieRoom = new List<MovieRoom>() {
+
+            new MovieRoom()
+            {
+                MovieId = 1,
+                RoomId = 2,
+
+            },
+
+            new MovieRoom()
+            {
+                MovieId = 2,
+                RoomId = 3,
+
+            },
+
+            new MovieRoom()
+            {
+                MovieId = 3,
+                RoomId = 1,
+
+            }
+
+            };
+
+            return movieRoom;
+
         }
 
         public static IEnumerable<Payment> GetPaymentSeeds()

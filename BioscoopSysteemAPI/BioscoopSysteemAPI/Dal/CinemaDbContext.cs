@@ -14,7 +14,7 @@ namespace BioscoopSysteemAPI
         public DbSet<Seat> Seats => Set<Seat>();
         public DbSet<Ticket> Tickets => Set<Ticket>();
         public DbSet<Visitor> Visitors => Set<Visitor>();
-
+        public DbSet<MovieRoom> MovieRoom { get; set; }
         public CinemaDbContext(DbContextOptions<CinemaDbContext> options) : base(options) 
         {
 
@@ -23,6 +23,9 @@ namespace BioscoopSysteemAPI
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            // Making the relation with the foreign keys
+            modelBuilder.Entity<MovieRoom>().HasKey(mgg => new { mgg.MovieId, mgg.RoomId });
 
             modelBuilder.Entity<Movie>().HasData(SeedHelper.GetMovieSeeds());
 
@@ -37,6 +40,8 @@ namespace BioscoopSysteemAPI
             modelBuilder.Entity<Ticket>().HasData(SeedHelper.GetTicketSeeds());
 
             modelBuilder.Entity<Visitor>().HasData(SeedHelper.GetVisitorSeeds());
+
+            modelBuilder.Entity<MovieRoom>().HasData(SeedHelper.GetMovieRoomSeeds());
 
         }
 
