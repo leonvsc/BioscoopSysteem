@@ -4,6 +4,8 @@
         <p>Time: 7:00 PM</p>
         <p>Venue: Pathé Amsterdam</p>
         <p>Total price: @TotalPrice</p>
+        <p>Aantal popcorn: @PopcornAmount</p>
+        <p>Betaalmethode: @PaymentMethod</p>
         <QRCode Value="@TicketNumber.ToString()"/>
     </div>
 
@@ -17,4 +19,7 @@
     
     [Parameter]
     public double PopcornAmount { get; set; }
+    
+    [Parameter]
+    public string PaymentMethod { get; set; }
 }
