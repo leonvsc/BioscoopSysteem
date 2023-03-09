@@ -30,5 +30,14 @@ builder.Services
 builder.Services.AddSingleton<GetTicketInfoService>();
 builder.Services.AddScoped<BiosLanguageNotifier>();
 builder.Services.AddScoped(typeof(IStringLocalizer<>), typeof(StringLocalizer<>));
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    options.AddSupportedCultures(new[] { "en", "nl" });
+    options.AddSupportedUICultures(new[] { "en", "nl" });
+    options.RequestCultureProviders = new List<IRequestCultureProvider>()
+        {
+            new CultureProvider("nl")
+        };
+});
 
 await builder.Build().RunAsync();

@@ -1,11 +1,14 @@
 @page "/MovieDetails"
 @inject IModalService modal 
 @using BioscoopSysteemWeb.Service
-@inject ppopie LanguageService
+@using BioscoopSysteemWeb.Service.LanguageService;
+@using Microsoft.Extensions.Localization;
+@inject IStringLocalizer<MovieDetails> Localizer;
+@inject BioscoopSysteemWeb.Service.LanguageService.BiosLanguageNotifier BiosLanguageNotifier;
 
 <PageTitle>Details</PageTitle>
-
-
+@Localizer["eng"]
+    <LanguageSelector />
 <div class="container">
  
      <!-- Portfolio Item Heading -->
@@ -72,6 +75,9 @@
    <!-- /.container -->
 
 @code { 
-    string taal = "eng"
+    string taal = "eng";
   string moviename = "Lord of the rings the fellowship of the ring";
+
+    protected override void OnInitialized() => BiosLanguageNotifier.SubscribeLanguageChange(this);
+    public void Dispose() => BiosLanguageNotifier.UnsubscribeLanguageChange(this);
 }
