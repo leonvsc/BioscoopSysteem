@@ -128,8 +128,6 @@ body
 .container .card .content
 {
     position: relative;
-    /*margin-top: -140px;*/
-    /*padding: 10px 15px;*/
     text-align: center;
     visibility: hidden;
     opacity: 0;
@@ -144,30 +142,4 @@ body
     margin-top: 10px;
     transition-delay: 0.3s;
 }
-
-/*.container .card:hover .image-view*/
-/*{*/
-/*    visibility: visible;*/
-/*    opacity: 1;*/
-/*    margin-top: 10px;*/
-/*    transition-delay: 0.3s;*/
-/*    animation: fadeIn 2s;*/
-/*}*/
-
-/*@keyframes fadeIn {*/
-/*    0% { opacity: 0; }*/
-/*    30% { opacity: 0 }*/
-/*    100% { opacity: 1; }*/
-/*}*/
-
-/*@keyframes fadeOut {*/
-/*    0% { opacity: 1; }*/
-/*    100% { opacity: 0; }*/
-/*}*/
-
-/*@media (max-width: 330px){*/
-/*    .container .card .imgContainer{*/
-/*        left: -2px;*/
-/*    }*/
-/*}*/
 
