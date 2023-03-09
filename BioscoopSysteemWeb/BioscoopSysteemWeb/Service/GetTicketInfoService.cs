@@ -5,7 +5,19 @@ public class GetTicketInfoService
     private int _ticketAmount;
     private int _popcornAmount;
     private double _totalPrice;
-    
+    private string _paymentMethod;
+    private int _movieId;
+
+    public int GetMovieId()
+    {
+        return _movieId;
+    }
+
+    public void SetMovieId(int movieId)
+    {
+        _movieId = movieId;
+    }
+
     public int GetTicketAmount()
     {
         return _ticketAmount;
@@ -34,5 +46,15 @@ public class GetTicketInfoService
     public void SetTotalPrice(double totalPrice)
     {
         _totalPrice = totalPrice;
+    }
+    
+    public string GetPaymentMethod()
+    {
+        return _paymentMethod;
+    }
+
+    public void SetPaymentMethod(string paymentMethod)
+    {
+        _paymentMethod = paymentMethod;
     }
 }

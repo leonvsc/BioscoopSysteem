@@ -1,6 +1,7 @@
-﻿@*@page "/"
+﻿@page "/"
+@inject IMovieService MovieService
 @using BioscoopSysteemWeb.Service
-@inject HttpService HttpService
+@inject GetTicketInfoService GetTicketInfoService
 
 <PageTitle>Index</PageTitle>
 
@@ -16,71 +17,51 @@
     </ModalContent>
 </Modal>
 
-<button @onclick="GetMovies">get data</button>
+@if (Films == null)
+{
+    <h3>Films worden opgehaald</h3>
+}
+else
+{
+    <div class="container d-flex align-items-center justify-content-center position-relative flex-wrap">
 
-<div class="container d-flex align-items-center justify-content-center position-relative flex-wrap">
-
-    @foreach (var movie in movies.Select((value, i) => new { i, value }))
-    {
-        <button @onclick="() => GetMovieById(movie.i + 1)">get data</button>
-        <div class="card d-flex position-relative flex-column">
-            <div class='imgContainer'>
-                <img src="img/The-Lord-Of-The-Rings-The-Fellowship-Of-The-Ring.jpg">
+        @foreach (var movie in Films)
+        {
+            <div class="card d-flex position-relative flex-column">
+                <div class='imgContainer'>
+                    <img src="@movie.ImageUrl">
+                </div>
+                <h4>@movie.Name</h4>
+                <Button Color="Color.Primary" Clicked="@ShowModal">Kaartjes bestellen</Button>
+                <a href="/MovieDetails"><button class="btn btn-primary" @onclick="() => GetTicketInfoService.SetMovieId(movie.MovieId)">Meer informatie</button></a>
+                @* <a href="/MovieDetails"><Button Color="Color.Primary" Clicked="@SetMovieId(movie.MovieId)">Kaartjes bestellen</Button></a> *@
+                <div class="content">
+                    <p><strong>Omschrijving: </strong>@movie.Description</p>
+                    <p><strong>Zaal: </strong>@movie.RoomId</p>
+                    <p><strong>Prijs: </strong>@movie.Price</p>
+                    <p><strong>Leeftijd: </strong>@movie.AllowedAge</p>
+                </div>
             </div>
-            <h4>@movie.value</h4>
-            <Button Color="Color.Primary" Clicked="@ShowModal">Kaartjes bestellen</Button>
-            <a href="/MovieDetails"><button class="btn btn-primary">Meer informatie</button></a>
-            <div class="content">
-                <p>@description[movie.i]</p>
-                <p>@dataFromApi</p>
-            </div>
-        </div>
-    }
-</div>
+        }
+    </div>
+}
 
 
 
 @code {
-
-    private string? _image;
-    private bool HideImage { get; set; } = false;
-    private int _num = 0;
-    private string? _imageText;
-
-    private string? dataFromApi;
-
-    private async Task GetMovies()
-    {
-        dataFromApi = await HttpService.GetMovies();
-    }
-
-    private async Task GetMovieById(int id)
-    {
-        dataFromApi = await HttpService.GetMovieById(id);
-    }
-
-
-    private void HideImageHandler()
-    {
-        HideImage = !HideImage;
-    }
-
-    List<string> movies = new List<string>
-    {
-            "Movie 1",
-            "Movie 2",
-            "Movie 3"
-        };
-
-    List<string> description = new List<string>
-    {
-            "Dit is de omschijving",
-            "Dit is de omschijving",
-            "Dit is de omschijving"
-        };
-
+    public IEnumerable<MovieReadDTO>? Films { get; set; }
     private Modal modalRef;
 
+    // private void SetMovieId(int movieId)
+    // {
+    //     GetTicketInfoService.SetMovieId(movieId);
+    // }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Films = await MovieService.GetMovies();
+    }
+    
     private Task ShowModal()
     {
         return modalRef.Show();
@@ -90,4 +71,4 @@
     {
         return modalRef.Hide();
     }
-}*@
+}
