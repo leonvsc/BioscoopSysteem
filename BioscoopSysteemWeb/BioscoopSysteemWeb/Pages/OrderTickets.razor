@@ -48,23 +48,23 @@
 </EditForm>
 
 @code {
-    private void OnSubmit(int amount, double price, int popcornAmount, string paymentMethod)
-    {
-        NavigationManager.NavigateTo("/ticket");
-        GetTicketInfoService.SetTicketAmount(amount);
-        GetTicketInfoService.SetPopcornAmount(popcornAmount);
-        GetTicketInfoService.SetTotalPrice(price);
-        GetTicketInfoService.SetPaymentMethod(paymentMethod);
-    }
+    // private void OnSubmit(int amount, double price, int popcornAmount, string paymentMethod)
+    // {
+    //     NavigationManager.NavigateTo("/ticket");
+    //     GetTicketInfoService.SetTicketAmount(amount);
+    //     GetTicketInfoService.SetPopcornAmount(popcornAmount);
+    //     GetTicketInfoService.SetTotalPrice(price);
+    //     GetTicketInfoService.SetPaymentMethod(paymentMethod);
+    // }
     
-    private ReservationModel Reservation { get; set; } = new ReservationModel();
-    
+    private ReservationModel Reservation = new ReservationModel();
+
     private async Task PayMollie()
     {
         var httpClient = new HttpClient();
         httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
 
-        var mollieAmount = new PaymentRequestModel { Amount = Convert.ToDecimal(Reservation.TotalPrice) };
+        var mollieAmount = new PaymentRequestModel { Amount = Convert.ToDecimal(Reservation.TotalPrice), Description = Reservation.TicketCount.ToString()};
 
         var response = await httpClient.PostAsJsonAsync("http://localhost:5059/api/payments/payWithMollie", mollieAmount);
         

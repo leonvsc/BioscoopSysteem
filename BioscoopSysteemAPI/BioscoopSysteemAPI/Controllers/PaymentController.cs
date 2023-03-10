@@ -1,3 +1,4 @@
+using System.Drawing;
 using System.Net.Mime;
 using AutoMapper;
 using BioscoopSysteemAPI.DTOs.PaymentDTOs;
@@ -9,6 +10,8 @@ using Mollie.Api.Client.Abstract;
 using Mollie.Api.Models;
 using Mollie.Api.Models.Payment.Request;
 using Mollie.Api.Models.Payment.Response;
+using Newtonsoft.Json;
+using QRCoder;
 
 namespace BioscoopSysteemAPI.Controllers
 {
@@ -20,6 +23,8 @@ namespace BioscoopSysteemAPI.Controllers
     {
         private readonly IPaymentRepository _paymentRepository;
         private readonly IMapper _mapper;
+        
+        private IPaymentClient paymentClient = new PaymentClient("test_KKMaBKv5ngVQdxAUx6jpbe9Js5kGg2");
 
         public PaymentController(IPaymentRepository paymentRepository, IMapper mapper)
         {
@@ -186,16 +191,61 @@ namespace BioscoopSysteemAPI.Controllers
         [HttpPost("payWithMollie")]
         public async Task<IActionResult> PayWithMollie(PaymentRequestModel model)
         {
-            IPaymentClient paymentClient = new PaymentClient("test_KKMaBKv5ngVQdxAUx6jpbe9Js5kGg2");
             PaymentRequest paymentRequest = new PaymentRequest() {
                 Amount = new Amount(Currency.EUR, model.Amount),
-                Description = "Test payment of the example project",
-                RedirectUrl = "http://localhost:5047/ticket"
+                Description = model.Description,
+                RedirectUrl = "http://localhost:5047/ticket?ticketId={ticketId}",
+                WebhookUrl = "https://34ed-84-83-28-195.eu.ngrok.io/api/payments/mollieWebhook"
             };
 
             PaymentResponse paymentResponse = await paymentClient.CreatePaymentAsync(paymentRequest);
 
             return Ok(paymentResponse.Links.Checkout.Href);
         }
+
+        [HttpPost("mollieWebhook")]
+        [Consumes("application/x-www-form-urlencoded")]
+        public async Task<IActionResult> mollieWebhook()
+        {
+            string mollieId = Request.Form["id"];
+
+            PaymentResponse payment = await paymentClient.GetPaymentAsync(mollieId);
+
+            if (payment != null && payment.Status == "paid")
+            {
+                // Payment is successful
+                Console.WriteLine($"Payment with id {mollieId} is successful.");
+                // TODO: handle successful payment
+            }
+
+            return Ok();
+        }
+
+        private void GenerateTickets(PaymentResponse payment)
+        {
+            // Generate a unique ticket ID
+            string ticketId = Guid.NewGuid().ToString();
+
+            // Create a ticket object with the ticket details
+            TicketModel ticket = new TicketModel()
+            {
+                Id = ticketId,
+                Price = payment.Amount.Value,
+                EventName = "Example Event",
+                EventDate = DateTime.Now.AddDays(7),
+                TicketType = "VIP"
+            };
+
+            // Generate a QR code with the ticket ID
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(ticketId, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
+
+            // Convert the QR code to a bitmap image
+            Bitmap qrCodeImage = qrCode.GetGraphic(20);
+
+            // TODO: save the ticket with the QR code image to a file or database
+        }
+
     }
 }

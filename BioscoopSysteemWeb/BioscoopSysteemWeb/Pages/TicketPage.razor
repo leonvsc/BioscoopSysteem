@@ -11,7 +11,7 @@
 
 <p class="d-print-none">Uw betaling is geslaagd. Hieronder kunt u uw ticket printen.</p>
 <button type="button" class="btn btn-primary d-print-none" @onclick="PrintTicket">Print Ticket</button>
-<button type="button" class="btn btn-primary" @onclick="PayMollie">Pay with Mollie</button>
+@* <button type="button" class="btn btn-primary" @onclick="PayMollie">Pay with Mollie</button> *@
 
 @for (int i = 1; i <= TicketAmount; i++)
 {
@@ -24,20 +24,20 @@
         await Js.InvokeVoidAsync("printPage");
     }
 
-    private async Task PayMollie()
-    {
-        var httpClient = new HttpClient();
-        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
-
-        var mollieAmount = new PaymentRequestModel { Amount = Convert.ToDecimal(TotalPrice) };
-
-        var response = await httpClient.PostAsJsonAsync("http://localhost:5059/api/payments/payWithMollie", mollieAmount);
-        
-        var paymentLink = await response.Content.ReadAsStringAsync();
-        var mollieUrl = paymentLink.Trim('"');
-        mollieUrl = HttpUtility.UrlDecode(mollieUrl);
-        NavigationManager.NavigateTo(mollieUrl);
-    }
+    // private async Task PayMollie()
+    // {
+    //     var httpClient = new HttpClient();
+    //     httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
+    //
+    //     var mollieAmount = new PaymentRequestModel { Amount = Convert.ToDecimal(TotalPrice) };
+    //
+    //     var response = await httpClient.PostAsJsonAsync("http://localhost:5059/api/payments/payWithMollie", mollieAmount);
+    //     
+    //     var paymentLink = await response.Content.ReadAsStringAsync();
+    //     var mollieUrl = paymentLink.Trim('"');
+    //     mollieUrl = HttpUtility.UrlDecode(mollieUrl);
+    //     NavigationManager.NavigateTo(mollieUrl);
+    // }
     
     private int amount;
     private double price;
