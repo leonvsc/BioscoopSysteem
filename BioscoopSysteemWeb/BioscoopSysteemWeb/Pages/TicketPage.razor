@@ -1,6 +1,7 @@
 ﻿@page "/ticket"
 @using BioscoopSysteemWeb.Service
 @using System.Web
+@using BioscoopSysteemWeb.Models
 @inject IJSRuntime Js
 @inject NavigationManager NavigationManager
 @inject GetTicketInfoService GetTicketInfoService
@@ -47,10 +48,6 @@
     private int PopcornAmount { get; set; }
     private string PaymentMethod { get; set; }
     
-    public class PaymentRequestModel
-    {
-        public decimal Amount { get; set; }
-    }
 
     protected override void OnInitialized()
     {

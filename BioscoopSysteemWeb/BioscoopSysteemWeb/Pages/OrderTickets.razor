@@ -1,5 +1,7 @@
 @page "/OrderTickets"
 @using BioscoopSysteemWeb.Service
+@using BioscoopSysteemWeb.Models
+@using System.Web
 @inject GetTicketInfoService GetTicketInfoService
 @inject NavigationManager NavigationManager
 
@@ -8,94 +10,44 @@
 <h1>Kaartjes bestellen</h1>
 
 <p>Hier kunnen de kaartjes besteld worden</p>
-<form onsubmit="@(() => OnSubmit(amount, CalculatePrice(), popcornAmount, paymentMethod))">
-    <label for="amount"><strong>Aantal tickets:</strong></label> 
-    <br/>
-    <input @bind="amount" type="number" id="amount" name="AantalTickets" class="form-control" required placeholder="Aantal..." min="1" max="10">
+<EditForm Model="Reservation" OnValidSubmit="HandleValidSubmit" OnInitialized="Initialize">
+    <div class="form-group">
+        <label for="ticket-count">Aantal tickets:</label>
+        <input id="ticket-count" name="AantalTickets" class="form-control" @bind="@Reservation.TicketCount" />
+        <ValidationMessage For="@(() => Reservation.TicketCount)" />
+    </div>
 
-    <label for="age-group"><strong>Leeftijd:</strong></label>
-    <select @onchange="SelectedAgeChanged" name="age-group" id="age-group" class="form-select" required>
-        <option value="">Maak keuze</option>
-        <option value="t/m 11">t/m 11</option>
-        <option value="12 t/m 65">12 t/m 65</option>
-        <option value="65 +">65 +</option>
-    </select>
-    <Check TValue="bool" @bind-Checked="@Student">Student</Check>
-    <Check TValue="bool" @bind-Checked="@Popcorn">Popcorn arrangement</Check>
-    @if (Popcorn)
+    <div class="form-group">
+        <label for="age">Leeftijd:</label>
+        <select id="age" class="form-control" @bind="@Reservation.Age">
+            <option value="">Maak keuze</option>
+            <option value="t/m 11">t/m 11</option>
+            <option value="12 t/m 65">12 t/m 65</option>
+            <option value="65 +">65 +</option>
+        </select>
+        <ValidationMessage For="@(() => Reservation.Age)" />
+    </div>
+
+    <Check TValue="bool" @bind-Checked="@Reservation.IsStudent">Student?</Check>
+    <Check TValue="bool" @bind-Checked="@Reservation.Is3D">3D?</Check>
+    <Check TValue="bool" @bind-Checked="@Reservation.WantsPopcorn">Popcorn arrangement?</Check>
+
+    @if (Reservation.WantsPopcorn)
     {
-        <label class="form-check-label"><strong>Aantal:</strong></label>
-        <input @bind="popcornAmount" type="number" id="popcornAmount" name="popcornAmount" class="form-control" min="0">
+        <div class="form-group">
+            <label for="popcorn-amount">Popcorn amount:</label>
+            <input id="popcorn-amount" class="form-control" @bind="@Reservation.PopcornAmount" />
+        </div>
     }
+
     <br/>
     <label class="form-check-label"><strong>Totaal:</strong></label>
-    <input class="form-control" type="text" placeholder="€ @CalculatePrice()" readonly>
+    <input class="form-control" type="text" placeholder="€ @Reservation.TotalPrice" readonly>
     <br/>
-    @* <label for="PaymentType"><strong>Betaalmethode:</strong></label> *@
-    @* <select @bind="@paymentMethod" name="PaymentType" id="PaymentType" class="form-select" required> *@
-    @*     <option value="">Maak keuze</option> *@
-    @*     <option value="Pin">Pin</option> *@
-    @*     <option value="Ideal">Ideal</option> *@
-    @*     <option value="Creditcard">Creditcard</option> *@
-    @* </select> *@
-    @* <br/> *@
     <button type="submit" class="btn btn-primary">Betalen</button>
-</form>
+</EditForm>
 
 @code {
-    int amount = 0;
-    int popcornAmount = 0;
-    string paymentMethod = "";
-    private bool Student { get; set; }
-    private bool Popcorn { get; set; }
-    bool film3D = true;
-    DayOfWeek dag;
-
-    public string? SelectedAge { get; set; }
-
-    private void SelectedAgeChanged(ChangeEventArgs e)
-    {
-        if (e.Value is not null)
-        {
-            SelectedAge = e.Value.ToString();
-        }
-    }
-
-    private double CalculatePrice()
-    {
-        double price = 0;
-        int movieTime = 130;
-        dag = DayOfWeek.Monday;
-
-
-        if (movieTime > 120)
-        {
-            price = 9;
-        }
-
-        if (dag is DayOfWeek.Monday or DayOfWeek.Tuesday or DayOfWeek.Wednesday or DayOfWeek.Thursday)
-        {
-            if (Student || SelectedAge == "t/m 11" || SelectedAge == "65 +")
-            {
-                price = price - 1.5;
-            }
-        }
-
-        if (Popcorn)
-        {
-            price = price + 4.5;
-        }
-
-        if (film3D)
-        {
-            price = price + 3.5;
-        }
-
-        double totalprice = price * amount;
-
-        return totalprice;
-    }
-
     private void OnSubmit(int amount, double price, int popcornAmount, string paymentMethod)
     {
         NavigationManager.NavigateTo("/ticket");
@@ -103,5 +55,27 @@
         GetTicketInfoService.SetPopcornAmount(popcornAmount);
         GetTicketInfoService.SetTotalPrice(price);
         GetTicketInfoService.SetPaymentMethod(paymentMethod);
+    }
+    
+    private ReservationModel Reservation { get; set; } = new ReservationModel();
+    
+    private async Task PayMollie()
+    {
+        var httpClient = new HttpClient();
+        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
+
+        var mollieAmount = new PaymentRequestModel { Amount = Convert.ToDecimal(Reservation.TotalPrice) };
+
+        var response = await httpClient.PostAsJsonAsync("http://localhost:5059/api/payments/payWithMollie", mollieAmount);
+        
+        var paymentLink = await response.Content.ReadAsStringAsync();
+        var mollieUrl = paymentLink.Trim('"');
+        mollieUrl = HttpUtility.UrlDecode(mollieUrl);
+        NavigationManager.NavigateTo(mollieUrl);
+    }
+    
+    private void HandleValidSubmit()
+    {
+        PayMollie();
     }
 }
