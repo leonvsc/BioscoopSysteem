@@ -1,6 +1,7 @@
 using BioscoopSysteemAPI;
 using BioscoopSysteemAPI.Dal.Repository;
 using BioscoopSysteemAPI.Interfaces;
+using BioscoopSysteemAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 
@@ -12,6 +13,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 var connection = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -27,6 +29,8 @@ builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
 builder.Services.AddScoped<IVisitorRepository, VisitorRepository>();
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+// Injection of MailService
+builder.Services.AddScoped<IMailService, MailService>();
 
 builder.Services.AddCors(options =>
 {
