@@ -1,24 +1,14 @@
-﻿@page "/"
+﻿@page "/AdminPage"
+@attribute [Authorize(Roles = "Administration")]
+
 @inject IMovieService MovieService
 @using BioscoopSysteemWeb.Service
+@using System.Security.Claims
 @inject GetTicketInfoService GetTicketInfoService
 
 <PageTitle>Index</PageTitle>
-<AuthorizeView Roles="Administration">
-    <a href="/AdminPage"><button class="btn btn-primary">Admin</button></a>
-</AuthorizeView>
 
-<Modal @ref="modalRef">
-    <ModalContent Centered>
-        <ModalHeader>
-            <ModalTitle>Kaartjes bestellen</ModalTitle>
-            <CloseButton />
-        </ModalHeader>
-        <ModalBody>
-            <OrderTickets></OrderTickets>
-        </ModalBody>
-    </ModalContent>
-</Modal>
+<a href="/AddMovie"><button class="btn btn-primary">Add movie</button></a>
 
 @if (Films == null)
 {
@@ -35,13 +25,13 @@ else
                     <img src="@movie.ImageUrl">
                 </div>
                 <h4>@movie.Name</h4>
-                <Button Color="Color.Primary" Clicked="@ShowModal">Kaartjes bestellen</Button>
-                <a href="/MovieDetails"><button class="btn btn-primary" @onclick="() => GetTicketInfoService.SetMovieId(movie.MovieId)">Meer informatie</button></a>
-                @* <a href="/MovieDetails"><Button Color="Color.Primary" Clicked="@SetMovieId(movie.MovieId)">Kaartjes bestellen</Button></a> *@
+                <a href="/UpdateMovie"><button class="btn btn-primary" @onclick="() => GetTicketInfoService.SetMovieId(movie.MovieId)">Update Movie</button></a>
                 <div class="content">
                     <p><strong>Omschrijving: </strong>@movie.Description</p>
                     <p><strong>Prijs: </strong>@movie.Price</p>
                     <p><strong>Leeftijd: </strong>@movie.AllowedAge</p>
+                    <p><strong>3D: </strong>@movie.Add3DMovie</p>
+                    <p><strong>Datum/tijd: </strong>@movie.Date</p>
                 </div>
             </div>
         }
@@ -53,11 +43,6 @@ else
 @code {
     public IEnumerable<MovieReadDTO>? Films { get; set; }
     private Modal modalRef;
-
-    // private void SetMovieId(int movieId)
-    // {
-    //     GetTicketInfoService.SetMovieId(movieId);
-    // }
 
     protected override async Task OnInitializedAsync()
     {
