@@ -15,5 +15,6 @@ namespace BioscoopSysteemAPI.Interfaces
         Task<ActionResult<Movie>> PutMovieAsync(int id, Movie movie);
 
         Task<ActionResult<Movie>> DeleteMovieAsync(int id);
+        Task<ActionResult<IEnumerable<Room>>> GetAllRoomsOfAMovie(int id);
     }
 }
