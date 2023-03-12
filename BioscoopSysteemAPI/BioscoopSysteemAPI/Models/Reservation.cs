@@ -11,8 +11,15 @@ namespace BioscoopSysteemAPI.Models
 
         [MaxLength(50)]
         public string Location{ get; set;}
+        
+        public string Age { get; set; }
+        public string Arrangementen { get; set; }
+        public double TotalPrice { get; set; }
+        public bool IsStudent { get; set; }
 
         // Navigation Property
+        
+        public int PaymentId { get; set; }
         public int SeatId { get; set; }
 
         public int MovieId { get; set; }

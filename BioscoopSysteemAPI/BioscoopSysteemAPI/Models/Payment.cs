@@ -6,16 +6,15 @@ namespace BioscoopSysteemAPI.Models
     {
         // Properties
         public int PaymentId { get; set; }
+        public string MollieId { get; set; }
 
-        public DateTime DateTime { get; set; }
+        public DateTime PaidAt { get; set; }
 
         public int Amount { get; set; }
         
         [MaxLength(50)]
         public string PaymentMethod { get; set; }
-
-        // Navigation Property
-
-        public int ReservationId { get; set; }
+        
+        public string PaymentStatus { get; set; }
     }
 }
