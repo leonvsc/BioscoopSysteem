@@ -8,6 +8,8 @@ namespace BioscoopSysteemAPI.DTOs.MovieDTOs
 
         [MaxLength(50)]
         public string Name { get; set; }
+        public DateTime Date { get; set; }
+        public bool Add3DMovie { get; set; }
 
         [MaxLength(255)]
         public string Description { get; set; }
@@ -16,8 +18,5 @@ namespace BioscoopSysteemAPI.DTOs.MovieDTOs
 
         [MaxLength(255)]
         public string? ImageUrl { get; set; }
-
-        // Navigation Property
-        public int RoomId { get; set; }
     }
 }

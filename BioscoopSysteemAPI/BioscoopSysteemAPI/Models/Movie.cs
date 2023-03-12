@@ -10,6 +10,9 @@ namespace BioscoopSysteemAPI.Models
         [MaxLength(50)]
         public string Name { get; set; }
 
+        public DateTime Date { get; set; }
+        public bool Add3DMovie { get; set; }
+
         [MaxLength(255)]
         public string Description { get; set; }
         public int Price { get; set; }
@@ -18,7 +21,5 @@ namespace BioscoopSysteemAPI.Models
         [MaxLength(255)]
         public string? ImageUrl { get; set; }
 
-        // Navigation Property
-        public int RoomId { get; set; }
     }
 }
