@@ -86,29 +86,32 @@
                 new Payment()
                 {
                 PaymentId = 1,
-                DateTime = DateTime.Now,
+                MollieId = "tr_9x5yAUbWZ2",
+                PaidAt = DateTime.Now,
                 Amount = 24,
                 PaymentMethod = "Ideal",
-                ReservationId = 1
+                PaymentStatus = "paid"
                 },
 
                 new Payment()
                 {
                 PaymentId = 2,
-                DateTime = DateTime.Now,
+                MollieId = "tr_9x5yAUbWZ2",
+                PaidAt = DateTime.Now,
                 Amount = 12,
                 PaymentMethod = "CreditCard",
-                ReservationId = 2
+                PaymentStatus = "paid"
 
                 },
 
                 new Payment()
                 {
                 PaymentId = 3,
-                DateTime = DateTime.Now,
+                MollieId = "tr_9x5yAUbWZ2",
+                PaidAt = DateTime.Now,
                 Amount = 12,
                 PaymentMethod = "CreditCard",
-                ReservationId = 3
+                PaymentStatus = "paid"
                 }
 
 
@@ -126,6 +129,10 @@
                 ReservationId = 1,
                 DateTime = DateTime.Now,
                 Location = "Amsterdam",
+                Age = "12 tm 65",
+                Arrangementen = "popcorn",
+                TotalPrice = 12.00,
+                IsStudent = false,
                 SeatId = 6,
                 MovieId = 1,
                 VisitorId = 1
@@ -136,6 +143,10 @@
                 ReservationId = 2,
                 DateTime = DateTime.Now,
                 Location = "Haarlem",
+                Age = "65+",
+                Arrangementen = "",
+                TotalPrice = 12.00,
+                IsStudent = false,
                 SeatId = 5,
                 MovieId = 2,
                 VisitorId = 2
@@ -147,6 +158,10 @@
                 ReservationId = 3,
                 DateTime = DateTime.Now,
                 Location = "Zaandam",
+                Age = "12 tm 65",
+                Arrangementen = "popcorn",
+                TotalPrice = 9.00,
+                IsStudent = true,
                 SeatId = 4,
                 MovieId = 3,
                 VisitorId = 3
