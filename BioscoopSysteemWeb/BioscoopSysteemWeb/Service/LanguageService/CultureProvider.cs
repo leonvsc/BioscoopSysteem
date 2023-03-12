@@ -16,15 +16,6 @@ namespace BioscoopSysteemWeb.Service.LanguageService
         {
             _defaultLanguage = defaultLanguage;
         }
-
-        private string? GetLanguageFromUrl(string url)
-        {
-            var uri = new Uri(url);
-            var urlParameters = HttpUtility.ParseQueryString(uri.Query);
-
-            return urlParameters["language"];
-        }
-
         public override Task<ProviderCultureResult?> DetermineProviderCultureResult(HttpContext httpContext)
         {
             if (httpContext.Request.Headers["Sec-Fetch-Dest"] == "document")
@@ -48,5 +39,17 @@ namespace BioscoopSysteemWeb.Service.LanguageService
                 return Task.FromResult<ProviderCultureResult?>(new ProviderCultureResult(_selectedLanguage));
             }
         }
+
+
+        private string? GetLanguageFromUrl(string url)
+        {
+            var uri = new Uri(url);
+            var urlParameters = HttpUtility.ParseQueryString(uri.Query);
+
+            return urlParameters["language"];
+        }
+
+
+
     }
 }

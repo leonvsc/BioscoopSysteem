@@ -1,14 +1,23 @@
 ﻿@page "/ticket"
 @using BioscoopSysteemWeb.Service
 @using System.Web
+@using BioscoopSysteemWeb.Service.LanguageService;
+@using Microsoft.Extensions.Localization;
 @inject IJSRuntime Js
 @inject NavigationManager NavigationManager
 @inject GetTicketInfoService GetTicketInfoService
+@inject IStringLocalizer<TicketPage> Localizer
+@inject BiosLanguageNotifier BiosLanguageNotifier
+@implements IDisposable
 
 
-<h3 class="d-print-none">Betaling geslaagd</h3>
+<h3>@Localizer["Language"]</h3>
+<LanguageSelector />
 
-<p class="d-print-none">Uw betaling is geslaagd. Hieronder kunt u uw ticket printen.</p>
+
+<h3 class="d-print-none">@Localizer["Payment Succeeded"]Betaling geslaagd</h3>
+
+<p class="d-print-none">@Localizer["Your payment is succesfull. Print your ticket below."]</p>
 <button type="button" class="btn btn-primary d-print-none" @onclick="PrintTicket">Print Ticket</button>
 <button type="button" class="btn btn-primary" @onclick="PayMollie">Pay with Mollie</button>
 
@@ -18,6 +27,9 @@
 }
 
 @code {
+
+    public void Dispose() => BiosLanguageNotifier.UnsubscribeLanguageChange(this);
+
     private async Task PrintTicket()
     {
         await Js.InvokeVoidAsync("printPage");
@@ -54,6 +66,7 @@
 
     protected override void OnInitialized()
     {
+        BiosLanguageNotifier.SubscribeLanguageChange(this);
         TicketAmount = GetTicketInfoService.GetTicketAmount();
         TotalPrice = GetTicketInfoService.GetTotalPrice();
         PopcornAmount = GetTicketInfoService.GetPopcornAmount();

@@ -4,23 +4,42 @@ using Microsoft.Extensions.Localization;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
+using System.Collections;
+using System.Globalization;
+using Microsoft.Extensions.Options;
 
 namespace BioscoopSysteemWeb.Service.LanguageService
 {
     public class BiosStringLocalizer<TComponent> : IStringLocalizer<TComponent>
     {
+        private readonly IOptions<LocalizationOptions> _localizationOptions;
+
         public LocalizedString this[string name] => FindLocalziedString(name);
         public LocalizedString this[string name, params object[] arguments] => FindLocalziedString(name, arguments);
 
-        public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
-        {
-            throw new NotImplementedException();
-        }
-        private readonly Microsoft.Extensions.Options.IOptions<LocalizationOptions> _localizationOptions;
-
-        public BiosStringLocalizer(Microsoft.Extensions.Options.IOptions<LocalizationOptions> localizationOptions)
+        public BiosStringLocalizer(IOptions<LocalizationOptions> localizationOptions)
         {
             _localizationOptions = localizationOptions;
+        }
+
+        public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
+        {
+            var resourceManager = CreateResourceManager();
+            var result = new List<LocalizedString>();
+
+            try
+            {
+                var resourceSet = resourceManager.GetResourceSet(CultureInfo.CurrentCulture, true, true);
+                result = resourceSet.Cast<DictionaryEntry>()
+                    .Select(item => new LocalizedString((string)item.Key, (string)item.Value, false, GetResourceLocaltion()))
+                    .ToList();
+            }
+            catch
+            {
+                result.Add(new("", "", true, GetResourceLocaltion()));
+            }
+
+            return result;
         }
 
         private LocalizedString FindLocalziedString(string key, object[]? arguments = default)

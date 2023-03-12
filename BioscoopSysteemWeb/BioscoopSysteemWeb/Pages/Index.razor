@@ -1,14 +1,23 @@
 ﻿@page "/"
 @inject IMovieService MovieService
 @using BioscoopSysteemWeb.Service
+@using BioscoopSysteemWeb.Service.LanguageService;
+@using Microsoft.Extensions.Localization;
 @inject GetTicketInfoService GetTicketInfoService
+@inject IStringLocalizer<Index> Localizer
+@inject BiosLanguageNotifier BiosLanguageNotifier
+@implements IDisposable
+
+
+<h3>@Localizer["Language"]</h3>
+<LanguageSelector />
 
 <PageTitle>Index</PageTitle>
 
 <Modal @ref="modalRef">
     <ModalContent Centered>
         <ModalHeader>
-            <ModalTitle>Kaartjes bestellen</ModalTitle>
+            <ModalTitle>@Localizer["Order Tickets"]</ModalTitle>
             <CloseButton />
         </ModalHeader>
         <ModalBody>
@@ -17,12 +26,17 @@
     </ModalContent>
 </Modal>
 
+
+
+
 @if (Films == null)
 {
-    <h3>Films worden opgehaald</h3>
+    <h3>@Localizer["Movies are loading"]</h3>
 }
 else
 {
+
+
     <div class="container d-flex align-items-center justify-content-center position-relative flex-wrap">
 
         @foreach (var movie in Films)
@@ -32,13 +46,13 @@ else
                     <img src="@movie.ImageUrl">
                 </div>
                 <h4>@movie.Name</h4>
-                <Button Color="Color.Primary" Clicked="@ShowModal">Kaartjes bestellen</Button>
-                <a href="/MovieDetails"><button class="btn btn-primary" @onclick="() => GetTicketInfoService.SetMovieId(movie.MovieId)">Meer informatie</button></a>
+                <Button Color="Color.Primary" Clicked="@ShowModal">@Localizer["Order Tickets"]</Button>
+                <a href="/MovieDetails"><button class="btn btn-primary" @onclick="() => GetTicketInfoService.SetMovieId(movie.MovieId)">@Localizer["More Information"]</button></a>
                 @* <a href="/MovieDetails"><Button Color="Color.Primary" Clicked="@SetMovieId(movie.MovieId)">Kaartjes bestellen</Button></a> *@
                 <div class="content">
-                    <p><strong>Omschrijving: </strong>@movie.Description</p>
-                    <p><strong>Prijs: </strong>@movie.Price</p>
-                    <p><strong>Leeftijd: </strong>@movie.AllowedAge</p>
+                    <p><strong>@Localizer["Description"]: </strong>@movie.Description</p>
+                    <p><strong>@Localizer["Price"]: </strong>@movie.Price</p>
+                    <p><strong>@Localizer["Age"]: </strong>@movie.AllowedAge</p>
                 </div>
             </div>
         }
@@ -48,6 +62,10 @@ else
 
 
 @code {
+
+    protected override void OnInitialized() => BiosLanguageNotifier.SubscribeLanguageChange(this);
+    public void Dispose() => BiosLanguageNotifier.UnsubscribeLanguageChange(this);
+
     public IEnumerable<MovieReadDTO>? Films { get; set; }
     private Modal modalRef;
 
