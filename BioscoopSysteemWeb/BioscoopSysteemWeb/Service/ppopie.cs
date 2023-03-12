@@ -1,6 +1,6 @@
 ﻿namespace BioscoopSysteemWeb.Service
 {
-    public class LanguageService
+    public class LanguageServiceProivder
     {
         Func<string, string> filmDet = lang =>
         {

@@ -9,8 +9,6 @@ namespace BioscoopSysteemWeb.Service.LanguageService
 {
     public class BiosStringLocalizer<TComponent> : IStringLocalizer<TComponent>
     {
-        
-        {
         public LocalizedString this[string name] => FindLocalziedString(name);
         public LocalizedString this[string name, params object[] arguments] => FindLocalziedString(name, arguments);
 
@@ -18,9 +16,9 @@ namespace BioscoopSysteemWeb.Service.LanguageService
         {
             throw new NotImplementedException();
         }
-        private readonly IOptions<LocalizationOptions> _localizationOptions;
+        private readonly Microsoft.Extensions.Options.IOptions<LocalizationOptions> _localizationOptions;
 
-        public BiosStringLocalizer(IOptions<LocalizationOptions> localizationOptions)
+        public BiosStringLocalizer(Microsoft.Extensions.Options.IOptions<LocalizationOptions> localizationOptions)
         {
             _localizationOptions = localizationOptions;
         }

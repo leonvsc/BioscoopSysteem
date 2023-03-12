@@ -1,4 +1,8 @@
-﻿@inject BiosLanguageNotifier BiosLanguageNotifier
+﻿@using System.Globalization;
+@using System.Web;
+@inject BiosLanguageNotifier BiosLanguageNotifier
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
 
 <select @onchange="OnChangeLanguage">
     <option value="">Select</option>
