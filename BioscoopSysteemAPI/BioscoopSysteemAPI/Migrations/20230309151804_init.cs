@@ -8,27 +8,28 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BioscoopSysteemAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class CinemaSeedData : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "movies",
+                name: "Movies",
                 columns: table => new
                 {
                     MovieId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Add3DMovie = table.Column<bool>(type: "bit", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
                     AllowedAge = table.Column<byte>(type: "tinyint", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    RoomId = table.Column<int>(type: "int", nullable: false)
+                    ImageUrl = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_movies", x => x.MovieId);
+                    table.PrimaryKey("PK_Movies", x => x.MovieId);
                 });
 
             migrationBuilder.CreateTable(
@@ -127,14 +128,48 @@ namespace BioscoopSysteemAPI.Migrations
                     table.PrimaryKey("PK_Visitors", x => x.VisitorId);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "MovieRoom",
+                columns: table => new
+                {
+                    MovieId = table.Column<int>(type: "int", nullable: false),
+                    RoomId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MovieRoom", x => new { x.MovieId, x.RoomId });
+                    table.ForeignKey(
+                        name: "FK_MovieRoom_Movies_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "MovieId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MovieRoom_Rooms_RoomId",
+                        column: x => x.RoomId,
+                        principalTable: "Rooms",
+                        principalColumn: "RoomId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Movies",
+                columns: new[] { "MovieId", "Add3DMovie", "AllowedAge", "Date", "Description", "ImageUrl", "Name", "Price" },
+                values: new object[,]
+                {
+                    { 1, true, (byte)16, new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2502), "Lorem ipsum dolor sit amet", "/Images/Movies/Movie1.jpeg", "ScaryMovie", 12 },
+                    { 2, false, (byte)8, new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2543), "Lorem ipsum dolor sit amet", "/Images/Movies/Movie2.jpeg", "AntMan", 9 },
+                    { 3, true, (byte)12, new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2546), "Lorem ipsum dolor sit amet", "/Images/Movies/Movie3.jpeg", "Plane", 12 }
+                });
+
             migrationBuilder.InsertData(
                 table: "Payments",
                 columns: new[] { "PaymentId", "Amount", "DateTime", "PaymentMethod", "ReservationId" },
                 values: new object[,]
                 {
-                    { 1, 24, new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6830), "Ideal", 1 },
-                    { 2, 12, new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6880), "CreditCard", 2 },
-                    { 3, 12, new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6890), "CreditCard", 3 }
+                    { 1, 24, new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2619), "Ideal", 1 },
+                    { 2, 12, new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2624), "CreditCard", 2 },
+                    { 3, 12, new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2626), "CreditCard", 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -142,9 +177,9 @@ namespace BioscoopSysteemAPI.Migrations
                 columns: new[] { "ReservationId", "DateTime", "Location", "MovieId", "SeatId", "VisitorId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6900), "Amsterdam", 1, 6, 1 },
-                    { 2, new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6910), "Haarlem", 2, 5, 2 },
-                    { 3, new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6920), "Zaandam", 3, 4, 3 }
+                    { 1, new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2670), "Amsterdam", 1, 6, 1 },
+                    { 2, new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2675), "Haarlem", 2, 5, 2 },
+                    { 3, new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2677), "Zaandam", 3, 4, 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -172,9 +207,9 @@ namespace BioscoopSysteemAPI.Migrations
                 columns: new[] { "TicketId", "DateTime", "MovieName", "PaymentId", "Quantity", "RoomId", "SeatId", "VisitorId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6970), "ScaryMovie", 1, 2, 2, 1, 2 },
-                    { 2, new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6980), "AntMan", 2, 1, 3, 3, 3 },
-                    { 3, new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6990), "Plane", 3, 1, 1, 2, 1 }
+                    { 1, new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2725), "ScaryMovie", 1, 2, 2, 1, 2 },
+                    { 2, new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2729), "AntMan", 2, 1, 3, 3, 3 },
+                    { 3, new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2732), "Plane", 3, 1, 1, 2, 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -188,30 +223,32 @@ namespace BioscoopSysteemAPI.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "movies",
-                columns: new[] { "MovieId", "AllowedAge", "Description", "ImageUrl", "Name", "Price", "RoomId" },
+                table: "MovieRoom",
+                columns: new[] { "MovieId", "RoomId" },
                 values: new object[,]
                 {
-                    { 1, (byte)16, "Lorem ipsum dolor sit amet", "/Images/Movies/Movie1.jpeg", "ScaryMovie", 12, 5 },
-                    { 2, (byte)8, "Lorem ipsum dolor sit amet", "/Images/Movies/Movie2.jpeg", "AntMan", 9, 4 },
-                    { 3, (byte)12, "Lorem ipsum dolor sit amet", "/Images/Movies/Movie3.jpeg", "Plane", 12, 3 }
+                    { 1, 2 },
+                    { 2, 3 },
+                    { 3, 1 }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MovieRoom_RoomId",
+                table: "MovieRoom",
+                column: "RoomId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "movies");
+                name: "MovieRoom");
 
             migrationBuilder.DropTable(
                 name: "Payments");
 
             migrationBuilder.DropTable(
                 name: "Reservations");
-
-            migrationBuilder.DropTable(
-                name: "Rooms");
 
             migrationBuilder.DropTable(
                 name: "Seats");
@@ -221,6 +258,12 @@ namespace BioscoopSysteemAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Visitors");
+
+            migrationBuilder.DropTable(
+                name: "Movies");
+
+            migrationBuilder.DropTable(
+                name: "Rooms");
         }
     }
 }

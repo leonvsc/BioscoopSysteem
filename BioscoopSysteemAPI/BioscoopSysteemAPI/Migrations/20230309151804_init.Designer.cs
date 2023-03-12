@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BioscoopSysteemAPI.Migrations
 {
     [DbContext(typeof(CinemaDbContext))]
-    [Migration("20230221103916_CinemaSeedData")]
-    partial class CinemaSeedData
+    [Migration("20230309151804_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,8 +33,14 @@ namespace BioscoopSysteemAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MovieId"));
 
+                    b.Property<bool>("Add3DMovie")
+                        .HasColumnType("bit");
+
                     b.Property<byte>("AllowedAge")
                         .HasColumnType("tinyint");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -53,43 +59,75 @@ namespace BioscoopSysteemAPI.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
-                    b.Property<int>("RoomId")
-                        .HasColumnType("int");
-
                     b.HasKey("MovieId");
 
-                    b.ToTable("movies");
+                    b.ToTable("Movies");
 
                     b.HasData(
                         new
                         {
                             MovieId = 1,
+                            Add3DMovie = true,
                             AllowedAge = (byte)16,
+                            Date = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2502),
                             Description = "Lorem ipsum dolor sit amet",
                             ImageUrl = "/Images/Movies/Movie1.jpeg",
                             Name = "ScaryMovie",
-                            Price = 12,
-                            RoomId = 5
+                            Price = 12
                         },
                         new
                         {
                             MovieId = 2,
+                            Add3DMovie = false,
                             AllowedAge = (byte)8,
+                            Date = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2543),
                             Description = "Lorem ipsum dolor sit amet",
                             ImageUrl = "/Images/Movies/Movie2.jpeg",
                             Name = "AntMan",
-                            Price = 9,
-                            RoomId = 4
+                            Price = 9
                         },
                         new
                         {
                             MovieId = 3,
+                            Add3DMovie = true,
                             AllowedAge = (byte)12,
+                            Date = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2546),
                             Description = "Lorem ipsum dolor sit amet",
                             ImageUrl = "/Images/Movies/Movie3.jpeg",
                             Name = "Plane",
-                            Price = 12,
+                            Price = 12
+                        });
+                });
+
+            modelBuilder.Entity("BioscoopSysteemAPI.Models.MovieRoom", b =>
+                {
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MovieId", "RoomId");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("MovieRoom");
+
+                    b.HasData(
+                        new
+                        {
+                            MovieId = 1,
+                            RoomId = 2
+                        },
+                        new
+                        {
+                            MovieId = 2,
                             RoomId = 3
+                        },
+                        new
+                        {
+                            MovieId = 3,
+                            RoomId = 1
                         });
                 });
 
@@ -124,7 +162,7 @@ namespace BioscoopSysteemAPI.Migrations
                         {
                             PaymentId = 1,
                             Amount = 24,
-                            DateTime = new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6830),
+                            DateTime = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2619),
                             PaymentMethod = "Ideal",
                             ReservationId = 1
                         },
@@ -132,7 +170,7 @@ namespace BioscoopSysteemAPI.Migrations
                         {
                             PaymentId = 2,
                             Amount = 12,
-                            DateTime = new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6880),
+                            DateTime = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2624),
                             PaymentMethod = "CreditCard",
                             ReservationId = 2
                         },
@@ -140,7 +178,7 @@ namespace BioscoopSysteemAPI.Migrations
                         {
                             PaymentId = 3,
                             Amount = 12,
-                            DateTime = new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6890),
+                            DateTime = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2626),
                             PaymentMethod = "CreditCard",
                             ReservationId = 3
                         });
@@ -179,7 +217,7 @@ namespace BioscoopSysteemAPI.Migrations
                         new
                         {
                             ReservationId = 1,
-                            DateTime = new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6900),
+                            DateTime = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2670),
                             Location = "Amsterdam",
                             MovieId = 1,
                             SeatId = 6,
@@ -188,7 +226,7 @@ namespace BioscoopSysteemAPI.Migrations
                         new
                         {
                             ReservationId = 2,
-                            DateTime = new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6910),
+                            DateTime = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2675),
                             Location = "Haarlem",
                             MovieId = 2,
                             SeatId = 5,
@@ -197,7 +235,7 @@ namespace BioscoopSysteemAPI.Migrations
                         new
                         {
                             ReservationId = 3,
-                            DateTime = new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6920),
+                            DateTime = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2677),
                             Location = "Zaandam",
                             MovieId = 3,
                             SeatId = 4,
@@ -328,7 +366,7 @@ namespace BioscoopSysteemAPI.Migrations
                         new
                         {
                             TicketId = 1,
-                            DateTime = new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6970),
+                            DateTime = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2725),
                             MovieName = "ScaryMovie",
                             PaymentId = 1,
                             Quantity = 2,
@@ -339,7 +377,7 @@ namespace BioscoopSysteemAPI.Migrations
                         new
                         {
                             TicketId = 2,
-                            DateTime = new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6980),
+                            DateTime = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2729),
                             MovieName = "AntMan",
                             PaymentId = 2,
                             Quantity = 1,
@@ -350,7 +388,7 @@ namespace BioscoopSysteemAPI.Migrations
                         new
                         {
                             TicketId = 3,
-                            DateTime = new DateTime(2023, 2, 21, 11, 39, 16, 601, DateTimeKind.Local).AddTicks(6990),
+                            DateTime = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2732),
                             MovieName = "Plane",
                             PaymentId = 3,
                             Quantity = 1,
@@ -407,6 +445,25 @@ namespace BioscoopSysteemAPI.Migrations
                             FirstName = "Hans",
                             LastName = "Koning"
                         });
+                });
+
+            modelBuilder.Entity("BioscoopSysteemAPI.Models.MovieRoom", b =>
+                {
+                    b.HasOne("BioscoopSysteemAPI.Models.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BioscoopSysteemAPI.Models.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
+
+                    b.Navigation("Room");
                 });
 #pragma warning restore 612, 618
         }
