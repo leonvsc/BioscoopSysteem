@@ -12,6 +12,8 @@ namespace BioscoopSysteemAPI.Models
         [MaxLength(50)]
         public string Location{ get; set;}
         
+        public int TicketAmount { get; set; }
+        
         public string Age { get; set; }
         public string Arrangementen { get; set; }
         public double TotalPrice { get; set; }
