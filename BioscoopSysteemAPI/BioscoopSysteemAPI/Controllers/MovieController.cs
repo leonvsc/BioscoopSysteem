@@ -7,6 +7,7 @@ using BioscoopSysteemAPI.Models;
 using BioscoopSysteemAPI.Service;
 using Microsoft.AspNetCore.Mvc;
 using Mollie.Api.Models;
+using System.Linq;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace BioscoopSysteemAPI.Controllers
@@ -22,11 +23,11 @@ namespace BioscoopSysteemAPI.Controllers
         private readonly IMapper _mapper;
         private readonly MovieService _movieService;
 
-        public MovieController(IMovieRepository movieRepository, IMapper mapper, MovieService movieService )
+        public MovieController(IMovieRepository movieRepository, IMapper mapper)
         {
             _movieRepository = movieRepository;
             _mapper = mapper;
-            _movieService = movieService;
+            _movieService = new MovieService();
         }
 
         // GET: api/movies
@@ -197,8 +198,8 @@ namespace BioscoopSysteemAPI.Controllers
         {
             try
             {
-
-                var filteredMovies = _movieService.GetFilteredMovie(filterDTO);
+                List<Movie> movies = _movieRepository.GetMoviesList();
+                var filteredMovies = _movieService.GetFilteredMovie(filterDTO,movies);
 
                 if (filteredMovies == null)
                 {

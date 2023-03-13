@@ -3,6 +3,7 @@ using BioscoopSysteemAPI.Interfaces;
 using BioscoopSysteemAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace BioscoopSysteemAPI.Dal.Repository
@@ -19,7 +20,7 @@ namespace BioscoopSysteemAPI.Dal.Repository
 
         public  List<Movie> GetMoviesList()
         {
-            var movies =  _cinemaDbContext.Movies.ToList();
+            List<Movie> movies =  _cinemaDbContext.Movies.ToList();
             if (movies.Any())
             {
                 return movies;

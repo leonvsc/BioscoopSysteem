@@ -5,24 +5,22 @@ using BioscoopSysteemAPI.DTOs;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.Collections;
+using BioscoopSysteemAPI.Interfaces;
 
 namespace BioscoopSysteemAPI.Service
 {
 	public class MovieService
 	{
-		private readonly MovieRepository movieRepository;
 
-        public MovieService(MovieRepository movieRepository)
-
+        public MovieService()
         {
-            this.movieRepository = 
 		}	
 
-		public List<Movie> GetFilteredMovie(FilterDTO filterDTO)
+		public List<Movie> GetFilteredMovie(FilterDTO filterDTO,List<Movie> movies)
 		{
             List<Movie> moviesToAdd = new List<Movie>() ;
-            var movies = movieRepository.GetMoviesList();
-            if (movies == null)
+            //var movies = _movieRepository.GetMoviesList();
+            if (!movies.Any())
             {
                 return null;
             }
