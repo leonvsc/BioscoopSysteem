@@ -23,7 +23,6 @@ namespace BioscoopSysteemAPI.Models
 
         // Navigation Property
         
-        public int PaymentId { get; set; }
         public int SeatId { get; set; }
 
         public int MovieId { get; set; }
