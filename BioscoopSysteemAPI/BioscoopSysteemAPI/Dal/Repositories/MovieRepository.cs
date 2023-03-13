@@ -17,6 +17,16 @@ namespace BioscoopSysteemAPI.Dal.Repository
             this._cinemaDbContext = cinemaDbContext;
         }
 
+        public  List<Movie> GetMoviesList()
+        {
+            var movies =  _cinemaDbContext.Movies.ToList();
+            if (movies.Any())
+            {
+                return movies;
+            }
+            return null;
+        }
+
         public async Task<ActionResult<IEnumerable<Movie>>> GetMoviesAsync()
         {
             var movies = await _cinemaDbContext.Movies.ToListAsync();
