@@ -96,7 +96,7 @@ else
 
     private async Task Update()
     {
-        var response = await Http.PostAsJsonAsync($"/api/movies/{MovieId}",_movie);
+        var response = await Http.PutAsJsonAsync($"/api/movies/{MovieId}",_movie);
         response.EnsureSuccessStatusCode();
         NavigationManager.NavigateTo("/AdminPage");
     }
