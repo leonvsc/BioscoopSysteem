@@ -37,5 +37,6 @@
     <ProjectReference Include="..\..\BioscoopSysteemAPI\BioscoopSysteemApi.Models\BioscoopSysteemApi.Models.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\..\BioscoopSysteemAPI\BioscoopSysteemAPI\BioscoopSysteemAPI.csproj" />
   </ItemGroup>
 </Project>
