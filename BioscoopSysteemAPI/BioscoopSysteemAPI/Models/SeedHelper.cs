@@ -90,7 +90,8 @@
                 PaidAt = DateTime.Now,
                 Amount = 24,
                 PaymentMethod = "Ideal",
-                PaymentStatus = "paid"
+                PaymentStatus = "paid",
+                ReservationId = 1
                 },
 
                 new Payment()
@@ -100,7 +101,8 @@
                 PaidAt = DateTime.Now,
                 Amount = 12,
                 PaymentMethod = "CreditCard",
-                PaymentStatus = "paid"
+                PaymentStatus = "paid",
+                ReservationId = 2
 
                 },
 
@@ -111,7 +113,8 @@
                 PaidAt = DateTime.Now,
                 Amount = 12,
                 PaymentMethod = "CreditCard",
-                PaymentStatus = "paid"
+                PaymentStatus = "paid",
+                ReservationId = 3
                 }
 
 
