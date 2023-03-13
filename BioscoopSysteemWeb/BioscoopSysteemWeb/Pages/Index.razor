@@ -66,9 +66,9 @@
 <h3>FilterBar</h3>
 <div class="wrap">
     <div class="search">
-        <input @bind="filter.search" id="search" type="text" class="searchTerm" placeholder="">
-        <input @bind="filter.age" id="age" type="number" class="searchTerm" placeholder="null">
-        <button @onclick="() => reloadMovies(filter)" class="searchButton">
+        <input @bind="search" id="search" type="text" class="searchTerm" placeholder="">
+        <input @bind="age" id="age" type="number" class="searchTerm" placeholder="null">
+        <button @onclick="() => filter(search,age)" class="searchButton">
             <i class="fa fa-search"></i>
         </button>
     </div>
@@ -127,6 +127,9 @@ else
 
     protected override void OnInitialized() => BiosLanguageNotifier.SubscribeLanguageChange(this);
     public void Dispose() => BiosLanguageNotifier.UnsubscribeLanguageChange(this);
+    private string search = null;
+    private int age = null;
+
 
     public IEnumerable<MovieReadDTO>? Films { get; set; }
     private Modal modalRef;
@@ -143,8 +146,11 @@ else
         Films = await MovieService.GetMovies();
     }
 
-    private async void reloadMovies(FilterDTO filter)
+    private async task filter(string? search, int? age)
     {
+        currentPage = 1;
+        filter.age = age;
+        filter.search = search;
         Films = await MovieService.GetMovieByFilter(filter);
     }
 
