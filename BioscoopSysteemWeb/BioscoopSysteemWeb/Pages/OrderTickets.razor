@@ -2,6 +2,7 @@
 @using BioscoopSysteemWeb.Service
 @using BioscoopSysteemWeb.Models
 @using System.Web
+@using System.Text.Json
 @inject GetTicketInfoService GetTicketInfoService
 @inject NavigationManager NavigationManager
 
@@ -13,8 +14,8 @@
 <EditForm Model="Reservation" OnValidSubmit="HandleValidSubmit" OnInitialized="Initialize">
     <div class="form-group">
         <label for="ticket-count">Aantal tickets:</label>
-        <input id="ticket-count" name="AantalTickets" class="form-control" @bind="@Reservation.TicketCount" />
-        <ValidationMessage For="@(() => Reservation.TicketCount)" />
+        <input id="ticket-count" name="AantalTickets" class="form-control" @bind="@Reservation.TicketAmount" />
+        <ValidationMessage For="@(() => Reservation.TicketAmount)" />
     </div>
 
     <div class="form-group">
@@ -29,20 +30,14 @@
     </div>
 
     <Check TValue="bool" @bind-Checked="@Reservation.IsStudent">Student?</Check>
-    <Check TValue="bool" @bind-Checked="@Reservation.Is3D">3D?</Check>
     <Check TValue="bool" @bind-Checked="@Reservation.WantsPopcorn">Popcorn arrangement?</Check>
-
-    @if (Reservation.WantsPopcorn)
-    {
-        <div class="form-group">
-            <label for="popcorn-amount">Popcorn amount:</label>
-            <input id="popcorn-amount" class="form-control" @bind="@Reservation.PopcornAmount" />
-        </div>
-    }
+    <Check TValue="bool" @bind-Checked="@Reservation.WantsVIP">VIP arrangement?</Check>
+    <Check TValue="bool" @bind-Checked="@Reservation.WantsKinderfeestje">Kinderfeestje arrangement?</Check>
+    
 
     <br/>
-    <label class="form-check-label"><strong>Totaal:</strong></label>
-    <input class="form-control" type="text" placeholder="€ @Reservation.TotalPrice" readonly>
+    <label class="form-check-label" for="totalPrice"><strong>Totaal:</strong></label>
+    <input class="form-control" type="text" id="totalPrice" placeholder="€ @CalculatePrice()" readonly>
     <br/>
     <button type="submit" class="btn btn-primary">Betalen</button>
 </EditForm>
@@ -58,14 +53,43 @@
     // }
     
     private ReservationModel Reservation = new ReservationModel();
+    
+    private double CalculatePrice()
+    {
+            double price = 0;
+            int movieTime = 130;
+            DayOfWeek dag = DayOfWeek.Monday;
 
-    private async Task PayMollie()
+            if (movieTime > 120)
+            {
+                price = 9;
+            }
+
+            if (dag is DayOfWeek.Monday or DayOfWeek.Tuesday or DayOfWeek.Wednesday or DayOfWeek.Thursday)
+            {
+                if (Reservation.IsStudent || Reservation.Age == "t/m 11" || Reservation.Age == "65 +")
+                {
+                    price = price - 1.5;
+                }
+            }
+
+            if (Reservation.WantsPopcorn)
+            {
+                price = price + 4.5;
+            }
+
+            double totalprice = price * Reservation.TicketAmount;
+
+            return totalprice;
+    }
+
+    private async Task PayMollie(string reservationId)
     {
         var httpClient = new HttpClient();
         httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
 
-        var mollieAmount = new PaymentRequestModel { Amount = Convert.ToDecimal(Reservation.TotalPrice), Description = Reservation.TicketCount.ToString()};
-
+        var mollieAmount = new PaymentRequestModel { Amount = Convert.ToDecimal(CalculatePrice()), ReservertionId = reservationId};
+        
         var response = await httpClient.PostAsJsonAsync("http://localhost:5059/api/payments/payWithMollie", mollieAmount);
         
         var paymentLink = await response.Content.ReadAsStringAsync();
@@ -73,9 +97,39 @@
         mollieUrl = HttpUtility.UrlDecode(mollieUrl);
         NavigationManager.NavigateTo(mollieUrl);
     }
-    
-    private void HandleValidSubmit()
+
+    private async Task<int> AddReservation()
     {
-        PayMollie();
+        var httpClient = new HttpClient();
+
+        var addReservation = new ReservationModel
+        {
+            DateTime = DateTime.Now,
+            Location = "Haarlem",
+            TicketAmount = Reservation.TicketAmount,
+            Age = Reservation.Age,
+            IsStudent = Reservation.IsStudent,
+            WantsPopcorn = Reservation.WantsPopcorn,
+            WantsVIP = Reservation.WantsVIP,
+            WantsKinderfeestje = Reservation.WantsKinderfeestje,
+            TotalPrice = CalculatePrice(),
+            SeatId = 6,
+            MovieId = 1,
+            VisitorId = 1
+        };
+        
+        var response = await httpClient.PostAsJsonAsync("http://localhost:5059/api/reservations", addReservation);
+        response.EnsureSuccessStatusCode();
+        
+        string responseContent = await response.Content.ReadAsStringAsync();
+        var reservationId = JsonSerializer.Deserialize<int>(responseContent);
+        
+        return reservationId;
+    }
+    
+    private async void HandleValidSubmit()
+    {
+        var reservation = await AddReservation();
+        await PayMollie(reservation.ToString());
     }
 }

@@ -2,47 +2,28 @@ namespace BioscoopSysteemWeb.Models;
 
 public class ReservationModel
 {
-    public int TicketCount { get; set; }
-    public int PopcornAmount { get; set; }
+    public int ReservationId { get; set; }
+
+    public DateTime DateTime { get; set; }
+
+    public string Location{ get; set;}
+        
+    public int TicketAmount { get; set; }
+        
+    public string Age { get; set; }
+   
     public bool IsStudent { get; set; }
     public bool WantsPopcorn { get; set; }
-    public bool Is3D { get; set; }
-    public string Age { get; set; }
+    public bool WantsVIP { get; set; }
+    public bool WantsKinderfeestje { get; set; }
     
-    public double TotalPrice 
-    { 
-        get 
-        {
-            double price = 0;
-            int movieTime = 130;
-            DayOfWeek dag = DayOfWeek.Monday;
+    public double TotalPrice { get; set; }
 
-            if (movieTime > 120)
-            {
-                price = 9;
-            }
+    // Navigation Property
+        
+    public int SeatId { get; set; }
 
-            if (dag is DayOfWeek.Monday or DayOfWeek.Tuesday or DayOfWeek.Wednesday or DayOfWeek.Thursday)
-            {
-                if (IsStudent || Age == "t/m 11" || Age == "65 +")
-                {
-                    price = price - 1.5;
-                }
-            }
+    public int MovieId { get; set; }
 
-            if (WantsPopcorn)
-            {
-                price = price + 4.5;
-            }
-            
-            if (Is3D)
-            {
-                price = price + 3.5;
-            }
-
-            double totalprice = price * TicketCount;
-
-            return totalprice;
-        }
-    }
+    public int VisitorId { get; set; }
 }

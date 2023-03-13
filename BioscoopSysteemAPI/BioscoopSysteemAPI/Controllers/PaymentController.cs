@@ -193,9 +193,9 @@ namespace BioscoopSysteemAPI.Controllers
         {
             PaymentRequest paymentRequest = new PaymentRequest() {
                 Amount = new Amount(Currency.EUR, model.Amount),
-                Description = model.Description,
+                Description = model.ReservertionId,
                 RedirectUrl = "http://localhost:5047/ticket?ticketId={ticketId}",
-                WebhookUrl = "https://34ed-84-83-28-195.eu.ngrok.io/api/payments/mollieWebhook"
+                WebhookUrl = "https://02e8-84-83-28-195.eu.ngrok.io//api/payments/mollieWebhook"
             };
 
             PaymentResponse paymentResponse = await paymentClient.CreatePaymentAsync(paymentRequest);
@@ -221,6 +221,7 @@ namespace BioscoopSysteemAPI.Controllers
             return Ok();
         }
 
+        // Kan waarschijnlijk verwijderd worden.
         private void GenerateTickets(PaymentResponse payment)
         {
             // Generate a unique ticket ID

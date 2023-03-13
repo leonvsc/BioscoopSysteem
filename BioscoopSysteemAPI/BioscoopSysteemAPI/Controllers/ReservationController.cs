@@ -1,15 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mime;
-using System.Threading.Tasks;
 using AutoMapper;
-using BioscoopSysteemAPI.Dal.Repository;
-using BioscoopSysteemAPI.DTOs.PaymentDTOs;
 using BioscoopSysteemAPI.DTOs.ReservationDTOs;
 using BioscoopSysteemAPI.Interfaces;
 using BioscoopSysteemAPI.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BioscoopSysteemAPI.Controllers
@@ -174,10 +167,11 @@ namespace BioscoopSysteemAPI.Controllers
 
                 await _reservationRepository.PostReservationAsync(domainReservation);
 
-                int reservationId = _reservationRepository.PostReservationAsync(domainReservation).Id;
+                // Set the reservationId property in the domainReservation object
+                reservationDto.ReservationId = domainReservation.ReservationId;
 
-                return CreatedAtAction("GetReservation", new { id = reservationId }, reservationDto);
-
+                // return CreatedAtAction("GetReservation", new { id = domainReservation.ReservationId }, reservationDto);
+                return Ok(reservationDto.ReservationId);
             }
             catch (Exception)
             {
