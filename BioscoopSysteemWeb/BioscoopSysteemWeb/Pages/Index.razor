@@ -10,102 +10,82 @@
 @implements IDisposable
 
 <style>
-
-    body {
-        background: #f2f2f2;
-        font-family: 'Open Sans', sans-serif;
-    }
-
-    .search {
-        width: 100%;
+    .holder{
         display: flex;
+        flex-direction:row;
     }
 
-    .searchTerm {
-        width: 100%;
-        border: 3px solid #00B4CC;
-        border-right: none;
-        padding: 5px;
-        height: 20px;
-        border-radius: 5px 0 0 5px;
-        outline: none;
-        color: #9DBFAF;
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+}
+    .checkHolders{
+        margin-left: -10px;
     }
 
-        .searchTerm:focus {
-            color: #00B4CC;
-        }
-
-    .searchButton {
-        width: 40px;
-        height: 36px;
-        border: 1px solid #00B4CC;
-        background: #00B4CC;
-        text-align: center;
-        color: #fff;
-        border-radius: 0 5px 5px 0;
-        cursor: pointer;
-        font-size: 20px;
-    }
-
-    /*Resize the wrap to see the search bar change!*/
-    .wrap {
-        width: 30%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        margin-bottom: 20px;
-    }
 
 </style>
 
 <h3>@Localizer["Language"]</h3>
 <LanguageSelector />
 
-<h3>FilterBar</h3>
-<p>@filter.specials</p>
-<div class="wrap">
-    <div class="search">
-        <input @bind="filter.search" id="search" type="text" class="searchTerm" placeholder="">
-        <input @bind="filter.age" id="age" type="number" class="searchTerm" placeholder="">
-        <select @bind="filter.genre">
-            <option value=""></option>
-            <option value="Actie">Actie</option>
-            <option value="Avonturen">Avonturen</option>
-            <option value="Familie">Familie</option>
-            <option value="Fantasy">Fantasy</option>
-            <option value="Horror">Horror</option>
-            <option value="Komedie">Komedie</option>
-            <option value="Misdaad">Misdaad</option>
-            <option value="Musical">Musical</option>
-            <option value="Muziek">Muziek</option>
-            <option value="Thriller">Thriller</option>
-            <option value="Romantische">Romantisch</option>
-            <option value="Romantische Komedie">Romantische Komedie</option>
-            <option value="Sciencefiction">Science Fiction</option>
-            <option value="Tragikomedie">TragiKomedie</option>
-        </select>
-        <select @bind="filter.language">
-            <option value=""></option>
-            <option value="English">English</option>
-            <option value="Nederlands">Nederlands</option>
-            <option value="Francais">Francais</option>
-        </select>
-        <select @bind="filter.specials">
-            <option value=""></option>
-            <option value="Ladies Night">Ladies Night</option>
-            <option value="Horror Night">Horror Night</option>
-            <option value="Marathon">Marathon</option>
-        </select>
-        <input @bind="filter.threeDee" id="threeDee" type="checkbox" class="threeDee" placeholder="">
-        <input @bind="filter.subtitles" id="subs" type="checkbox" class="subs" placeholder="">
-        <button @onclick="() => Filter()" class="searchButton">
-            <i class="fa fa-search"></i>
-        </button>
-        <button @onclick="() => FilterClear()" class="searchButton">
-            <p>clear search</p>
-        </button>
+<div class="d-flex justify-content-center bg-secondary search align-content-center flex-lg-wrap" style="width:1500px; height:150px;">
+    <div class="container w-50">
+        <div class="row mb-2">
+@*            <h3>Search</h3>*@
+            <input @bind="filter.search" id="search" type="text" class="col-12 col-sm-4 col-lg-6 form-control rounded m-1" placeholder="Movie">
+                <input @bind="filter.age" id="age" type="number" class="col-3 col-sm-3 col-lg-1 form-control rounded m-1" placeholder="Age">
+                <button @onclick="() => Filter()" class="col-1 col-lg-1 col-lg-2 mh-100 text-center rounded m-1 btn-primary" style="color:grey">
+                    <i class=" border-white text-black-50 font-size h6">Search</i>
+                </button>
+                <button @onclick="() => FilterClear()" class="col-1 col-lg-1 col-lg-2 mh-100 text-center rounded m-1 btn-warning" sstyle="color:grey">
+                    <i class="border-white text-black-50 h6">clear search</i>
+                 </button>
+            </Div>
+                <div class="row">
+                    <select class="col-6 col-sm-4 form-control rounded m-1" @bind="filter.genre">
+                        <option value="">Genre</option>
+                        <option value="Actie">Actie</option>
+                        <option value="Avonturen">Avonturen</option>
+                        <option value="Familie">Familie</option>
+                        <option value="Fantasy">Fantasy</option>
+                        <option value="Horror">Horror</option>
+                        <option value="Komedie">Komedie</option>
+                        <option value="Misdaad">Misdaad</option>
+                        <option value="Musical">Musical</option>
+                        <option value="Muziek">Muziek</option>
+                        <option value="Thriller">Thriller</option>
+                        <option value="Romantische">Romantisch</option>
+                        <option value="Romantische Komedie">Romantische Komedie</option>
+                        <option value="Sciencefiction">Science Fiction</option>
+                        <option value="Tragikomedie">TragiKomedie</option>
+                    </select>
+                <select class="col-5 col-sm-3 form-control rounded m-1" @bind="filter.language">
+                    <option value="">Language</option>
+                    <option value="English">English</option>
+                    <option value="Nederlands">Nederlands</option>
+                    <option value="Francais">Francais</option>
+                </select>
+                    <select class="col-5 col-sm-3 form-control rounded m-1" @bind="filter.specials">
+                    <option value="">Specials</option>
+                    <option value="Ladies Night">Ladies Night</option>
+                    <option value="Horror Night">Horror Night</option>
+                    <option value="Marathon">Marathon</option>
+                </select>
+                <div class="col-1 col-sm-1 checkHolders">
+                    <div class="holder">
+                        <input @bind="filter.threeDee" id="threeDee" type="checkbox" class="col rounded m-1 form-check" placeholder=""> 
+                        <p class="m-0 text-white" style="font-size:10px;">3D?</p>
+                    </div>
+                    <div class="holder">
+                        <input @bind="filter.subtitles" id="subs" type="checkbox" class="col rounded m-1 form-check" placeholder="">  
+                        <p class="m-0 text-white" style="font-size:10px;">Subtitles?</p>
+                        </Div>
+                    </Div>
+                </div>
+        </div>
     </div>
-</div>
 
 <PageTitle>Index</PageTitle>
 
