@@ -10,7 +10,7 @@ namespace BioscoopSysteemAPI.DTOs.PaymentDTOs
 
         public DateTime PaidAt { get; set; }
 
-        public int Amount { get; set; }
+        public decimal Amount { get; set; }
         
         [MaxLength(50)]
         public string PaymentMethod { get; set; }
