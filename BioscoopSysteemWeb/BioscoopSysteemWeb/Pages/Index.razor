@@ -30,7 +30,7 @@
 <h3>@Localizer["Language"]</h3>
 <LanguageSelector />
 
-<div class="d-flex justify-content-center bg-secondary search align-content-center flex-lg-wrap" style="width:1500px; height:150px;">
+<div class="d-flex justify-content-center bg-dark align-content-center flex-lg-wrap" style="width:1500px; height:150px;">
     <div class="container w-50">
         <div class="row mb-2">
 @*            <h3>Search</h3>*@
@@ -39,7 +39,7 @@
                 <button @onclick="() => Filter()" class="col-1 col-lg-1 col-lg-2 mh-100 text-center rounded m-1 btn-primary" style="color:grey">
                     <i class=" border-white text-black-50 font-size h6">Search</i>
                 </button>
-                <button @onclick="() => FilterClear()" class="col-1 col-lg-1 col-lg-2 mh-100 text-center rounded m-1 btn-warning" sstyle="color:grey">
+                <button @onclick="() => FilterClear()" class="col-1 col-lg-1 col-lg-2 mh-100 text-center rounded m-1 btn-secondary" sstyle="color:grey">
                     <i class="border-white text-black-50 h6">clear search</i>
                  </button>
             </Div>
@@ -73,14 +73,14 @@
                     <option value="Horror Night">Horror Night</option>
                     <option value="Marathon">Marathon</option>
                 </select>
-                <div class="col-1 col-sm-1 checkHolders">
+                <div class="col-1 col-sm-1 checkHolders " style="margin-top:-5px">
                     <div class="holder">
                         <input @bind="filter.threeDee" id="threeDee" type="checkbox" class="col rounded m-1 form-check" placeholder=""> 
-                        <p class="m-0 text-white" style="font-size:10px;">3D?</p>
+                        <p class="m-0 text-white form-check-inline" style="font-size:10px;">3D?</p>
                     </div>
-                    <div class="holder">
+                    <div class="holder" style="margin-top:-8px">
                         <input @bind="filter.subtitles" id="subs" type="checkbox" class="col rounded m-1 form-check" placeholder="">  
-                        <p class="m-0 text-white" style="font-size:10px;">Subtitles?</p>
+                        <p class="m-0 text-white form-check-inline" style="font-size:10px;">Subtitles?</p>
                         </Div>
                     </Div>
                 </div>
