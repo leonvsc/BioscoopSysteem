@@ -195,7 +195,7 @@ namespace BioscoopSysteemAPI.Controllers
             PaymentRequest paymentRequest = new PaymentRequest() {
                 Amount = new Amount(Currency.EUR, model.Amount),
                 Description = model.ReservertionId,
-                RedirectUrl = "http://localhost:5047/ticket?ticketId={ticketId}",
+                RedirectUrl = $"http://localhost:5047/ticket?resid={model.ReservertionId}",
                 WebhookUrl = "https://e46b-84-83-28-195.eu.ngrok.io/api/payments/mollieWebhook"
             };
 
@@ -220,7 +220,7 @@ namespace BioscoopSysteemAPI.Controllers
                 {
                     MollieId = mollieId,
                     PaidAt = paidAt,
-                    Amount = Convert.ToInt32(decimal.Parse(payment.Amount.Value, CultureInfo.InvariantCulture)),
+                    Amount = payment.Amount,
                     PaymentMethod = payment.Method,
                     PaymentStatus = payment.Status,
                     ReservationId = int.Parse(payment.Description)
