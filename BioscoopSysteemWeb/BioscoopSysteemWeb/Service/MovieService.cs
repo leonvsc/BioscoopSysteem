@@ -47,7 +47,7 @@ namespace BioscoopSysteemWeb.Service
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync("api/movies/filter", filter);
+                var response = await _httpClient.PostAsJsonAsync("filter", filter);
 
                 if (response.IsSuccessStatusCode)
                 {
