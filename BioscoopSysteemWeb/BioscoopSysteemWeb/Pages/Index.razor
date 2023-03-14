@@ -33,7 +33,7 @@ else
                 </div>
                 <h4>@movie.Name</h4>
                 @* <Button Color="Color.Primary" Clicked="@ShowModal">Kaartjes bestellen</Button> *@
-                <button class="btn btn-primary" @onclick="() => ShowModal()">Kaartjes bestellen</button>
+                <button class="btn btn-primary" @onclick="() => ShowModal(movie.MovieId)">Kaartjes bestellen</button>
                 <a href="/MovieDetails"><button class="btn btn-primary" @onclick="() => GetTicketInfoService.SetMovieId(movie.MovieId)">Meer informatie</button></a>
                 @* <a href="/MovieDetails"><Button Color="Color.Primary" Clicked="@SetMovieId(movie.MovieId)">Kaartjes bestellen</Button></a> *@
                 <div class="content">
@@ -62,8 +62,9 @@ else
         Films = await MovieService.GetMovies();
     }
     
-    private Task ShowModal()
+    private Task ShowModal(int movieId)
     {
+        GetTicketInfoService.SetMovieId(movieId);
         return modalRef.Show();
     }
 
