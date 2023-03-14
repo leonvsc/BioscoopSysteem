@@ -15,8 +15,11 @@
                 Description = "Lorem ipsum dolor sit amet",
                 Price = 12,
                 AllowedAge = 16,
-                ImageUrl = "/Images/Movies/Movie1.jpeg"
-
+                ImageUrl = "/Images/Movies/Movie1.jpeg",
+                Language = "English",
+                Subtitles = true,
+                Genre = "Horror",
+                Specials = "Ladies Night"
                 },
 
                 new Movie(){
@@ -27,7 +30,11 @@
                 Description = "Lorem ipsum dolor sit amet",
                 Price = 9,
                 AllowedAge = 8,
-                ImageUrl = "/Images/Movies/Movie2.jpeg"
+                ImageUrl = "/Images/Movies/Movie2.jpeg",
+                Language = "English",
+                Subtitles = true,
+                Genre = "Horror",
+                Specials = "Ladies Night"
                 },
 
                 new Movie()
@@ -39,7 +46,11 @@
                 Description = "Lorem ipsum dolor sit amet",
                 Price = 12,
                 AllowedAge = 12,
-                ImageUrl = "/Images/Movies/Movie3.jpeg"
+                ImageUrl = "/Images/Movies/Movie3.jpeg",
+                Language = "English",
+                Subtitles = true,
+                Genre = "Horror",
+                Specials = "Ladies Night"
                 }
 
 
