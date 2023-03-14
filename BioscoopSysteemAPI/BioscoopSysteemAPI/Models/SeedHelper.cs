@@ -15,8 +15,11 @@
                 Description = "Lorem ipsum dolor sit amet",
                 Price = 12,
                 AllowedAge = 16,
-                ImageUrl = "/Images/Movies/Movie1.jpeg"
-
+                ImageUrl = "/Images/Movies/Movie1.jpeg",
+                Language = "English",
+                Subtitles = true,
+                Genre = "Horror",
+                Specials = "Ladies Night"
                 },
 
                 new Movie(){
@@ -27,7 +30,11 @@
                 Description = "Lorem ipsum dolor sit amet",
                 Price = 9,
                 AllowedAge = 8,
-                ImageUrl = "/Images/Movies/Movie2.jpeg"
+                ImageUrl = "/Images/Movies/Movie2.jpeg",
+                Language = "English",
+                Subtitles = true,
+                Genre = "Horror",
+                Specials = "Ladies Night"
                 },
 
                 new Movie()
@@ -39,7 +46,11 @@
                 Description = "Lorem ipsum dolor sit amet",
                 Price = 12,
                 AllowedAge = 12,
-                ImageUrl = "/Images/Movies/Movie3.jpeg"
+                ImageUrl = "/Images/Movies/Movie3.jpeg",
+                Language = "English",
+                Subtitles = true,
+                Genre = "Horror",
+                Specials = "Ladies Night"
                 }
 
 
@@ -86,18 +97,22 @@
                 new Payment()
                 {
                 PaymentId = 1,
-                DateTime = DateTime.Now,
+                MollieId = "tr_9x5yAUbWZ2",
+                PaidAt = DateTime.Now,
                 Amount = 24,
                 PaymentMethod = "Ideal",
+                PaymentStatus = "paid",
                 ReservationId = 1
                 },
 
                 new Payment()
                 {
                 PaymentId = 2,
-                DateTime = DateTime.Now,
+                MollieId = "tr_9x5yAUbWZ2",
+                PaidAt = DateTime.Now,
                 Amount = 12,
                 PaymentMethod = "CreditCard",
+                PaymentStatus = "paid",
                 ReservationId = 2
 
                 },
@@ -105,9 +120,11 @@
                 new Payment()
                 {
                 PaymentId = 3,
-                DateTime = DateTime.Now,
+                MollieId = "tr_9x5yAUbWZ2",
+                PaidAt = DateTime.Now,
                 Amount = 12,
                 PaymentMethod = "CreditCard",
+                PaymentStatus = "paid",
                 ReservationId = 3
                 }
 
@@ -126,6 +143,13 @@
                 ReservationId = 1,
                 DateTime = DateTime.Now,
                 Location = "Amsterdam",
+                TicketAmount = 1,
+                Age = "12 tm 65",
+                TotalPrice = 12.00,
+                IsStudent = false,
+                WantsPopcorn = false,
+                WantsVIP = false,
+                WantsKinderfeestje = false,
                 SeatId = 6,
                 MovieId = 1,
                 VisitorId = 1
@@ -136,6 +160,13 @@
                 ReservationId = 2,
                 DateTime = DateTime.Now,
                 Location = "Haarlem",
+                TicketAmount = 1,
+                Age = "65+",
+                TotalPrice = 12.00,
+                IsStudent = false,
+                WantsPopcorn = false,
+                WantsVIP = false,
+                WantsKinderfeestje = false,
                 SeatId = 5,
                 MovieId = 2,
                 VisitorId = 2
@@ -147,6 +178,13 @@
                 ReservationId = 3,
                 DateTime = DateTime.Now,
                 Location = "Zaandam",
+                TicketAmount = 1,
+                Age = "12 tm 65",
+                TotalPrice = 9.00,
+                IsStudent = true,
+                WantsPopcorn = false,
+                WantsVIP = false,
+                WantsKinderfeestje = false,
                 SeatId = 4,
                 MovieId = 3,
                 VisitorId = 3

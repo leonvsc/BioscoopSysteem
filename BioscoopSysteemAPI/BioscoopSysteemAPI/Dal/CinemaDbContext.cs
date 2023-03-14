@@ -30,6 +30,10 @@ namespace BioscoopSysteemAPI
             modelBuilder.Entity<Movie>().HasData(SeedHelper.GetMovieSeeds());
 
             modelBuilder.Entity<Payment>().HasData(SeedHelper.GetPaymentSeeds());
+            
+            modelBuilder.Entity<Payment>()
+                .Property(p => p.Amount)
+                .HasColumnType("float");
 
             modelBuilder.Entity<Reservation>().HasData(SeedHelper.GetReservationSeeds());
 
