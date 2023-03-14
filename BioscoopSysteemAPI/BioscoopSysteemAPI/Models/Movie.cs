@@ -21,10 +21,10 @@ namespace BioscoopSysteemAPI.Models
 
         [MaxLength(255)]
         public string? ImageUrl { get; set; }
-        public Genre genre { get; set; }
-        public Specials specials { get; set; }
-        public string language { get; set; }
-        public bool subtitles { get; set; }
+         public string? genre { get; set; }
+         public string? specials { get; set; }
+         public string? language { get; set; }
+         public bool subtitles { get; set; }
 
 
     }

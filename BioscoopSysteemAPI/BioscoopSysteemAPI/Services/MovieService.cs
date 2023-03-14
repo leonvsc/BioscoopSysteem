@@ -27,7 +27,7 @@ namespace BioscoopSysteemAPI.Service
             foreach (Movie movie in movies)
 			{
 				var check = true;
-                if (filterDTO.genre != null && movie.genre != filterDTO.genre)
+                if (filterDTO.genre != null && movie.genre != filterDTO.genre.ToString())
                 {
                     check = false;
                 }
@@ -39,7 +39,7 @@ namespace BioscoopSysteemAPI.Service
 				{
 					check = false;
 				}
-				if (filterDTO.subtitles != null && movie.subtitles != filterDTO.subtitles)
+                if (filterDTO.subtitles != null && movie.subtitles != filterDTO.subtitles)
                 {
                     check = false;
                 }
@@ -47,17 +47,17 @@ namespace BioscoopSysteemAPI.Service
 				{
 					check = false;
 				}
-        		if (filterDTO.specials != null && movie.specials != filterDTO.specials)
+                if (filterDTO.specials != null && movie.specials != filterDTO.specials.ToString())
                 {
                     check = false;
                 }
-        		if (filterDTO.language != null && movie.language != filterDTO.language)
+                if (filterDTO.language != null && movie.language != filterDTO.language)
                 {
                     check = false;
                 }
 
 
-            if (check)
+                if (check)
 				{
 					moviesToAdd.Add(movie);
 				}

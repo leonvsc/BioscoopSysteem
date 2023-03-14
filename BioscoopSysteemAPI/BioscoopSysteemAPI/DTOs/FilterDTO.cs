@@ -3,11 +3,11 @@
     public class FilterDTO
     {
 
-        public String? search { get; set; }
+        public string? search { get; set; }
         public int? age { get; set; }
         public bool? threeDee { get; set; }
-        public Genre? genre { get; set; }
-        public Specials? specials { get; set; }
+        public string? genre { get; set; }
+        public string? specials { get; set; }
         public string? language { get; set; }
         public bool? subtitles { get; set; }
 

@@ -62,42 +62,43 @@
 <LanguageSelector />
 
 <h3>FilterBar</h3>
+<p>@filter.specials</p>
 <div class="wrap">
     <div class="search">
-        <input @bind="search" id="search" type="text" class="searchTerm" placeholder="@search">
-        <input @bind="age" id="age" type="number" class="searchTerm" placeholder="@age">
-        <select @bind="genre">
-            <option value="@genre">Select</option>
-            <option value="@Genre.Actie">Actie</option>
-            <option value="@Genre.Avonturen">Avonturen</option>
-            <option value="@Genre.Familie">Familie</option>
-            <option value="@Genre.Fantasy">Fantasy</option>
-            <option value="@Genre.Horror">Horror</option>
-            <option value="@Genre.Komedie">Komedie</option>
-            <option value="@Genre.Misdaad">Misdaad</option>
-            <option value="@Genre.Musical">Musical</option>
-            <option value="@Genre.Muziek">Muziek</option>
-            <option value="@Genre.Thriller">Thriller</option>
-            <option value="@Genre.Romantische">Romantisch</option>
-            <option value="@Genre.RomantischeKomedie">Romantische Komedie</option>
-            <option value="@Genre.Sciencefiction">Science Fiction</option>
-            <option value="@Genre.Tragikomedie">TragiKomedie</option>
+        <input @bind="filter.search" id="search" type="text" class="searchTerm" placeholder="">
+        <input @bind="filter.age" id="age" type="number" class="searchTerm" placeholder="">
+        <select @bind="filter.genre">
+            <option value=""></option>
+            <option value="Actie">Actie</option>
+            <option value="Avonturen">Avonturen</option>
+            <option value="Familie">Familie</option>
+            <option value="Fantasy">Fantasy</option>
+            <option value="Horror">Horror</option>
+            <option value="Komedie">Komedie</option>
+            <option value="Misdaad">Misdaad</option>
+            <option value="Musical">Musical</option>
+            <option value="Muziek">Muziek</option>
+            <option value="Thriller">Thriller</option>
+            <option value="Romantische">Romantisch</option>
+            <option value="Romantische Komedie">Romantische Komedie</option>
+            <option value="Sciencefiction">Science Fiction</option>
+            <option value="Tragikomedie">TragiKomedie</option>
         </select>
-        <select @bind="language">
-            <option value="@language">Select</option>
-            <option value="en">English</option>
-            <option value="nl">Nederlands</option>
-            <option value="fr">Francais</option>
+        <select @bind="filter.language">
+            <option value=""></option>
+            <option value="English">English</option>
+            <option value="Nederlands">Nederlands</option>
+            <option value="Francais">Francais</option>
         </select>
-        <select @bind="specials">
-            <option value="@specials">Select</option>
-            <option value="@Specials.LadiesNight">Ladies Night</option>
-            <option value="@Specials.HorrorNight">Horror Night</option>
-            <option value="@Specials.Marathon">Marathon</option>
+        <select @bind="filter.specials">
+            <option value=""></option>
+            <option value="Ladies Night">Ladies Night</option>
+            <option value="Horror Night">Horror Night</option>
+            <option value="Marathon">Marathon</option>
         </select>
-        <input @bind="threeDee" id="threeDee" type="checkbox" class="threeDee" placeholder="@threeDee">
-        <input @bind="subtitles" id="subs" type="checkbox" class="subs" placeholder="@subtitles">
-        <button @onclick="() => Filter(search,age)" class="searchButton">
+        <input @bind="filter.threeDee" id="threeDee" type="checkbox" class="threeDee" placeholder="">
+        <input @bind="filter.subtitles" id="subs" type="checkbox" class="subs" placeholder="">
+        <button @onclick="() => Filter()" class="searchButton">
             <i class="fa fa-search"></i>
         </button>
         <button @onclick="() => FilterClear()" class="searchButton">
@@ -162,8 +163,8 @@ else
 
     private string? search { get; set; } = null;
     private int? age {get;set;}  = null;
-    private Specials? specials { get; set; } = null;
-    private Genre? genre { get; set; } = null;
+    private string? specials { get; set; } = null;
+    private string? genre { get; set; } = null;
     private string? language { get; set; } = null;
     private bool? threeDee { get; set; } = null;
     private bool? subtitles { get; set; } = null;
@@ -187,23 +188,42 @@ else
     }
     private async Task FilterClear()
     {
+        genre = null;
+        threeDee = null;
+        specials = null;
+        age = null;
+        search = null;
+        language = null;
+        subtitles = null;
+        filter.genre = null;
+        filter.threeDee = null;
+        filter.specials = null;
+        filter.age = null;
+        filter.search = null;
+        filter.language = null;
+        filter.subtitles = null;
         Films = await MovieService.GetMovies();
         await InvokeAsync(() =>
                {
                    StateHasChanged();
                });
     }
-    private async Task Filter(string? search, int? age)
+    private async Task Filter()
     {
-        filter.genre = genre;
-        filter.threeDee = threeDee;
-        filter.specials = specials;
-        filter.age = age;
-        filter.search = search;
-        filter.language = language;
-        filter.subtitles = subtitles;
+        if(filter.genre == "")
+        {
+            filter.genre = null;
+        }
+        if(filter.specials == "")
+        {
+            filter.specials = null;
+        }
+        if(filter.language == "")
+        {
+            filter.language = null;
+        }
         Films = await MovieService.GetMovieByFilter(filter);
-
+        
         await InvokeAsync(() =>
                {
                    StateHasChanged();
