@@ -161,13 +161,6 @@ else
     protected override void OnInitialized() => BiosLanguageNotifier.SubscribeLanguageChange(this);
     public void Dispose() => BiosLanguageNotifier.UnsubscribeLanguageChange(this);
 
-    private string? search { get; set; } = null;
-    private int? age {get;set;}  = null;
-    private string? specials { get; set; } = null;
-    private string? genre { get; set; } = null;
-    private string? language { get; set; } = null;
-    private bool? threeDee { get; set; } = null;
-    private bool? subtitles { get; set; } = null;
     EventCallback<string> OnChange { get; set; }
 
 
@@ -188,13 +181,6 @@ else
     }
     private async Task FilterClear()
     {
-        genre = null;
-        threeDee = null;
-        specials = null;
-        age = null;
-        search = null;
-        language = null;
-        subtitles = null;
         filter.genre = null;
         filter.threeDee = null;
         filter.specials = null;
