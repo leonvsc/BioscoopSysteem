@@ -1,5 +1,6 @@
 ﻿@page "/"
 @inject IMovieService MovieService
+@using BioscoopSysteemAPI.DTOs;
 @using BioscoopSysteemWeb.Service
 @using BioscoopSysteemWeb.Service.LanguageService;
 @using Microsoft.Extensions.Localization;
@@ -8,9 +9,70 @@
 @inject BiosLanguageNotifier BiosLanguageNotifier
 @implements IDisposable
 
+<style>
+
+    body {
+        background: #f2f2f2;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    .search {
+        width: 100%;
+        position: relative;
+        display: flex;
+    }
+
+    .searchTerm {
+        width: 100%;
+        border: 3px solid #00B4CC;
+        border-right: none;
+        padding: 5px;
+        height: 20px;
+        border-radius: 5px 0 0 5px;
+        outline: none;
+        color: #9DBFAF;
+    }
+
+        .searchTerm:focus {
+            color: #00B4CC;
+        }
+
+    .searchButton {
+        width: 40px;
+        height: 36px;
+        border: 1px solid #00B4CC;
+        background: #00B4CC;
+        text-align: center;
+        color: #fff;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        font-size: 20px;
+    }
+
+    /*Resize the wrap to see the search bar change!*/
+    .wrap {
+        width: 30%;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin-bottom: 20px;
+    }
+
+</style>
 
 <h3>@Localizer["Language"]</h3>
 <LanguageSelector />
+
+<h3>FilterBar</h3>
+<div class="wrap">
+    <div class="search">
+        <input @bind="search" id="search" type="text" class="searchTerm" placeholder="">
+        <input @bind="age" id="age" type="number" class="searchTerm" placeholder="null">
+        <button @onclick="() => Filter(search,age)" class="searchButton">
+            <i class="fa fa-search"></i>
+        </button>
+    </div>
+</div>
 
 <PageTitle>Index</PageTitle>
 
@@ -37,7 +99,7 @@ else
 {
 
 
-    <div class="container d-flex align-items-center justify-content-center position-relative flex-wrap">
+    <div class="container d-flex align-items-center justify-content-center position-relative flex-wrap" style="margin-top:35px;">
 
         @foreach (var movie in Films)
         {
@@ -65,9 +127,15 @@ else
 
     protected override void OnInitialized() => BiosLanguageNotifier.SubscribeLanguageChange(this);
     public void Dispose() => BiosLanguageNotifier.UnsubscribeLanguageChange(this);
+    
+    private string? search = null;
+    private int? age = null;
+
 
     public IEnumerable<MovieReadDTO>? Films { get; set; }
     private Modal modalRef;
+
+    private FilterDTO filter = new FilterDTO();
 
     // private void SetMovieId(int movieId)
     // {
@@ -78,7 +146,14 @@ else
     {
         Films = await MovieService.GetMovies();
     }
-    
+
+   private async Task Filter(string? search, int? age)
+    {
+        filter.age = age;
+        filter.search = search;
+        Films = await MovieService.GetMovieByFilter(filter);
+    }
+
     private Task ShowModal()
     {
         return modalRef.Show();
