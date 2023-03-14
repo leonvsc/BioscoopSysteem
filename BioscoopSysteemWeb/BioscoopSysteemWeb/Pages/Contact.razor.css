@@ -1,0 +1,15 @@
+﻿form {
+    width: 750px;
+}
+
+.message-field {
+    height: 250px;
+}
+
+.btn {
+    margin: 10px;
+}
+
+.contact-form-group {
+    font-weight: bold;
+}
