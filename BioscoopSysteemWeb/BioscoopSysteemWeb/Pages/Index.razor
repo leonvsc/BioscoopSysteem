@@ -28,41 +28,41 @@
 </style>
 
 <h3>@Localizer["Language"]</h3>
-<LanguageSelector />
+<LanguageSelector style="margin-right:500px;" />
 
 <div class="d-flex justify-content-center bg-dark align-content-center flex-lg-wrap" style="width:1500px; height:150px;">
     <div class="container w-50">
         <div class="row mb-2">
 @*            <h3>Search</h3>*@
-            <input @bind="filter.search" id="search" type="text" class="col-12 col-sm-4 col-lg-6 form-control rounded m-1" placeholder="Movie">
-                <input @bind="filter.age" id="age" type="number" class="col-3 col-sm-3 col-lg-1 form-control rounded m-1" placeholder="Age">
+            <input @bind="filter.search" id="search" type="text" class="col-12 col-sm-4 col-lg-6 form-control rounded m-1" placeholder="@Localizer["Movie"]">
+                <input @bind="filter.age" id="age" type="number" class="col-3 col-sm-3 col-lg-1 form-control rounded m-1" placeholder="@Localizer["Age"]">
                 <button @onclick="() => Filter()" class="col-1 col-lg-1 col-lg-2 mh-100 text-center rounded m-1 btn-primary" style="color:grey">
-                    <i class=" border-white text-black-50 font-size h6">Search</i>
+                    <i class=" border-white text-black-50 font-size h6">@Localizer["Search"]</i>
                 </button>
                 <button @onclick="() => FilterClear()" class="col-1 col-lg-1 col-lg-2 mh-100 text-center rounded m-1 btn-secondary" sstyle="color:grey">
-                    <i class="border-white text-black-50 h6">clear search</i>
+                    <i class="border-white text-black-50 h6">@Localizer["Clear Filter"]</i>
                  </button>
             </Div>
                 <div class="row">
                     <select class="col-6 col-sm-4 form-control rounded m-1" @bind="filter.genre">
                         <option value="">Genre</option>
-                        <option value="Actie">Actie</option>
-                        <option value="Avonturen">Avonturen</option>
-                        <option value="Familie">Familie</option>
-                        <option value="Fantasy">Fantasy</option>
-                        <option value="Horror">Horror</option>
-                        <option value="Komedie">Komedie</option>
-                        <option value="Misdaad">Misdaad</option>
-                        <option value="Musical">Musical</option>
-                        <option value="Muziek">Muziek</option>
-                        <option value="Thriller">Thriller</option>
-                        <option value="Romantische">Romantisch</option>
-                        <option value="Romantische Komedie">Romantische Komedie</option>
-                        <option value="Sciencefiction">Science Fiction</option>
-                        <option value="Tragikomedie">TragiKomedie</option>
+                        <option value="Actie">@Localizer["Action"]</option>
+                        <option value="Avonturen">@Localizer["Adventure"]</option>
+                        <option value="Familie">@Localizer["Family"]</option>
+                        <option value="Fantasy">@Localizer["Fantasy"]</option>
+                        <option value="Horror">@Localizer["Horror"]</option>
+                        <option value="Komedie">@Localizer["Comedy"]</option>
+                        <option value="Misdaad">@Localizer["Crime"]</option>
+                        <option value="Musical">@Localizer["Musical"]</option>
+                        <option value="Muziek">@Localizer["Music"]</option>
+                        <option value="Thriller">@Localizer["Thriller"]</option>
+                        <option value="Romantische">@Localizer["Romantic"]</option>
+                        <option value="Romantische Komedie">@Localizer["Romcom"]</option>
+                        <option value="Sciencefiction">@Localizer["Science Fiction"]</option>
+                        <option value="Tragikomedie">@Localizer["Tragical Comedy"]</option>
                     </select>
                 <select class="col-5 col-sm-3 form-control rounded m-1" @bind="filter.language">
-                    <option value="">Language</option>
+                    <option value="">@Localizer["Language"]</option>
                     <option value="English">English</option>
                     <option value="Nederlands">Nederlands</option>
                     <option value="Francais">Francais</option>
@@ -80,7 +80,7 @@
                     </div>
                     <div class="holder" style="margin-top:-8px">
                         <input @bind="filter.subtitles" id="subs" type="checkbox" class="col rounded m-1 form-check" placeholder="">  
-                        <p class="m-0 text-white form-check-inline" style="font-size:10px;">Subtitles?</p>
+                        <p class="m-0 text-white form-check-inline" style="font-size:10px;">@Localizer["Subtitles"]?</p>
                         </Div>
                     </Div>
                 </div>
