@@ -1,4 +1,5 @@
 using System.Drawing;
+using System.Globalization;
 using System.Net.Mime;
 using AutoMapper;
 using BioscoopSysteemAPI.DTOs.PaymentDTOs;
@@ -195,7 +196,7 @@ namespace BioscoopSysteemAPI.Controllers
                 Amount = new Amount(Currency.EUR, model.Amount),
                 Description = model.ReservertionId,
                 RedirectUrl = "http://localhost:5047/ticket?ticketId={ticketId}",
-                WebhookUrl = "https://02e8-84-83-28-195.eu.ngrok.io//api/payments/mollieWebhook"
+                WebhookUrl = "https://e46b-84-83-28-195.eu.ngrok.io/api/payments/mollieWebhook"
             };
 
             PaymentResponse paymentResponse = await paymentClient.CreatePaymentAsync(paymentRequest);
@@ -214,8 +215,18 @@ namespace BioscoopSysteemAPI.Controllers
             if (payment != null && payment.Status == "paid")
             {
                 // Payment is successful
-                Console.WriteLine($"Payment with id {mollieId} is successful.");
-                // TODO: handle successful payment
+                DateTime paidAt = payment.PaidAt.HasValue ? payment.PaidAt.Value : default(DateTime);
+                var newPayment = new Payment
+                {
+                    MollieId = mollieId,
+                    PaidAt = paidAt,
+                    Amount = Convert.ToInt32(decimal.Parse(payment.Amount.Value, CultureInfo.InvariantCulture)),
+                    PaymentMethod = payment.Method,
+                    PaymentStatus = payment.Status,
+                    ReservationId = int.Parse(payment.Description)
+                };
+
+                await _paymentRepository.PostPaymentAsync(newPayment);
             }
 
             return Ok();
