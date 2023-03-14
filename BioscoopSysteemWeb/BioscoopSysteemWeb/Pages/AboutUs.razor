@@ -1,0 +1,60 @@
+﻿@inject IStringLocalizer<AboutUs> Localizer
+@inject BiosLanguageNotifier BiosLanguageNotifier
+@implements IDisposable
+
+<h3>@Localizer["Language"]</h3>
+<LanguageSelector />
+
+@page "/about-us"
+@using BioscoopSysteemWeb.Service.LanguageService;
+@using BioscoopSysteemWeb.Service;
+@using Microsoft.Extensions.Localization;
+<h1>@Localizer["About us"]</h1>
+<hr/>
+<br />
+<div>
+    <h2>@Localizer["Welcome to 'The Popcorn Place'!"]</h2>
+    <p>@Localizer["We are excited to announce the opening of our new cinema. Our state-of-the-art theaters feature the latest audio and visual technology, and our comfortable seating and spacious layout ensure that you'll be able to fully immerse yourself in the film."]</p>
+    <h2>@Localizer["Our Movie Selection"]</h2>
+    <p>@Localizer["We are committed to bringing you the best movies from around the world. From blockbuster hits to independent films, we have something for everyone. Our programming team carefully curates our selection to ensure that you'll always find something new and exciting to watch."]</p>
+    <h2>@Localizer["Concessions and Snacks"]</h2>
+    <p>@Localizer["No movie experience is complete without some delicious snacks. That's why we offer a wide selection of concessions, including popcorn, candy, and drinks. We also have a full-service bar, so you can enjoy a beer, wine, or cocktail with your movie."]</p>
+    <h2>@Localizer["Arrangements and services"]</h2>
+    <ul id="arrangement-and-service">
+        <li style="list-style:none"><strong>@Localizer["Popcorn arrangement:"]</strong></li>
+        <li>@Localizer["Large popcorn"]</li>
+        <li>@Localizer["Soft drink"]</li>
+        <br/>
+        <li style="list-style:none"><strong>@Localizer["VIP arrangement:"]</strong></li>
+        <li>@Localizer["Wardrobe"]</li>
+        <li>@Localizer["Free snack/drink during the movie"]</li>
+        <li>@Localizer["Welcome drink"]</li>
+        <li>@Localizer["VIP lounge"]</li>
+        <li>@Localizer["Comfortable VIP seats"]</li>
+        <br/>
+        <li style="list-style:none"><strong>@Localizer["Kids party:"]</strong></li>
+        <li>@Localizer["Movie"]</li>
+        <li>@Localizer["Popcorn"]</li>
+        <li>@Localizer["Gift"]</li>
+    </ul>
+    <h2>@Localizer["Events and Special Screenings"]</h2>
+    <p>@Localizer["In addition to our regular programming, we also host special events and screenings throughout the year. From Q&A sessions with filmmakers to themed movie marathons, there's always something exciting happening at our cinema."]</p>
+    <h2>@Localizer["Membership Program"]</h2>
+    <p>@Localizer["For the ultimate movie-going experience, consider becoming a member of our cinema. Membership includes perks such as discounted tickets, early access to screenings, and special invitations to members-only events. Visit our box office to learn more."]</p>
+    <h2>@Localizer["Contact Us"]</h2>
+    <p>@Localizer["Have a question or comment? We'd love to hear from you. You can reach us by phone at 555-1234 or email us at info@POP.com. You can also follow us on social media for the latest updates and news."]</p>
+    <h2>@Localizer["Route to the cinema"]</h2>
+    <p>@Localizer["Come check us out for yourself and get the full cinema experience at 'The Popcorn Place'!"]</p>
+    <br/>
+    <iframe width="600" height="450" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJIRoqlNehxkcRx3FkvbvvsEY&key=AIzaSyCwyeE_BuGz2D7T0NPKM6_6UUr73-oHnsM"></iframe>
+</div>
+
+@code
+{
+    public void Dispose() => BiosLanguageNotifier.UnsubscribeLanguageChange(this);
+
+    protected override void OnInitialized()
+    {
+        BiosLanguageNotifier.SubscribeLanguageChange(this);
+    }
+}
