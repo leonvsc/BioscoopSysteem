@@ -18,7 +18,12 @@
     <link href="_content/Blazorise/blazorise.css" rel="stylesheet" />
     <link href="_content/Blazorise.Bootstrap/blazorise.bootstrap.css" rel="stylesheet" />
 </head>
-
+<style>
+    body{
+        display:flex;
+        flex-direction:column;
+    }
+</style>
 <body>
     <div id="app">
         <svg class="loading-progress">
@@ -33,28 +38,7 @@
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
-    <div class="socialFooter">
-
-        <div class="socialContainer">
-            <h3 class="socialTitle">Volg ons</h3>
-            <div class="socialRow">
-                <a href="https://www.twitter.com">
-                    <img class="socialImg" src="/img/icons8-twitter.svg" />
-                </a>
-            </div>
-            <div class="socialRow">
-                <a href="https://www.instagram.com">
-                    <img class="socialImg" src="/img/icons8-instagram.svg" />
-                </a>
-            </div>
-            <div class="socialRow">
-                <a href="https://www.facebook.com">
-                    <img class="socialImg" src="/img/icons8-facebook.svg" />
-                </a>
-            </div>
-
-        </div>
-    </div>
+    
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="_content/Blazored.Modal/blazored.modal.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

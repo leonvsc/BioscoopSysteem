@@ -1,5 +1,6 @@
 ﻿@page "/"
 @inject IMovieService MovieService
+@using BioscoopSysteemAPI.DTOs;
 @using BioscoopSysteemWeb.Service
 @using BioscoopSysteemWeb.Service.LanguageService;
 @using Microsoft.Extensions.Localization;
@@ -8,9 +9,83 @@
 @inject BiosLanguageNotifier BiosLanguageNotifier
 @implements IDisposable
 
+<style>
+    .holder{
+        display: flex;
+        flex-direction:row;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+}
+    .checkHolders{
+        margin-left: -10px;
+    }
+
+
+</style>
 
 <h3>@Localizer["Language"]</h3>
-<LanguageSelector />
+<LanguageSelector style="margin-right:500px;" />
+
+<div class="d-flex justify-content-center bg-dark align-content-center flex-lg-wrap" style="width:1500px; height:150px;">
+    <div class="container w-50">
+        <div class="row mb-2">
+@*            <h3>Search</h3>*@
+            <input @bind="filter.search" id="search" type="text" class="col-12 col-sm-4 col-lg-6 form-control rounded m-1" placeholder="@Localizer["Movie"]">
+                <input @bind="filter.age" id="age" type="number" class="col-3 col-sm-3 col-lg-1 form-control rounded m-1" placeholder="@Localizer["Age"]">
+                <button @onclick="() => Filter()" class="col-1 col-lg-1 col-lg-2 mh-100 text-center rounded m-1 btn-primary" style="color:grey">
+                    <i class=" border-white text-black-50 font-size h6">@Localizer["Search"]</i>
+                </button>
+                <button @onclick="() => FilterClear()" class="col-1 col-lg-1 col-lg-2 mh-100 text-center rounded m-1 btn-secondary" sstyle="color:grey">
+                    <i class="border-white text-black-50 h6">@Localizer["Clear Filter"]</i>
+                 </button>
+            </Div>
+                <div class="row">
+                    <select class="col-6 col-sm-4 form-control rounded m-1" @bind="filter.genre">
+                        <option value="">Genre</option>
+                        <option value="Actie">@Localizer["Action"]</option>
+                        <option value="Avonturen">@Localizer["Adventure"]</option>
+                        <option value="Familie">@Localizer["Family"]</option>
+                        <option value="Fantasy">@Localizer["Fantasy"]</option>
+                        <option value="Horror">@Localizer["Horror"]</option>
+                        <option value="Komedie">@Localizer["Comedy"]</option>
+                        <option value="Misdaad">@Localizer["Crime"]</option>
+                        <option value="Musical">@Localizer["Musical"]</option>
+                        <option value="Muziek">@Localizer["Music"]</option>
+                        <option value="Thriller">@Localizer["Thriller"]</option>
+                        <option value="Romantische">@Localizer["Romantic"]</option>
+                        <option value="Romantische Komedie">@Localizer["Romcom"]</option>
+                        <option value="Sciencefiction">@Localizer["Science Fiction"]</option>
+                        <option value="Tragikomedie">@Localizer["Tragical Comedy"]</option>
+                    </select>
+                <select class="col-5 col-sm-3 form-control rounded m-1" @bind="filter.language">
+                    <option value="">@Localizer["Language"]</option>
+                    <option value="English">English</option>
+                    <option value="Nederlands">Nederlands</option>
+                    <option value="Francais">Francais</option>
+                </select>
+                    <select class="col-5 col-sm-3 form-control rounded m-1" @bind="filter.specials">
+                    <option value="">Specials</option>
+                    <option value="Ladies Night">Ladies Night</option>
+                    <option value="Horror Night">Horror Night</option>
+                    <option value="Marathon">Marathon</option>
+                </select>
+                <div class="col-1 col-sm-1 checkHolders " style="margin-top:-5px">
+                    <div class="holder">
+                        <input @bind="filter.threeDee" id="threeDee" type="checkbox" class="col rounded m-1 form-check" placeholder=""> 
+                        <p class="m-0 text-white form-check-inline" style="font-size:10px;">3D?</p>
+                    </div>
+                    <div class="holder" style="margin-top:-8px">
+                        <input @bind="filter.subtitles" id="subs" type="checkbox" class="col rounded m-1 form-check" placeholder="">  
+                        <p class="m-0 text-white form-check-inline" style="font-size:10px;">@Localizer["Subtitles"]?</p>
+                        </Div>
+                    </Div>
+                </div>
+        </div>
+    </div>
 
 <PageTitle>Index</PageTitle>
 
@@ -37,7 +112,7 @@ else
 {
 
 
-    <div class="container d-flex align-items-center justify-content-center position-relative flex-wrap">
+    <div class="container d-flex align-items-center justify-content-center position-relative flex-wrap" style="margin-top:35px;">
 
         @foreach (var movie in Films)
         {
@@ -66,8 +141,14 @@ else
     protected override void OnInitialized() => BiosLanguageNotifier.SubscribeLanguageChange(this);
     public void Dispose() => BiosLanguageNotifier.UnsubscribeLanguageChange(this);
 
+    EventCallback<string> OnChange { get; set; }
+
+
     public IEnumerable<MovieReadDTO>? Films { get; set; }
     private Modal modalRef;
+
+    private FilterDTO filter { get; set; } = new FilterDTO();
+
 
     // private void SetMovieId(int movieId)
     // {
@@ -78,7 +159,43 @@ else
     {
         Films = await MovieService.GetMovies();
     }
-    
+    private async Task FilterClear()
+    {
+        filter.genre = null;
+        filter.threeDee = null;
+        filter.specials = null;
+        filter.age = null;
+        filter.search = null;
+        filter.language = null;
+        filter.subtitles = null;
+        Films = await MovieService.GetMovies();
+        await InvokeAsync(() =>
+               {
+                   StateHasChanged();
+               });
+    }
+    private async Task Filter()
+    {
+        if(filter.genre == "")
+        {
+            filter.genre = null;
+        }
+        if(filter.specials == "")
+        {
+            filter.specials = null;
+        }
+        if(filter.language == "")
+        {
+            filter.language = null;
+        }
+        Films = await MovieService.GetMovieByFilter(filter);
+        
+        await InvokeAsync(() =>
+               {
+                   StateHasChanged();
+               });
+    }
+
     private Task ShowModal()
     {
         return modalRef.Show();
