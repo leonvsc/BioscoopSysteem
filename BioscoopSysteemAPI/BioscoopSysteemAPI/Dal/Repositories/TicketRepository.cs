@@ -49,9 +49,22 @@ namespace BioscoopSysteemAPI.Dal.Repository
 
         public async Task<ActionResult<Ticket>> PutTicketAsync(int id, Ticket ticket)
         {
+            var domainTicket = await _cinemaDbContext.Tickets.FindAsync(id);
 
-            var domainTicket = _cinemaDbContext.Tickets.Find(id);
+            if (domainTicket == null)
+            {
+                return null;
+            }
 
+            domainTicket.TicketId = ticket.TicketId;
+            domainTicket.DateTime = ticket.DateTime;
+            domainTicket.MovieName = ticket.MovieName;
+            domainTicket.Quantity = ticket.Quantity;
+            domainTicket.SeatId = ticket.SeatId;
+            domainTicket.VisitorId = ticket.VisitorId;
+            domainTicket.RoomId = ticket.RoomId;
+            domainTicket.PaymentId = ticket.PaymentId;
+            
             await _cinemaDbContext.SaveChangesAsync();
 
             return domainTicket;

@@ -50,7 +50,16 @@ namespace BioscoopSysteemAPI.Dal.Repository
         public async Task<ActionResult<Room>> PutRoomAsync(int id, Room room)
         {
 
-            var domainRoom = _cinemaDbContext.Rooms.Find(id);
+            var domainRoom = await _cinemaDbContext.Rooms.FindAsync(id);
+
+            if (domainRoom == null)
+            {
+                return null;
+            }
+
+            domainRoom.RoomId = room.RoomId;
+            domainRoom.InUse = room.InUse;
+            domainRoom.NumberOfSeatsAvailable = room.NumberOfSeatsAvailable;
 
             await _cinemaDbContext.SaveChangesAsync();
 
