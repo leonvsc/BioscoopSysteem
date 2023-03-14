@@ -40,10 +40,19 @@
     <input class="form-control" type="text" id="totalPrice" placeholder="€ @CalculatePrice()" readonly>
     <br/>
     <button type="submit" class="btn btn-primary">Betalen</button>
+    
+    <h1>MovieId = @MovieId</h1>
 </EditForm>
 
 @code {
     private ReservationModel Reservation = new ReservationModel();
+    
+    private int MovieId { get; set; }
+    
+    protected override void OnInitialized()
+    {
+        MovieId = GetTicketInfoService.GetMovieId();
+    }
     
     private double CalculatePrice()
     {
@@ -105,7 +114,7 @@
             WantsKinderfeestje = Reservation.WantsKinderfeestje,
             TotalPrice = CalculatePrice(),
             SeatId = 6,
-            MovieId = 1,
+            MovieId = MovieId,
             VisitorId = 1
         };
         
