@@ -3,58 +3,64 @@
 @using BioscoopSysteemWeb.Models
 @using System.Web
 @using System.Text.Json
+@using BioscoopSysteemWeb.Service
+@inject IMovieService MovieService
 @inject GetTicketInfoService GetTicketInfoService
 @inject NavigationManager NavigationManager
 
 <PageTitle>Bestellen</PageTitle>
-
 <h1>Kaartjes bestellen</h1>
 
-<p>Hier kunnen de kaartjes besteld worden</p>
-<EditForm Model="Reservation" OnValidSubmit="HandleValidSubmit" OnInitialized="Initialize">
-    <div class="form-group">
-        <label for="ticket-count">Aantal tickets:</label>
-        <input id="ticket-count" name="AantalTickets" class="form-control" @bind="@Reservation.TicketAmount" />
-        <ValidationMessage For="@(() => Reservation.TicketAmount)" />
-    </div>
+<h3>@MovieId</h3>
+<button @onclick="() => MovieId = GetTicketInfoService.GetMovieId()"></button>
 
-    <div class="form-group">
-        <label for="age">Leeftijd:</label>
-        <select id="age" class="form-control" @bind="@Reservation.Age">
-            <option value="">Maak keuze</option>
-            <option value="t/m 11">t/m 11</option>
-            <option value="12 t/m 65">12 t/m 65</option>
-            <option value="65 +">65 +</option>
-        </select>
-        <ValidationMessage For="@(() => Reservation.Age)" />
-    </div>
+    <p>Hier kunnen de kaartjes besteld worden</p>
+    <EditForm Model="Reservation" OnValidSubmit="HandleValidSubmit" OnInitialized="Initialize">
+        <div class="form-group">
+            <label for="ticket-count">Aantal tickets:</label>
+            <input id="ticket-count" name="AantalTickets" class="form-control" @bind="@Reservation.TicketAmount"/>
+            <ValidationMessage For="@(() => Reservation.TicketAmount)"/>
+        </div>
 
-    <Check TValue="bool" @bind-Checked="@Reservation.IsStudent">Student?</Check>
-    <Check TValue="bool" @bind-Checked="@Reservation.WantsPopcorn">Popcorn arrangement?</Check>
-    <Check TValue="bool" @bind-Checked="@Reservation.WantsVIP">VIP arrangement?</Check>
-    <Check TValue="bool" @bind-Checked="@Reservation.WantsKinderfeestje">Kinderfeestje arrangement?</Check>
-    
+        <div class="form-group">
+            <label for="age">Leeftijd:</label>
+            <select id="age" class="form-control" @bind="@Reservation.Age">
+                <option value="">Maak keuze</option>
+                <option value="t/m 11">t/m 11</option>
+                <option value="12 t/m 65">12 t/m 65</option>
+                <option value="65 +">65 +</option>
+            </select>
+            <ValidationMessage For="@(() => Reservation.Age)"/>
+        </div>
 
-    <br/>
-    <label class="form-check-label" for="totalPrice"><strong>Totaal:</strong></label>
-    <input class="form-control" type="text" id="totalPrice" placeholder="€ @CalculatePrice()" readonly>
-    <br/>
-    <button type="submit" class="btn btn-primary">Betalen</button>
-    
-    <h1>MovieId = @MovieId</h1>
-</EditForm>
+        <Check TValue="bool" @bind-Checked="@Reservation.IsStudent">Student?</Check>
+        <Check TValue="bool" @bind-Checked="@Reservation.WantsPopcorn">Popcorn arrangement?</Check>
+        <Check TValue="bool" @bind-Checked="@Reservation.WantsVIP">VIP arrangement?</Check>
+        <Check TValue="bool" @bind-Checked="@Reservation.WantsKinderfeestje">Kinderfeestje arrangement?</Check>
+
+
+        <br/>
+        <label class="form-check-label" for="totalPrice"><strong>Totaal:</strong></label>
+        <input class="form-control" type="text" id="totalPrice" placeholder="€ @CalculatePrice()" readonly>
+        <br/>
+        <button type="submit" class="btn btn-primary">Betalen</button>
+
+        <h1>MovieId = @MovieId</h1>
+    </EditForm>
 
 @code {
     private ReservationModel Reservation = new ReservationModel();
     
     private int MovieId { get; set; }
+    
+    public MovieReadDTO? Movie { get; set; }
 
     
-    protected override void OnInitialized()
-    {
-        MovieId = GetTicketInfoService.GetMovieId();
-    }
-    
+    // protected override void OnInitialized()
+    // {
+    //     MovieId = GetTicketInfoService.GetMovieId();
+    // }
+
     private double CalculatePrice()
     {
             double price = 0;
