@@ -21,13 +21,10 @@
             <CloseButton />
         </ModalHeader>
         <ModalBody>
-            <OrderTickets></OrderTickets>
+            <OrderTickets MovieId="GetTicketInfoService.GetMovieId()" ></OrderTickets>
         </ModalBody>
     </ModalContent>
 </Modal>
-
-
-
 
 @if (Films == null)
 {
@@ -46,10 +43,8 @@ else
                     <img src="@movie.ImageUrl">
                 </div>
                 <h4>@movie.Name</h4>
-                @* <Button Color="Color.Primary" Clicked="@ShowModal">Kaartjes bestellen</Button> *@
                 <button class="btn btn-primary" @onclick="() => ShowModal(movie.MovieId)">Kaartjes bestellen</button>
                 <a href="/MovieDetails"><button class="btn btn-primary" @onclick="() => GetTicketInfoService.SetMovieId(movie.MovieId)">Meer informatie</button></a>
-                @* <a href="/MovieDetails"><Button Color="Color.Primary" Clicked="@SetMovieId(movie.MovieId)">Kaartjes bestellen</Button></a> *@
                 <div class="content">
                     <p><strong>@Localizer["Description"]: </strong>@movie.Description</p>
                     <p><strong>@Localizer["Price"]: </strong>@movie.Price</p>
@@ -69,11 +64,6 @@ else
 
     public IEnumerable<MovieReadDTO>? Films { get; set; }
     private Modal modalRef;
-
-    // private void SetMovieId(int movieId)
-    // {
-    //     GetTicketInfoService.SetMovieId(movieId);
-    // }
 
     protected override async Task OnInitializedAsync()
     {

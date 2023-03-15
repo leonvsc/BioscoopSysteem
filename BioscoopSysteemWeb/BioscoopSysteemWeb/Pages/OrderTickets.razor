@@ -17,11 +17,7 @@
 
 <PageTitle>Bestellen</PageTitle>
 <h1>Kaartjes bestellen</h1>
-
-<h3>@MovieId</h3>
-<button @onclick="() => MovieId = GetTicketInfoService.GetMovieId()"></button>
-
-    <p>Hier kunnen de kaartjes besteld worden</p>
+<p>Hier kunnen de kaartjes besteld worden</p>
     <EditForm Model="Reservation" OnValidSubmit="HandleValidSubmit" OnInitialized="Initialize">
         <div class="form-group">
             <label for="ticket-count">Aantal tickets:</label>
@@ -51,23 +47,13 @@
         <input class="form-control" type="text" id="totalPrice" placeholder="€ @CalculatePrice()" readonly>
         <br/>
         <button type="submit" class="btn btn-primary">Betalen</button>
-
-        <h1>MovieId = @MovieId</h1>
     </EditForm>
 
 @code {
     private ReservationModel Reservation = new ReservationModel();
     
-    private int MovieId { get; set; }
-    
-    public MovieReadDTO? Movie { get; set; }
-
-
-    
-    // protected override void OnInitialized()
-    // {
-    //     MovieId = GetTicketInfoService.GetMovieId();
-    // }
+    [Parameter]
+    public int MovieId { get; set; }
 
     private double CalculatePrice()
     {

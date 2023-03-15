@@ -195,8 +195,8 @@ namespace BioscoopSysteemAPI.Controllers
             PaymentRequest paymentRequest = new PaymentRequest() {
                 Amount = new Amount(Currency.EUR, model.Amount),
                 Description = model.ReservertionId,
-                RedirectUrl = $"http://localhost:5047/ticket?resid={model.ReservertionId}",
-                WebhookUrl = "https://e46b-84-83-28-195.eu.ngrok.io/api/payments/mollieWebhook"
+                RedirectUrl = "http://localhost:5047/ticket?resid={model.ReservertionId}",
+                WebhookUrl = "https://e2e7-195-230-110-6.eu.ngrok.io/api/payments/mollieWebhook"
             };
 
             PaymentResponse paymentResponse = await paymentClient.CreatePaymentAsync(paymentRequest);

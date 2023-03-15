@@ -27,7 +27,7 @@
 {
     @for (int i = 1; i <= reservation.TicketAmount; i++)
     {
-        <Ticket TicketNumber="@i" TotalPrice="reservation.TotalPrice"/>
+        <Ticket TicketNumber="@i" TotalPrice="reservation.TotalPrice" MovieTitle="movie.Name"/>
     }
 }
 
@@ -43,6 +43,8 @@
     [Parameter]
     public string ResId { get; set; }
     public ReservationModel reservation { get; set; }
+    public MovieModel movie { get; set; }
+
     
     protected override void OnInitialized()
     {
@@ -53,14 +55,20 @@
     
     protected override async Task OnInitializedAsync()
     {
-        reservation = await GetMyModelById();
+        reservation = await GetReservationById();
+        movie = await GetMovieById();
     }
     
-    public async Task<ReservationModel> GetMyModelById()
+    public async Task<ReservationModel> GetReservationById()
     {
         if (!string.IsNullOrEmpty(ResId)) {
             return await HttpClient.GetFromJsonAsync<ReservationModel>($"/api/reservations/{ResId}");
         }
         return null;
+    }
+    
+    public async Task<MovieModel> GetMovieById()
+    {
+        return await HttpClient.GetFromJsonAsync<MovieModel>($"/api/movies/{reservation.MovieId}");
     }
 }
