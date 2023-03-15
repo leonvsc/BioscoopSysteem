@@ -20,6 +20,5 @@ namespace BioscoopSysteemAPI.DTOs.MovieDTOs
         public bool Subtitles { get; set; }
         public string Genre { get; set; }
         public string Specials { get; set; }
-
     }
 }

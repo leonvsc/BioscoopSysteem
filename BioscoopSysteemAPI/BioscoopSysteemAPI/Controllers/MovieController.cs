@@ -1,9 +1,13 @@
 using System.Net.Mime;
 using AutoMapper;
+using BioscoopSysteemAPI.DTOs;
 using BioscoopSysteemAPI.DTOs.MovieDTOs;
 using BioscoopSysteemAPI.Interfaces;
 using BioscoopSysteemAPI.Models;
+using BioscoopSysteemAPI.Service;
 using Microsoft.AspNetCore.Mvc;
+using Mollie.Api.Models;
+using System.Linq;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace BioscoopSysteemAPI.Controllers
@@ -17,11 +21,13 @@ namespace BioscoopSysteemAPI.Controllers
         
         private readonly IMovieRepository _movieRepository;
         private readonly IMapper _mapper;
+        private readonly MovieService _movieService;
 
-        public MovieController(IMovieRepository movieRepository, IMapper mapper )
+        public MovieController(IMovieRepository movieRepository, IMapper mapper)
         {
             _movieRepository = movieRepository;
             _mapper = mapper;
+            _movieService = new MovieService();
         }
 
         // GET: api/movies
@@ -170,6 +176,36 @@ namespace BioscoopSysteemAPI.Controllers
                 int movieId = _movieRepository.PostMovieAsync(domainMovie).Id;
 
                 return CreatedAtAction("GetMovie", new { id = movieId }, movieDto);
+
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
+            }
+        }
+
+        // GET: api/movies/filter
+        /// <summary>
+        /// Get all movies.
+        /// </summary>
+        /// <response code="200">Succesfully returns a filtered movie object.</response>
+        /// <returns>A list of filtered movie objects.</returns>
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpPost("/filter")]
+        public async Task<ActionResult<IEnumerable<Movie>>> GetFilteredMovies(FilterDTO filterDTO)
+        {
+            try
+            {
+                List<Movie> movies = _movieRepository.GetMoviesList();
+                var filteredMovies = _movieService.GetFilteredMovie(filterDTO,movies);
+
+                if (filteredMovies == null)
+                {
+                    return NoContent();
+                }
+                return Ok(filteredMovies);
 
             }
             catch (Exception)
