@@ -64,12 +64,10 @@ namespace BioscoopSysteemAPI.Dal.Repository
             domainMovie.Price = movie.Price;
             domainMovie.AllowedAge = movie.AllowedAge;
             domainMovie.ImageUrl = movie.ImageUrl;
-            
-            // TODO: Uncomment after merge BIOS-107
-            // domainMovie.Language = movie.Language;
-            // domainMovie.Subtitles = movie.Subtitles;
-            // domainMovie.Genre = movie.Genre;
-            // domainMovie.Specials = movie.Specials;
+            domainMovie.Language = movie.Language;
+            domainMovie.Subtitles = movie.Subtitles;
+            domainMovie.Genre = movie.Genre;
+            domainMovie.Specials = movie.Specials;
 
             await _cinemaDbContext.SaveChangesAsync();
 

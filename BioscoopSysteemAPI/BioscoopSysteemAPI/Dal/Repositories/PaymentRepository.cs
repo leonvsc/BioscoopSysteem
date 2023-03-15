@@ -57,15 +57,12 @@ namespace BioscoopSysteemAPI.Dal.Repository
             }
 
             domainPayment.PaymentId = payment.PaymentId;
-            domainPayment.DateTime = payment.DateTime; // TODO: Mag eruit na merge BIOS-107
             domainPayment.Amount = payment.Amount;
             domainPayment.PaymentMethod = payment.PaymentMethod;
             domainPayment.ReservationId = payment.ReservationId;
-
-            // TODO: Uncomment after merge BIOS-107
-            // domainPayment.MollieId = payment.MollieId;
-            // domainPayment.PaidAt = payment.PaidAt;
-            // domainPayment.PaymentStatus = payment.PaymentStatus;
+            domainPayment.MollieId = payment.MollieId;
+            domainPayment.PaidAt = payment.PaidAt;
+            domainPayment.PaymentStatus = payment.PaymentStatus;
 
             await _cinemaDbContext.SaveChangesAsync();
 
