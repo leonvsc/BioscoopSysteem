@@ -4,6 +4,7 @@ using BioscoopSysteemAPI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BioscoopSysteemAPI.Migrations
 {
     [DbContext(typeof(CinemaDbContext))]
-    partial class CinemaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230314103303_BIOS-107-DatabaseUpdate-Added4FieldsToMovieModel")]
+    partial class BIOS107DatabaseUpdateAdded4FieldsToMovieModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,7 +84,7 @@ namespace BioscoopSysteemAPI.Migrations
                             MovieId = 1,
                             Add3DMovie = true,
                             AllowedAge = (byte)16,
-                            Date = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(3803),
+                            Date = new DateTime(2023, 3, 14, 11, 33, 3, 131, DateTimeKind.Local).AddTicks(3605),
                             Description = "Lorem ipsum dolor sit amet",
                             Genre = "Horror",
                             ImageUrl = "/Images/Movies/Movie1.jpeg",
@@ -96,7 +99,7 @@ namespace BioscoopSysteemAPI.Migrations
                             MovieId = 2,
                             Add3DMovie = false,
                             AllowedAge = (byte)8,
-                            Date = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(3838),
+                            Date = new DateTime(2023, 3, 14, 11, 33, 3, 131, DateTimeKind.Local).AddTicks(3641),
                             Description = "Lorem ipsum dolor sit amet",
                             Genre = "Horror",
                             ImageUrl = "/Images/Movies/Movie2.jpeg",
@@ -111,7 +114,7 @@ namespace BioscoopSysteemAPI.Migrations
                             MovieId = 3,
                             Add3DMovie = true,
                             AllowedAge = (byte)12,
-                            Date = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(3841),
+                            Date = new DateTime(2023, 3, 14, 11, 33, 3, 131, DateTimeKind.Local).AddTicks(3645),
                             Description = "Lorem ipsum dolor sit amet",
                             Genre = "Horror",
                             ImageUrl = "/Images/Movies/Movie3.jpeg",
@@ -163,8 +166,8 @@ namespace BioscoopSysteemAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentId"));
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
 
                     b.Property<string>("MollieId")
                         .IsRequired()
@@ -193,9 +196,9 @@ namespace BioscoopSysteemAPI.Migrations
                         new
                         {
                             PaymentId = 1,
-                            Amount = 24.0,
+                            Amount = 24,
                             MollieId = "tr_9x5yAUbWZ2",
-                            PaidAt = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(3865),
+                            PaidAt = new DateTime(2023, 3, 14, 11, 33, 3, 131, DateTimeKind.Local).AddTicks(3669),
                             PaymentMethod = "Ideal",
                             PaymentStatus = "paid",
                             ReservationId = 1
@@ -203,9 +206,9 @@ namespace BioscoopSysteemAPI.Migrations
                         new
                         {
                             PaymentId = 2,
-                            Amount = 12.0,
+                            Amount = 12,
                             MollieId = "tr_9x5yAUbWZ2",
-                            PaidAt = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(3873),
+                            PaidAt = new DateTime(2023, 3, 14, 11, 33, 3, 131, DateTimeKind.Local).AddTicks(3674),
                             PaymentMethod = "CreditCard",
                             PaymentStatus = "paid",
                             ReservationId = 2
@@ -213,9 +216,9 @@ namespace BioscoopSysteemAPI.Migrations
                         new
                         {
                             PaymentId = 3,
-                            Amount = 12.0,
+                            Amount = 12,
                             MollieId = "tr_9x5yAUbWZ2",
-                            PaidAt = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(3916),
+                            PaidAt = new DateTime(2023, 3, 14, 11, 33, 3, 131, DateTimeKind.Local).AddTicks(3676),
                             PaymentMethod = "CreditCard",
                             PaymentStatus = "paid",
                             ReservationId = 3
@@ -278,7 +281,7 @@ namespace BioscoopSysteemAPI.Migrations
                         {
                             ReservationId = 1,
                             Age = "12 tm 65",
-                            DateTime = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(4436),
+                            DateTime = new DateTime(2023, 3, 14, 11, 33, 3, 131, DateTimeKind.Local).AddTicks(3694),
                             IsStudent = false,
                             Location = "Amsterdam",
                             MovieId = 1,
@@ -294,7 +297,7 @@ namespace BioscoopSysteemAPI.Migrations
                         {
                             ReservationId = 2,
                             Age = "65+",
-                            DateTime = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(4447),
+                            DateTime = new DateTime(2023, 3, 14, 11, 33, 3, 131, DateTimeKind.Local).AddTicks(3704),
                             IsStudent = false,
                             Location = "Haarlem",
                             MovieId = 2,
@@ -310,7 +313,7 @@ namespace BioscoopSysteemAPI.Migrations
                         {
                             ReservationId = 3,
                             Age = "12 tm 65",
-                            DateTime = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(4450),
+                            DateTime = new DateTime(2023, 3, 14, 11, 33, 3, 131, DateTimeKind.Local).AddTicks(3707),
                             IsStudent = true,
                             Location = "Zaandam",
                             MovieId = 3,
@@ -371,7 +374,7 @@ namespace BioscoopSysteemAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SeatId"));
 
-                    b.Property<int?>("MovieId")
+                    b.Property<int>("MovieId")
                         .HasColumnType("int");
 
                     b.Property<int>("SeatNumber")
@@ -447,7 +450,7 @@ namespace BioscoopSysteemAPI.Migrations
                         new
                         {
                             TicketId = 1,
-                            DateTime = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(4504),
+                            DateTime = new DateTime(2023, 3, 14, 11, 33, 3, 131, DateTimeKind.Local).AddTicks(3752),
                             MovieName = "ScaryMovie",
                             PaymentId = 1,
                             Quantity = 2,
@@ -458,7 +461,7 @@ namespace BioscoopSysteemAPI.Migrations
                         new
                         {
                             TicketId = 2,
-                            DateTime = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(4509),
+                            DateTime = new DateTime(2023, 3, 14, 11, 33, 3, 131, DateTimeKind.Local).AddTicks(3758),
                             MovieName = "AntMan",
                             PaymentId = 2,
                             Quantity = 1,
@@ -469,7 +472,7 @@ namespace BioscoopSysteemAPI.Migrations
                         new
                         {
                             TicketId = 3,
-                            DateTime = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(4511),
+                            DateTime = new DateTime(2023, 3, 14, 11, 33, 3, 131, DateTimeKind.Local).AddTicks(3760),
                             MovieName = "Plane",
                             PaymentId = 3,
                             Quantity = 1,

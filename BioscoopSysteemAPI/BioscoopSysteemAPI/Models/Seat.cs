@@ -9,6 +9,6 @@
         public int SeatRow { get; set; }
 
         // Navigation Property
-        public int MovieId { get; set; }
+        public int? MovieId { get; set; }
     }
 }
