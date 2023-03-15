@@ -4,9 +4,16 @@
 @using System.Web
 @using System.Text.Json
 @using BioscoopSysteemWeb.Service
+@using BioscoopSysteemWeb.Service.LanguageService
+@using Microsoft.Extensions.Localization
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Web
 @inject IMovieService MovieService
-@inject GetTicketInfoService GetTicketInfoService
 @inject NavigationManager NavigationManager
+@inject GetTicketInfoService GetTicketInfoService
+@inject IStringLocalizer<OrderTickets> Localizer
+@inject BiosLanguageNotifier BiosLanguageNotifier
+
 
 <PageTitle>Bestellen</PageTitle>
 <h1>Kaartjes bestellen</h1>
@@ -54,6 +61,7 @@
     private int MovieId { get; set; }
     
     public MovieReadDTO? Movie { get; set; }
+
 
     
     // protected override void OnInitialized()

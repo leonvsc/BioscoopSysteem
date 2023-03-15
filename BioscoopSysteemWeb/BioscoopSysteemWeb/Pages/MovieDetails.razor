@@ -1,8 +1,18 @@
 @page "/MovieDetails"
 @using BioscoopSysteemWeb.Service
+@using BioscoopSysteemWeb.Service.LanguageService;
+@using Microsoft.Extensions.Localization;
 @inject IMovieService MovieService
 @inject IModalService modal 
 @inject GetTicketInfoService GetTicketInfoService
+@inject IStringLocalizer<MovieDetails> Localizer
+@inject BiosLanguageNotifier BiosLanguageNotifier
+@implements IDisposable
+
+
+<h3>@Localizer["Language"]</h3>
+<LanguageSelector />
+
 
 <PageTitle>Details</PageTitle>
 
@@ -27,23 +37,23 @@ else
       </div>
 
       <div class="col-md-4">
-        <h3 class="my-3">Beschrijving:</h3>
+        <h3 class="my-3">@Localizer["Description"]:</h3>
         <p>@Movie.Description</p>
-        <h3 class="my-3">Film details</h3>
+                <h3 class="my-3">@Localizer["Movie Details"]:</h3>
         <ul>
-          <li>Tijd van de film: 130 min</li>
-          <li>Datum en tijd: 27 feb 2023, 21:00</li>
-          <li>Film in 3D? Ja</li>
-          <li>Leeftijdsindicatie: @Movie.AllowedAge</li>
+                    <li>@Localizer["Length of Movie"]: 130 min</li>
+                    <li>@Localizer["Time and Date"]: 27 feb 2023, 21:00</li>
+                    <li>@Localizer["3D Movie"]? Ja</li>
+                    <li>@Localizer["PG"]: @Movie.AllowedAge</li>
         </ul>
-        <button @onclick="@(() => modal.Show<OrderTickets>("Bestellen"))" class="btn btn-primary">Kaartjes bestellen</button>
+                <button @onclick="@(() => modal.Show<OrderTickets>("Bestellen"))" class="btn btn-primary">@Localizer["Order Tickets"]</button>
       </div>
 
     </div>
     <!-- /.row -->
 
     <!-- Related Projects Row -->
-    <h3 class="my-4">Andere films</h3>
+        <h3 class="my-4">@Localizer["Other Movies"]</h3>
 
     <div class="row">
       @if (Films != null)
@@ -66,6 +76,9 @@ else
 }
 
 @code {
+
+    public void Dispose() => BiosLanguageNotifier.UnsubscribeLanguageChange(this);
+
   private int MovieId { get; set; }
   public MovieReadDTO? Movie { get; set; }
   public IEnumerable<MovieReadDTO>? Films { get; set; }
@@ -73,6 +86,7 @@ else
   protected override void OnInitialized()
   {
     MovieId = GetTicketInfoService.GetMovieId();
+        BiosLanguageNotifier.SubscribeLanguageChange(this);
   }
   
   protected override async Task OnInitializedAsync()
