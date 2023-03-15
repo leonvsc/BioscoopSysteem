@@ -20,12 +20,10 @@ namespace BioscoopSysteemAPI.Models
         public byte AllowedAge { get; set; }
 
         [MaxLength(255)]
-        public string? ImageUrl { get; set; }
-         public string? genre { get; set; }
-         public string? specials { get; set; }
-         public string? language { get; set; }
-         public bool subtitles { get; set; }
-
-
+        public string? ImageUrl { get; set; }       
+        public string Language { get; set; }
+        public bool Subtitles { get; set; }
+        public string Genre { get; set; }
+        public string Specials { get; set; }
     }
 }
