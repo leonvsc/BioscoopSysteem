@@ -214,8 +214,34 @@ namespace BioscoopSysteemAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Get all Rooms in a movie.
+        /// </summary>
+        /// <param name="id">Movie Id</param>
+        /// <returns>A list of room objects.</returns>
+        /// <response code="200">Succesfully returns the room objects.</response>
+        /// <response code="400">Error: Response with this is a bad request.</response>
+        /// <response code="404">Error: The object you are looking for is not found.</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpGet("{id}/movie/rooms")]
+        public async Task<ActionResult<IEnumerable<Room>>> GetAllRoomsOfAMovie(int id)
+        {
+            var getAllRoomsOfAMovie = await _movieRepository.GetAllRoomsOfAMovieAsync(id);
+
+            int notFound = getAllRoomsOfAMovie.Count();
+
+            if (notFound > 0 )
+            {
+                return Ok(getAllRoomsOfAMovie);
+            }
+            return NotFound();
+        }
+
     }
 }
+
 
 
 

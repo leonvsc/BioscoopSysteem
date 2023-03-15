@@ -6,7 +6,7 @@ namespace BioscoopSysteemAPI.Interfaces
 {
     public interface ISeatRepository
     {
-        Task<ActionResult<IEnumerable<Seat>>> GetSeatsAsync();
+        Task<IEnumerable<Seat>> GetSeatsAsync();
         
         Task<ActionResult<Seat>> GetSeatByIdAsync(int id);
 
@@ -15,5 +15,7 @@ namespace BioscoopSysteemAPI.Interfaces
         Task<ActionResult<Seat>> PutSeatAsync(int id, Seat seat);
 
         Task<ActionResult<Seat>> DeleteSeatAsync(int id);
+
+        Task<IEnumerable<Seat>> GetEmptySeatsForSelectionAsync();
     }
 }
