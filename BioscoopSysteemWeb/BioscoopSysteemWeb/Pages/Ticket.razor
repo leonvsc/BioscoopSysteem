@@ -4,6 +4,22 @@
         <p>Venue: @Location</p>
         <p>Row: @Row Seat: @Seat</p>
         <p>Total price: @TotalPrice</p>
+        
+        @if (WantsPopcorn)
+        {
+            <p>Popcorn Arrangement</p>
+        }
+        
+        @if (WantsVIP)
+        {
+            <p>VIP Arrangement</p>
+        }
+        
+        @if (WantsKinderfeestje)
+        {
+            <p>Kinderfeestje Arrangement</p>
+        }
+        
         <QRCode Value="@TicketNumber.ToString()"/>
     </div>
 
@@ -32,4 +48,13 @@
     
     [Parameter]
     public int Seat { get; set; }
+    
+    [Parameter]
+    public bool WantsPopcorn { get; set; }
+    
+    [Parameter]
+    public bool WantsVIP { get; set; }
+    
+    [Parameter]
+    public bool WantsKinderfeestje { get; set; }
 }

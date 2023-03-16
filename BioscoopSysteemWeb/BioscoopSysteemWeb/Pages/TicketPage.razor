@@ -21,7 +21,7 @@
 {
     @for (int i = 1; i <= reservation.TicketAmount; i++)
     {
-        <Ticket TicketNumber="@i" TotalPrice="reservation.TotalPrice" MovieTitle="@movie.Name" Date="@movie.Date" Location="@reservation.Location" Row="@seat.SeatRow" Seat="@seat.SeatNumber"/>
+        <Ticket TicketNumber="@i" TotalPrice="reservation.TotalPrice" MovieTitle="@movie.Name" Date="@movie.Date" Location="@reservation.Location" Row="@seat.SeatRow" Seat="@seat.SeatNumber" WantsPopcorn="reservation.WantsPopcorn" WantsVIP="reservation.WantsVIP" WantsKinderfeestje="reservation.WantsKinderfeestje"/>
     }
 }
 
