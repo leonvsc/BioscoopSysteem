@@ -5,7 +5,6 @@ namespace BioscoopSysteemAPI.DTOs.SeatDTOs
     public class SeatCreateDTO
     {
         // Properties
-        public int SeatId { get; set; }
         public int SeatNumber { get; set; }
 
         public int SeatRow { get; set; }

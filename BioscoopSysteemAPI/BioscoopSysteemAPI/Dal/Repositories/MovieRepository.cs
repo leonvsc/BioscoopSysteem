@@ -67,6 +67,16 @@ namespace BioscoopSysteemAPI.Dal.Repository
 
             return domainMovie;
         }
+
+        public async Task<IEnumerable<Room>> GetAllRoomsOfAMovieAsync(int id)
+        {
+            var getAllRoomsOfAMovie = await _cinemaDbContext.MovieRoom
+                .Where(m => m.MovieId == id)
+                .Select(m => m.Room)
+                .ToListAsync();
+
+            return getAllRoomsOfAMovie;
+        }
     }
 }
 
