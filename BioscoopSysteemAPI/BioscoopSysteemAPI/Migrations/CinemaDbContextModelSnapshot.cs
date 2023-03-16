@@ -44,9 +44,17 @@ namespace BioscoopSysteemAPI.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<string>("Genre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ImageUrl")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -55,6 +63,13 @@ namespace BioscoopSysteemAPI.Migrations
 
                     b.Property<int>("Price")
                         .HasColumnType("int");
+
+                    b.Property<string>("Specials")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Subtitles")
+                        .HasColumnType("bit");
 
                     b.HasKey("MovieId");
 
@@ -66,33 +81,45 @@ namespace BioscoopSysteemAPI.Migrations
                             MovieId = 1,
                             Add3DMovie = true,
                             AllowedAge = (byte)16,
-                            Date = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2502),
+                            Date = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(3803),
                             Description = "Lorem ipsum dolor sit amet",
+                            Genre = "Horror",
                             ImageUrl = "/Images/Movies/Movie1.jpeg",
+                            Language = "English",
                             Name = "ScaryMovie",
-                            Price = 12
+                            Price = 12,
+                            Specials = "Ladies Night",
+                            Subtitles = true
                         },
                         new
                         {
                             MovieId = 2,
                             Add3DMovie = false,
                             AllowedAge = (byte)8,
-                            Date = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2543),
+                            Date = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(3838),
                             Description = "Lorem ipsum dolor sit amet",
+                            Genre = "Horror",
                             ImageUrl = "/Images/Movies/Movie2.jpeg",
+                            Language = "English",
                             Name = "AntMan",
-                            Price = 9
+                            Price = 9,
+                            Specials = "Ladies Night",
+                            Subtitles = true
                         },
                         new
                         {
                             MovieId = 3,
                             Add3DMovie = true,
                             AllowedAge = (byte)12,
-                            Date = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2546),
+                            Date = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(3841),
                             Description = "Lorem ipsum dolor sit amet",
+                            Genre = "Horror",
                             ImageUrl = "/Images/Movies/Movie3.jpeg",
+                            Language = "English",
                             Name = "Plane",
-                            Price = 12
+                            Price = 12,
+                            Specials = "Ladies Night",
+                            Subtitles = true
                         });
                 });
 
@@ -136,16 +163,24 @@ namespace BioscoopSysteemAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentId"));
 
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
 
-                    b.Property<DateTime>("DateTime")
+                    b.Property<string>("MollieId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PaidAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PaymentMethod")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("PaymentStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ReservationId")
                         .HasColumnType("int");
@@ -158,25 +193,31 @@ namespace BioscoopSysteemAPI.Migrations
                         new
                         {
                             PaymentId = 1,
-                            Amount = 24,
-                            DateTime = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2619),
+                            Amount = 24.0,
+                            MollieId = "tr_9x5yAUbWZ2",
+                            PaidAt = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(3865),
                             PaymentMethod = "Ideal",
+                            PaymentStatus = "paid",
                             ReservationId = 1
                         },
                         new
                         {
                             PaymentId = 2,
-                            Amount = 12,
-                            DateTime = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2624),
+                            Amount = 12.0,
+                            MollieId = "tr_9x5yAUbWZ2",
+                            PaidAt = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(3873),
                             PaymentMethod = "CreditCard",
+                            PaymentStatus = "paid",
                             ReservationId = 2
                         },
                         new
                         {
                             PaymentId = 3,
-                            Amount = 12,
-                            DateTime = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2626),
+                            Amount = 12.0,
+                            MollieId = "tr_9x5yAUbWZ2",
+                            PaidAt = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(3916),
                             PaymentMethod = "CreditCard",
+                            PaymentStatus = "paid",
                             ReservationId = 3
                         });
                 });
@@ -189,8 +230,15 @@ namespace BioscoopSysteemAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReservationId"));
 
+                    b.Property<string>("Age")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsStudent")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Location")
                         .IsRequired()
@@ -203,8 +251,23 @@ namespace BioscoopSysteemAPI.Migrations
                     b.Property<int>("SeatId")
                         .HasColumnType("int");
 
+                    b.Property<int>("TicketAmount")
+                        .HasColumnType("int");
+
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("float");
+
                     b.Property<int>("VisitorId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("WantsKinderfeestje")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("WantsPopcorn")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("WantsVIP")
+                        .HasColumnType("bit");
 
                     b.HasKey("ReservationId");
 
@@ -214,29 +277,50 @@ namespace BioscoopSysteemAPI.Migrations
                         new
                         {
                             ReservationId = 1,
-                            DateTime = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2670),
+                            Age = "12 tm 65",
+                            DateTime = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(4436),
+                            IsStudent = false,
                             Location = "Amsterdam",
                             MovieId = 1,
                             SeatId = 6,
-                            VisitorId = 1
+                            TicketAmount = 1,
+                            TotalPrice = 12.0,
+                            VisitorId = 1,
+                            WantsKinderfeestje = false,
+                            WantsPopcorn = false,
+                            WantsVIP = false
                         },
                         new
                         {
                             ReservationId = 2,
-                            DateTime = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2675),
+                            Age = "65+",
+                            DateTime = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(4447),
+                            IsStudent = false,
                             Location = "Haarlem",
                             MovieId = 2,
                             SeatId = 5,
-                            VisitorId = 2
+                            TicketAmount = 1,
+                            TotalPrice = 12.0,
+                            VisitorId = 2,
+                            WantsKinderfeestje = false,
+                            WantsPopcorn = false,
+                            WantsVIP = false
                         },
                         new
                         {
                             ReservationId = 3,
-                            DateTime = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2677),
+                            Age = "12 tm 65",
+                            DateTime = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(4450),
+                            IsStudent = true,
                             Location = "Zaandam",
                             MovieId = 3,
                             SeatId = 4,
-                            VisitorId = 3
+                            TicketAmount = 1,
+                            TotalPrice = 9.0,
+                            VisitorId = 3,
+                            WantsKinderfeestje = false,
+                            WantsPopcorn = false,
+                            WantsVIP = false
                         });
                 });
 
@@ -287,7 +371,7 @@ namespace BioscoopSysteemAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SeatId"));
 
-                    b.Property<int>("MovieId")
+                    b.Property<int?>("MovieId")
                         .HasColumnType("int");
 
                     b.Property<int>("SeatNumber")
@@ -363,7 +447,7 @@ namespace BioscoopSysteemAPI.Migrations
                         new
                         {
                             TicketId = 1,
-                            DateTime = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2725),
+                            DateTime = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(4504),
                             MovieName = "ScaryMovie",
                             PaymentId = 1,
                             Quantity = 2,
@@ -374,7 +458,7 @@ namespace BioscoopSysteemAPI.Migrations
                         new
                         {
                             TicketId = 2,
-                            DateTime = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2729),
+                            DateTime = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(4509),
                             MovieName = "AntMan",
                             PaymentId = 2,
                             Quantity = 1,
@@ -385,7 +469,7 @@ namespace BioscoopSysteemAPI.Migrations
                         new
                         {
                             TicketId = 3,
-                            DateTime = new DateTime(2023, 3, 9, 16, 18, 4, 180, DateTimeKind.Local).AddTicks(2732),
+                            DateTime = new DateTime(2023, 3, 15, 13, 13, 44, 747, DateTimeKind.Local).AddTicks(4511),
                             MovieName = "Plane",
                             PaymentId = 3,
                             Quantity = 1,
