@@ -27,7 +27,7 @@ namespace BioscoopSysteemWeb.Service
 
             try
             {
-                var response = await _httpClient.PostAsJsonAsync(email, "api/mail/sendmail");
+                var response = await _httpClient.PostAsJsonAsync("api/mail/sendmail", mailDataDto);
 
                 if (response.IsSuccessStatusCode)
                 {

@@ -8,6 +8,12 @@
 @inject IStringLocalizer<Index> Localizer
 @inject BiosLanguageNotifier BiosLanguageNotifier
 @implements IDisposable
+@using BioscoopSysteemWeb.Service;
+@using BioscoopSysteemWeb.Service.Contracts;
+@inject IMailService MailService;
+@{
+    var showClass = IsVisible ? "d-block" : "d-none";
+}
 
 
 <style>
@@ -27,6 +33,23 @@
 
 
 </style>
+
+
+<div class="toast-container p-3 @showClass" data-bs-autohide="true" data-bs-delay="5000">
+    <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Wilt u zich inschrijven voor onze nieuwsbrief?</strong>
+            <button type="button" class="btn-close" aria-label="Close" @onclick="Close"></button>
+        </div>
+
+        <input class="form-control" @bind="email">
+        <button @onclick="() => signUpEmail(email)" class="btn-primary">
+            <Label class="text-black-50">Schrijf in</Label>
+        </button>
+        <h6>@message</h6>
+    </div>
+</div>
+
 
 <h3>@Localizer["Language"]</h3>
 <LanguageSelector style="margin-right:500px;" />
@@ -90,7 +113,6 @@
 
 <PageTitle>Index</PageTitle>
 
-<MailPopUp/>
 
 <Modal @ref="modalRef">
     <ModalContent Centered>
@@ -140,6 +162,53 @@ else
 
 
 @code {
+
+
+    private string? email { get; set; }
+    private string? message { get; set; }
+
+    [Parameter]
+    public bool IsVisible { get; set; } = true;
+
+    [Parameter]
+    public EventCallback<bool> IsVisibleChanged { get; set; }
+
+    [Parameter]
+    public string? HeaderText { get; set; }
+
+    [Parameter]
+    public string? BodyText { get; set; }
+
+    public void Show(string bodyText, string headerText = "")
+    {
+        HeaderText = headerText;
+        BodyText = bodyText;
+        IsVisible = true;
+        StateHasChanged();
+    }
+
+    private void Close()
+    {
+        HeaderText = string.Empty;
+        BodyText = string.Empty;
+        IsVisible = false;
+        StateHasChanged();
+    }
+
+    protected async Task signUpEmail(string email)
+    {
+        if (email == null)
+        {
+            message = "geen mail ingegeven probeer opnieuw";
+        }
+        else
+        {
+            await MailService.SubscribeEmail(email);
+            message = "Success!";
+        }
+
+    }
+
 
     protected override void OnInitialized() => BiosLanguageNotifier.SubscribeLanguageChange(this);
     public void Dispose() => BiosLanguageNotifier.UnsubscribeLanguageChange(this);
