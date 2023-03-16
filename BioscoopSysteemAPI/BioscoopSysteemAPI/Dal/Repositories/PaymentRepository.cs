@@ -49,8 +49,20 @@ namespace BioscoopSysteemAPI.Dal.Repository
 
         public async Task<ActionResult<Payment>> PutPaymentAsync(int id, Payment payment)
         {
+            var domainPayment = await _cinemaDbContext.Payments.FindAsync(id);
 
-            var domainPayment = _cinemaDbContext.Payments.Find(id);
+            if (domainPayment == null)
+            {
+                return null;
+            }
+
+            domainPayment.PaymentId = payment.PaymentId;
+            domainPayment.Amount = payment.Amount;
+            domainPayment.PaymentMethod = payment.PaymentMethod;
+            domainPayment.ReservationId = payment.ReservationId;
+            domainPayment.MollieId = payment.MollieId;
+            domainPayment.PaidAt = payment.PaidAt;
+            domainPayment.PaymentStatus = payment.PaymentStatus;
 
             await _cinemaDbContext.SaveChangesAsync();
 

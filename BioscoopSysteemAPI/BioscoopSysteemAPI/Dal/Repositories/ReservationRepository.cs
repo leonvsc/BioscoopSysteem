@@ -50,7 +50,26 @@ public class ReservationRepository : IReservationRepository
     public async Task<ActionResult<Reservation>> PutReservationAsync(int id, Reservation reservation)
     {
 
-        var domainReservation = _cinemaDbContext.Reservations.Find(id);
+        var domainReservation = await _cinemaDbContext.Reservations.FindAsync(id);
+        
+        if (domainReservation == null)
+        {
+            return null;
+        }
+
+        domainReservation.ReservationId = reservation.ReservationId;
+        domainReservation.DateTime = reservation.DateTime;
+        domainReservation.Location = reservation.Location;
+        domainReservation.SeatId = reservation.SeatId;
+        domainReservation.MovieId = reservation.MovieId;
+        domainReservation.VisitorId = reservation.VisitorId;
+        domainReservation.TicketAmount = reservation.TicketAmount;
+        domainReservation.Age = reservation.Age;
+        domainReservation.TotalPrice = reservation.TotalPrice;
+        domainReservation.IsStudent = reservation.IsStudent;
+        domainReservation.WantsPopcorn = reservation.WantsPopcorn;
+        domainReservation.WantsVIP = reservation.WantsVIP;
+        domainReservation.WantsKinderfeestje = reservation.WantsKinderfeestje;
 
         await _cinemaDbContext.SaveChangesAsync();
 

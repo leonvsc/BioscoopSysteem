@@ -50,8 +50,18 @@ namespace BioscoopSysteemAPI.Dal.Repository
         public async Task<ActionResult<Visitor>> PutVisitorAsync(int id, Visitor visitor)
         {
 
-            var domainVisitor = _cinemaDbContext.Visitors.Find(id);
+            var domainVisitor = await _cinemaDbContext.Visitors.FindAsync(id);
 
+            if (domainVisitor == null)
+            {
+                return null;
+            }
+
+            domainVisitor.VisitorId = visitor.VisitorId;
+            domainVisitor.FirstName = visitor.FirstName;
+            domainVisitor.LastName = visitor.LastName;
+            domainVisitor.Age = visitor.Age;
+            
             await _cinemaDbContext.SaveChangesAsync();
 
             return domainVisitor;
