@@ -35,15 +35,15 @@
 </style>
 
 
-<div class="toast-container p-3 @showClass" data-bs-autohide="true" data-bs-delay="5000">
+<div class="toast-container p-10 position-absolute p-3 @showClass" data-bs-autohide="true" data-bs-delay="5000" style="transform:translate(-50%,-50%);left: 50%;top: 70%;z-index: 5;">
     <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
             <strong class="me-auto">Wilt u zich inschrijven voor onze nieuwsbrief?</strong>
             <button type="button" class="btn-close" aria-label="Close" @onclick="Close"></button>
         </div>
 
-        <input class="form-control" @bind="email">
-        <button @onclick="() => signUpEmail(email)" class="btn-primary">
+        <input class="w-75 m-2 form-control" placeholder="Email" @bind="email">
+        <button @onclick="() => signUpEmail(email)" class="m-2 btn-primary">
             <Label class="text-black-50">Schrijf in</Label>
         </button>
         <h6>@message</h6>
