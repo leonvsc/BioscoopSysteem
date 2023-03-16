@@ -21,13 +21,13 @@
     <EditForm Model="Reservation" OnValidSubmit="HandleValidSubmit" OnInitialized="Initialize">
         <div class="form-group">
             <label for="ticket-count">Aantal tickets:</label>
-            <input id="ticket-count" name="AantalTickets" class="form-control" @bind="@Reservation.TicketAmount"/>
+            <input id="ticket-count" name="AantalTickets" class="form-control" @bind="@Reservation.TicketAmount" required />
             <ValidationMessage For="@(() => Reservation.TicketAmount)"/>
         </div>
 
         <div class="form-group">
             <label for="age">Leeftijd:</label>
-            <select id="age" class="form-control" @bind="@Reservation.Age">
+            <select id="age" class="form-control" @bind="@Reservation.Age" required>
                 <option value="">Maak keuze</option>
                 <option value="t/m 11">t/m 11</option>
                 <option value="12 t/m 65">12 t/m 65</option>
@@ -38,7 +38,7 @@
         
         <div class="form-group">
             <label for="age">Locatie:</label>
-            <select id="age" class="form-control" @bind="@Reservation.Location">
+            <select id="age" class="form-control" @bind="@Reservation.Location" required>
                 <option value="">Maak keuze</option>
                 <option value="Haarlem">Haarlem</option>
                 <option value="Amsterdam">Amsterdam</option>
