@@ -117,11 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Action" xml:space="preserve">
+    <value>Actie</value>
+  </data>
+  <data name="Adventure" xml:space="preserve">
+    <value>Avontuur</value>
+  </data>
   <data name="Age" xml:space="preserve">
     <value>Leeftijd</value>
   </data>
+  <data name="Clear Filter" xml:space="preserve">
+    <value>Verwijderen</value>
+  </data>
+  <data name="Comedy" xml:space="preserve">
+    <value>Komedie</value>
+  </data>
+  <data name="Crime" xml:space="preserve">
+    <value>Misdaad</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Omschrijving</value>
+  </data>
+  <data name="Family" xml:space="preserve">
+    <value>Familie</value>
+  </data>
+  <data name="Fantasy" xml:space="preserve">
+    <value>Fantasy</value>
+  </data>
+  <data name="Horror" xml:space="preserve">
+    <value>Horror</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Taal</value>
@@ -129,13 +153,40 @@
   <data name="More Information" xml:space="preserve">
     <value>Meer informatie</value>
   </data>
+  <data name="Movie" xml:space="preserve">
+    <value>Film</value>
+  </data>
   <data name="Movies are loading" xml:space="preserve">
     <value>Films worden opgehaald</value>
+  </data>
+  <data name="Music" xml:space="preserve">
+    <value>Muziek</value>
+  </data>
+  <data name="Musical" xml:space="preserve">
+    <value>Musical</value>
   </data>
   <data name="Order Tickets" xml:space="preserve">
     <value>Kaartjes bestellen</value>
   </data>
   <data name="Price" xml:space="preserve">
     <value>Prijs</value>
+  </data>
+  <data name="Romantic" xml:space="preserve">
+    <value>Romantisch</value>
+  </data>
+  <data name="Romcom" xml:space="preserve">
+    <value>Romantische Komedie</value>
+  </data>
+  <data name="Science Fiction" xml:space="preserve">
+    <value>Science Fiction</value>
+  </data>
+  <data name="Searcg" xml:space="preserve">
+    <value>Zoeken</value>
+  </data>
+  <data name="Thriller" xml:space="preserve">
+    <value>Thriller</value>
+  </data>
+  <data name="Tragical Comedy" xml:space="preserve">
+    <value>Tragikomedie</value>
   </data>
 </root>

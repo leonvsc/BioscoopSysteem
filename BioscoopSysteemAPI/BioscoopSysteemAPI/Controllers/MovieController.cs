@@ -1,9 +1,13 @@
 using System.Net.Mime;
 using AutoMapper;
+using BioscoopSysteemAPI.DTOs;
 using BioscoopSysteemAPI.DTOs.MovieDTOs;
 using BioscoopSysteemAPI.Interfaces;
 using BioscoopSysteemAPI.Models;
+using BioscoopSysteemAPI.Service;
 using Microsoft.AspNetCore.Mvc;
+using Mollie.Api.Models;
+using System.Linq;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace BioscoopSysteemAPI.Controllers
@@ -17,11 +21,13 @@ namespace BioscoopSysteemAPI.Controllers
         
         private readonly IMovieRepository _movieRepository;
         private readonly IMapper _mapper;
+        private readonly MovieService _movieService;
 
-        public MovieController(IMovieRepository movieRepository, IMapper mapper )
+        public MovieController(IMovieRepository movieRepository, IMapper mapper)
         {
             _movieRepository = movieRepository;
             _mapper = mapper;
+            _movieService = new MovieService();
         }
 
         // GET: api/movies
@@ -178,8 +184,64 @@ namespace BioscoopSysteemAPI.Controllers
             }
         }
 
+        // GET: api/movies/filter
+        /// <summary>
+        /// Get all movies.
+        /// </summary>
+        /// <response code="200">Succesfully returns a filtered movie object.</response>
+        /// <returns>A list of filtered movie objects.</returns>
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpPost("/filter")]
+        public async Task<ActionResult<IEnumerable<Movie>>> GetFilteredMovies(FilterDTO filterDTO)
+        {
+            try
+            {
+                List<Movie> movies = _movieRepository.GetMoviesList();
+                var filteredMovies = _movieService.GetFilteredMovie(filterDTO,movies);
+
+                if (filteredMovies == null)
+                {
+                    return NoContent();
+                }
+                return Ok(filteredMovies);
+
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
+            }
+        }
+
+        /// <summary>
+        /// Get all Rooms in a movie.
+        /// </summary>
+        /// <param name="id">Movie Id</param>
+        /// <returns>A list of room objects.</returns>
+        /// <response code="200">Succesfully returns the room objects.</response>
+        /// <response code="400">Error: Response with this is a bad request.</response>
+        /// <response code="404">Error: The object you are looking for is not found.</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpGet("{id}/movie/rooms")]
+        public async Task<ActionResult<IEnumerable<Room>>> GetAllRoomsOfAMovie(int id)
+        {
+            var getAllRoomsOfAMovie = await _movieRepository.GetAllRoomsOfAMovieAsync(id);
+
+            int notFound = getAllRoomsOfAMovie.Count();
+
+            if (notFound > 0 )
+            {
+                return Ok(getAllRoomsOfAMovie);
+            }
+            return NotFound();
+        }
+
     }
 }
+
 
 
 
