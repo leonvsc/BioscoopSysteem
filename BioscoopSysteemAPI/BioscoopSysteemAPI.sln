@@ -5,9 +5,9 @@ VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BioscoopSysteemAPI", "BioscoopSysteemAPI\BioscoopSysteemAPI.csproj", "{F8765132-FCF2-4153-8D8F-3F959E4A250E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioscoopSysteemWeb", "..\BioscoopSysteemWeb\BioscoopSysteemWeb\BioscoopSysteemWeb.csproj", "{3DAEBE04-83A7-4DE6-A6E6-7614E24BC3E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BioscoopSysteemWeb", "..\BioscoopSysteemWeb\BioscoopSysteemWeb\BioscoopSysteemWeb.csproj", "{3DAEBE04-83A7-4DE6-A6E6-7614E24BC3E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioscoopSysteemApi.Models", "BioscoopSysteemApi.Models\BioscoopSysteemApi.Models.csproj", "{FF4EE207-FDF0-4D97-B291-03C59E5AE428}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BioscoopSysteemApi.Models", "BioscoopSysteemApi.Models\BioscoopSysteemApi.Models.csproj", "{FF4EE207-FDF0-4D97-B291-03C59E5AE428}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
