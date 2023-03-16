@@ -16,6 +16,18 @@
 
 <PageTitle>Details</PageTitle>
 
+<Modal @ref="modalRef">
+    <ModalContent Centered>
+        <ModalHeader>
+            <ModalTitle>@Localizer["Order Tickets"]</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            <OrderTickets MovieId="GetTicketInfoService.GetMovieId()" ></OrderTickets>
+        </ModalBody>
+    </ModalContent>
+</Modal>
+
 @if (Movie == null)
 {
     <h3>Film worden opgehaald</h3>
@@ -46,7 +58,8 @@ else
                     <li>@Localizer["3D Movie"]? Ja</li>
                     <li>@Localizer["PG"]: @Movie.AllowedAge</li>
         </ul>
-                <button @onclick="@(() => modal.Show<OrderTickets>("Bestellen"))" class="btn btn-primary">@Localizer["Order Tickets"]</button>
+                <button class="btn btn-primary" @onclick="() => ShowModal(MovieId)">Kaartjes bestellen</button>
+        
       </div>
 
     </div>
@@ -82,6 +95,8 @@ else
   private int MovieId { get; set; }
   public MovieReadDTO? Movie { get; set; }
   public IEnumerable<MovieReadDTO>? Films { get; set; }
+  private Modal modalRef;
+
 
   protected override void OnInitialized()
   {
@@ -93,5 +108,11 @@ else
   {
     Movie = await MovieService.GetMovie(MovieId);
     Films = await MovieService.GetMovies();
+  }
+  
+  private Task ShowModal(int movieId)
+  {
+    GetTicketInfoService.SetMovieId(movieId);
+    return modalRef.Show();
   }
 }

@@ -1,11 +1,25 @@
-    <div class="border border-primary p-5 mt-5">
-        <h1>Lord of the rings</h1>
-        <p>Date: May 1, 2023</p>
-        <p>Time: 7:00 PM</p>
-        <p>Venue: Pathé Amsterdam</p>
+    <div class="border border-primary p-5 mt-5 mb-5">
+        <h1>@MovieTitle</h1>
+        <p>Date: @Date</p>
+        <p>Venue: @Location</p>
+        <p>Row: @Row Seat: @Seat</p>
         <p>Total price: @TotalPrice</p>
-        <p>Aantal popcorn: @PopcornAmount</p>
-        <p>Betaalmethode: @PaymentMethod</p>
+        
+        @if (WantsPopcorn)
+        {
+            <p>Popcorn Arrangement</p>
+        }
+        
+        @if (WantsVIP)
+        {
+            <p>VIP Arrangement</p>
+        }
+        
+        @if (WantsKinderfeestje)
+        {
+            <p>Kinderfeestje Arrangement</p>
+        }
+        
         <QRCode Value="@TicketNumber.ToString()"/>
     </div>
 
@@ -15,11 +29,32 @@
     public int TicketNumber { get; set; }
     
     [Parameter]
+    public int ReservationId { get; set; }
+    
+    [Parameter]
     public double TotalPrice { get; set; }
+
+    [Parameter]
+    public string MovieTitle { get; set; }
     
     [Parameter]
-    public double PopcornAmount { get; set; }
+    public DateTime Date { get; set; }
     
     [Parameter]
-    public string PaymentMethod { get; set; }
+    public string Location { get; set; }
+    
+    [Parameter]
+    public int Row { get; set; }
+    
+    [Parameter]
+    public int Seat { get; set; }
+    
+    [Parameter]
+    public bool WantsPopcorn { get; set; }
+    
+    [Parameter]
+    public bool WantsVIP { get; set; }
+    
+    [Parameter]
+    public bool WantsKinderfeestje { get; set; }
 }

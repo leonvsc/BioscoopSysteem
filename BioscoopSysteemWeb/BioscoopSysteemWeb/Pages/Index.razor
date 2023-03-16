@@ -1,12 +1,12 @@
 ﻿@page "/"
 @inject IMovieService MovieService
-@using BioscoopSysteemAPI.DTOs;
-@using BioscoopSysteemWeb.Service
-@using BioscoopSysteemWeb.Service.LanguageService;
-@using Microsoft.Extensions.Localization;
 @inject GetTicketInfoService GetTicketInfoService
 @inject IStringLocalizer<Index> Localizer
 @inject BiosLanguageNotifier BiosLanguageNotifier
+@using BioscoopSysteemWeb.Service
+@using BioscoopSysteemWeb.Service.LanguageService
+@using Microsoft.Extensions.Localization
+@using BioscoopSysteemAPI.DTOs
 @implements IDisposable
 @using BioscoopSysteemWeb.Service;
 @using BioscoopSysteemWeb.Service.Contracts;
@@ -52,7 +52,7 @@
 
 
 <h3>@Localizer["Language"]</h3>
-<LanguageSelector style="margin-right:500px;" />
+<LanguageSelector/>
 
 <div class="d-flex justify-content-center bg-dark align-content-center flex-lg-wrap" style="width:1500px; height:150px;">
     <div class="container w-50">
@@ -121,13 +121,24 @@
             <CloseButton />
         </ModalHeader>
         <ModalBody>
-            <OrderTickets></OrderTickets>
+            <OrderTickets MovieId="GetTicketInfoService.GetMovieId()" ></OrderTickets>
         </ModalBody>
     </ModalContent>
 </Modal>
 
+<Modal @ref="myTickets">
+    <ModalContent Centered>
+        <ModalHeader>
+            <ModalTitle>Get my tickets</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            <GetMyTickets></GetMyTickets>
+        </ModalBody>
+    </ModalContent>
+</Modal>
 
-
+<button class="btn btn-primary mt-3" @onclick="() => ShowMyTickets()">Get my tickets</button>
 
 @if (Films == null)
 {
@@ -146,9 +157,8 @@ else
                     <img src="@movie.ImageUrl">
                 </div>
                 <h4>@movie.Name</h4>
-                <Button Color="Color.Primary" Clicked="@ShowModal">@Localizer["Order Tickets"]</Button>
-                <a href="/MovieDetails"><button class="btn btn-primary" @onclick="() => GetTicketInfoService.SetMovieId(movie.MovieId)">@Localizer["More Information"]</button></a>
-                @* <a href="/MovieDetails"><Button Color="Color.Primary" Clicked="@SetMovieId(movie.MovieId)">Kaartjes bestellen</Button></a> *@
+                <button class="btn btn-primary" @onclick="() => ShowModal(movie.MovieId)">Kaartjes bestellen</button>
+                <a href="/MovieDetails"><button class="btn btn-primary" @onclick="() => GetTicketInfoService.SetMovieId(movie.MovieId)">Meer informatie</button></a>
                 <div class="content">
                     <p><strong>@Localizer["Description"]: </strong>@movie.Description</p>
                     <p><strong>@Localizer["Price"]: </strong>@movie.Price</p>
@@ -218,19 +228,16 @@ else
 
     public IEnumerable<MovieReadDTO>? Films { get; set; }
     private Modal modalRef;
-
+    private Modal myTickets;
     private FilterDTO filter { get; set; } = new FilterDTO();
 
 
-    // private void SetMovieId(int movieId)
-    // {
-    //     GetTicketInfoService.SetMovieId(movieId);
-    // }
 
     protected override async Task OnInitializedAsync()
     {
         Films = await MovieService.GetMovies();
     }
+
     private async Task FilterClear()
     {
         filter.genre = null;
@@ -246,6 +253,7 @@ else
                    StateHasChanged();
                });
     }
+    
     private async Task Filter()
     {
         if(filter.genre == "")
@@ -267,10 +275,16 @@ else
                    StateHasChanged();
                });
     }
-
-    private Task ShowModal()
+    
+    private Task ShowModal(int movieId)
     {
+        GetTicketInfoService.SetMovieId(movieId);
         return modalRef.Show();
+    }
+
+    private Task ShowMyTickets()
+    {
+        return myTickets.Show();
     }
 
     private Task HideModal()

@@ -1,3 +1,5 @@
+using System.Drawing;
+using System.Globalization;
 using System.Net.Mime;
 using AutoMapper;
 using BioscoopSysteemAPI.DTOs.PaymentDTOs;
@@ -9,6 +11,8 @@ using Mollie.Api.Client.Abstract;
 using Mollie.Api.Models;
 using Mollie.Api.Models.Payment.Request;
 using Mollie.Api.Models.Payment.Response;
+using Newtonsoft.Json;
+using QRCoder;
 
 namespace BioscoopSysteemAPI.Controllers
 {
@@ -20,6 +24,8 @@ namespace BioscoopSysteemAPI.Controllers
     {
         private readonly IPaymentRepository _paymentRepository;
         private readonly IMapper _mapper;
+        
+        private IPaymentClient paymentClient = new PaymentClient("test_KKMaBKv5ngVQdxAUx6jpbe9Js5kGg2");
 
         public PaymentController(IPaymentRepository paymentRepository, IMapper mapper)
         {
@@ -186,16 +192,44 @@ namespace BioscoopSysteemAPI.Controllers
         [HttpPost("payWithMollie")]
         public async Task<IActionResult> PayWithMollie(PaymentRequestModel model)
         {
-            IPaymentClient paymentClient = new PaymentClient("test_KKMaBKv5ngVQdxAUx6jpbe9Js5kGg2");
             PaymentRequest paymentRequest = new PaymentRequest() {
                 Amount = new Amount(Currency.EUR, model.Amount),
-                Description = "Test payment of the example project",
-                RedirectUrl = "http://localhost:5047/ticket"
+                Description = model.ReservertionId,
+                RedirectUrl = $"http://localhost:5047/ticket?resid={model.ReservertionId}",
+                WebhookUrl = "https://1538-145-49-57-4.eu.ngrok.io/api/payments/mollieWebhook"
             };
 
             PaymentResponse paymentResponse = await paymentClient.CreatePaymentAsync(paymentRequest);
 
             return Ok(paymentResponse.Links.Checkout.Href);
+        }
+
+        [HttpPost("mollieWebhook")]
+        [Consumes("application/x-www-form-urlencoded")]
+        public async Task<IActionResult> mollieWebhook()
+        {
+            string mollieId = Request.Form["id"];
+
+            PaymentResponse payment = await paymentClient.GetPaymentAsync(mollieId);
+
+            if (payment != null && payment.Status == "paid")
+            {
+                // Payment is successful
+                DateTime paidAt = payment.PaidAt.HasValue ? payment.PaidAt.Value : default(DateTime);
+                var newPayment = new Payment
+                {
+                    MollieId = mollieId,
+                    PaidAt = paidAt,
+                    Amount = payment.Amount,
+                    PaymentMethod = payment.Method,
+                    PaymentStatus = payment.Status,
+                    ReservationId = int.Parse(payment.Description)
+                };
+
+                await _paymentRepository.PostPaymentAsync(newPayment);
+            }
+
+            return Ok();
         }
     }
 }

@@ -1,0 +1,21 @@
+@using BioscoopSysteemWeb.Models
+@inject NavigationManager NavigationManager
+
+<EditForm Model="Reservation" OnValidSubmit="HandleValidSubmit">
+    <div class="form-group">
+        <label for="reservation-id">Reserveringsnummer:</label>
+        <input id="reservation-id" name="Reserveringsnummer" class="form-control" @bind="Reservation.ReservationId"/>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Haal tickets op</button>
+</EditForm>
+
+@code
+{
+    private ReservationModel Reservation = new ReservationModel();
+    
+    private async void HandleValidSubmit()
+    {
+        NavigationManager.NavigateTo($"/ticket?resid={Reservation.ReservationId}");
+    }
+}

@@ -1,29 +1,28 @@
 ﻿@page "/ticket"
-@using BioscoopSysteemWeb.Service
+@using BioscoopSysteemWeb.Models
 @using System.Web
+@using BioscoopSysteemWeb.Service
 @using BioscoopSysteemWeb.Service.LanguageService;
 @using Microsoft.Extensions.Localization;
 @inject IJSRuntime Js
 @inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
 @inject GetTicketInfoService GetTicketInfoService
 @inject IStringLocalizer<TicketPage> Localizer
 @inject BiosLanguageNotifier BiosLanguageNotifier
 @implements IDisposable
 
-
-<h3>@Localizer["Language"]</h3>
-<LanguageSelector />
-
-
 <h3 class="d-print-none">@Localizer["Payment Succeeded"]Betaling geslaagd</h3>
 
 <p class="d-print-none">@Localizer["Your payment is succesfull. Print your ticket below."]</p>
 <button type="button" class="btn btn-primary d-print-none" @onclick="PrintTicket">Print Ticket</button>
-<button type="button" class="btn btn-primary" @onclick="PayMollie">Pay with Mollie</button>
 
-@for (int i = 1; i <= TicketAmount; i++)
+@if (reservation != null)
 {
-    <Ticket TicketNumber="@i" TotalPrice="TotalPrice" PopcornAmount="PopcornAmount" PaymentMethod="@PaymentMethod"/>
+    @for (int i = 1; i <= reservation.TicketAmount; i++)
+    {
+        <Ticket TicketNumber="@i" TotalPrice="reservation.TotalPrice" MovieTitle="@movie.Name" Date="@movie.Date" Location="@reservation.Location" Row="@seat.SeatRow" Seat="@seat.SeatNumber" WantsPopcorn="reservation.WantsPopcorn" WantsVIP="reservation.WantsVIP" WantsKinderfeestje="reservation.WantsKinderfeestje"/>
+    }
 }
 
 @code {
@@ -34,43 +33,44 @@
     {
         await Js.InvokeVoidAsync("printPage");
     }
-
-    private async Task PayMollie()
-    {
-        var httpClient = new HttpClient();
-        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
-
-        var mollieAmount = new PaymentRequestModel { Amount = Convert.ToDecimal(TotalPrice) };
-
-        var response = await httpClient.PostAsJsonAsync("http://localhost:5059/api/payments/payWithMollie", mollieAmount);
-        
-        var paymentLink = await response.Content.ReadAsStringAsync();
-        var mollieUrl = paymentLink.Trim('"');
-        mollieUrl = HttpUtility.UrlDecode(mollieUrl);
-        NavigationManager.NavigateTo(mollieUrl);
-    }
     
-    private int amount;
-    private double price;
-    private string paymentMethod;
-    
-    private int TicketAmount { get; set; }
-    private double TotalPrice { get; set; }
-    private int PopcornAmount { get; set; }
-    private string PaymentMethod { get; set; }
-    
-    public class PaymentRequestModel
-    {
-        public decimal Amount { get; set; }
-    }
+    [Parameter]
+    public string ResId { get; set; }
+    public ReservationModel reservation { get; set; }
+    public MovieModel movie { get; set; }
+    public SeatModel seat { get; set; }
 
+    
     protected override void OnInitialized()
     {
         BiosLanguageNotifier.SubscribeLanguageChange(this);
-        TicketAmount = GetTicketInfoService.GetTicketAmount();
-        TotalPrice = GetTicketInfoService.GetTotalPrice();
-        PopcornAmount = GetTicketInfoService.GetPopcornAmount();
-        PaymentMethod = GetTicketInfoService.GetPaymentMethod();
+        var uri = new Uri(NavigationManager.Uri);
+        var queryParam = HttpUtility.ParseQueryString(uri.Query);
+        ResId = queryParam["resid"];
     }
-
+    
+    protected override async Task OnInitializedAsync()
+    {
+        reservation = await GetReservationById();
+        movie = await GetMovieById();
+        seat = await GetSeatById();
+    }
+    
+    public async Task<ReservationModel> GetReservationById()
+    {
+        if (!string.IsNullOrEmpty(ResId)) {
+            return await HttpClient.GetFromJsonAsync<ReservationModel>($"/api/reservations/{ResId}");
+        }
+        return null;
+    }
+    
+    public async Task<MovieModel> GetMovieById()
+    {
+        return await HttpClient.GetFromJsonAsync<MovieModel>($"/api/movies/{reservation.MovieId}");
+    }
+    
+    public async Task<SeatModel> GetSeatById()
+    {
+        return await HttpClient.GetFromJsonAsync<SeatModel>($"/api/seats/{reservation.SeatId}");
+    }
 }
