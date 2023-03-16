@@ -60,8 +60,25 @@ namespace BioscoopSysteemAPI.Dal.Repository
 
         public async Task<ActionResult<Movie>> PutMovieAsync(int id, Movie movie)
         {
+            var domainMovie = await _cinemaDbContext.Movies.FindAsync(id);
 
-            var domainMovie = _cinemaDbContext.Movies.Find(id);
+            if (domainMovie == null)
+            {
+                return null;
+            }
+
+            domainMovie.MovieId = movie.MovieId;
+            domainMovie.Name = movie.Name;
+            domainMovie.Date = movie.Date;
+            domainMovie.Add3DMovie = movie.Add3DMovie;
+            domainMovie.Description = movie.Description;
+            domainMovie.Price = movie.Price;
+            domainMovie.AllowedAge = movie.AllowedAge;
+            domainMovie.ImageUrl = movie.ImageUrl;
+            domainMovie.Language = movie.Language;
+            domainMovie.Subtitles = movie.Subtitles;
+            domainMovie.Genre = movie.Genre;
+            domainMovie.Specials = movie.Specials;
 
             await _cinemaDbContext.SaveChangesAsync();
 

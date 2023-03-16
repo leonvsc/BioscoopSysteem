@@ -1,0 +1,44 @@
+﻿@inject IStringLocalizer<Contact> Localizer
+@inject BiosLanguageNotifier BiosLanguageNotifier
+@implements IDisposable
+
+<h3>@Localizer["Language"]</h3>
+<LanguageSelector />
+
+@page "/contact"
+@using BioscoopSysteemWeb.Service.LanguageService;
+@using BioscoopSysteemWeb.Service;
+@using Microsoft.Extensions.Localization;
+<h1>@Localizer["Contact us"]</h1>
+<hr />
+<div>
+    <form>
+        <div class="contact-form-group">
+            <label for="name">@Localizer["Name *"]</label>
+            <input type="text" class="form-control" id="name">
+        </div>
+        <div class="contact-form-group">
+            <label for="email">@Localizer["Email address *"]</label>
+            <input type="email" class="form-control" id="email">
+        </div>
+        <div class="contact-form-group">
+            <label for="subject">@Localizer["Subject *"]</label>
+            <input type="subject" class="form-control" id="subject">
+        </div>
+        <div class="contact-form-group">
+            <label for="message">@Localizer["Message *"]</label>
+            <textarea class="form-control message-field" id="message" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">@Localizer["Submit"]</button>
+    </form>
+</div>
+
+@code
+{
+    public void Dispose() => BiosLanguageNotifier.UnsubscribeLanguageChange(this);
+
+    protected override void OnInitialized()
+    {
+        BiosLanguageNotifier.SubscribeLanguageChange(this);
+    }
+}

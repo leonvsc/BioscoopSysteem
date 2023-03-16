@@ -50,7 +50,17 @@ namespace BioscoopSysteemAPI.Dal.Repository
         public async Task<ActionResult<Seat>> PutSeatAsync(int id, Seat seat)
         {
 
-            var domainSeat = _cinemaDbContext.Seats.Find(id);
+            var domainSeat = await _cinemaDbContext.Seats.FindAsync(id);
+            
+            if (domainSeat == null)
+            {
+                return null;
+            }
+
+            domainSeat.SeatId = seat.SeatId;
+            domainSeat.SeatNumber = seat.SeatNumber;
+            domainSeat.SeatRow = seat.SeatRow;
+            domainSeat.MovieId = seat.MovieId;
 
             await _cinemaDbContext.SaveChangesAsync();
 
