@@ -13,6 +13,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7083") });
 builder.Services.AddScoped<IMovieService, MovieService>();
+builder.Services.AddScoped<IMailService, MailService>();
 
 builder.Services
     .AddBlazorise( options =>

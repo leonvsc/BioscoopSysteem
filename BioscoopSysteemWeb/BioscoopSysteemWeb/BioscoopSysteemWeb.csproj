@@ -28,9 +28,6 @@
     <None Remove="Service\Contracts\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Service\Contracts\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\BioscoopSysteemAPI\BioscoopSysteemApi.Models\BioscoopSysteemApi.Models.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
