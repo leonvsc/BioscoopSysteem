@@ -37,9 +37,6 @@
     <Content Include="Pages\Contact.razor.css" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Service\Contracts\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\BioscoopSysteemAPI\BioscoopSysteemApi.Models\BioscoopSysteemApi.Models.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>

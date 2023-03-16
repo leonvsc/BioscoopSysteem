@@ -1,4 +1,5 @@
 @page "/MovieDetails"
+@using BioscoopSysteemAPI.DTOs.SeatDTOs;
 @using BioscoopSysteemWeb.Service
 @using BioscoopSysteemWeb.Service.LanguageService;
 @using Microsoft.Extensions.Localization;
@@ -69,6 +70,10 @@ else
       }
 
     </div>
+        <div class="row">
+          
+
+        </div>
     <!--/.row -->
 
   </div>
@@ -79,19 +84,19 @@ else
 
     public void Dispose() => BiosLanguageNotifier.UnsubscribeLanguageChange(this);
 
-  private int MovieId { get; set; }
-  public MovieReadDTO? Movie { get; set; }
-  public IEnumerable<MovieReadDTO>? Films { get; set; }
+    private int MovieId { get; set; }
+    public MovieReadDTO? Movie { get; set; }
+    public IEnumerable<MovieReadDTO>? Films { get; set; }
 
-  protected override void OnInitialized()
-  {
-    MovieId = GetTicketInfoService.GetMovieId();
+    protected override void OnInitialized()
+    {
+        MovieId = GetTicketInfoService.GetMovieId();
         BiosLanguageNotifier.SubscribeLanguageChange(this);
-  }
-  
-  protected override async Task OnInitializedAsync()
-  {
-    Movie = await MovieService.GetMovie(MovieId);
-    Films = await MovieService.GetMovies();
-  }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Movie = await MovieService.GetMovie(MovieId);
+        Films = await MovieService.GetMovies();
+    }
 }

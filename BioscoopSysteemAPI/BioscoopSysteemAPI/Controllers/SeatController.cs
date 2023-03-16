@@ -188,7 +188,7 @@ namespace BioscoopSysteemAPI.Controllers
         /// <returns>A list of Seat objects.</returns>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet("/emptyseats")]
-        public async Task<ActionResult<IEnumerable<Seat>>> GetEmptySeatsForSelection()
+        public async Task<ActionResult<IEnumerable<SeatReadDTO>>> GetEmptySeatsForSelection()
         {
             try
             {
