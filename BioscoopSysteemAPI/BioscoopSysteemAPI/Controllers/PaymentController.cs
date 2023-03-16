@@ -195,8 +195,8 @@ namespace BioscoopSysteemAPI.Controllers
             PaymentRequest paymentRequest = new PaymentRequest() {
                 Amount = new Amount(Currency.EUR, model.Amount),
                 Description = model.ReservertionId,
-                RedirectUrl = "http://localhost:5047/ticket?resid={model.ReservertionId}",
-                WebhookUrl = "https://e2e7-195-230-110-6.eu.ngrok.io/api/payments/mollieWebhook"
+                RedirectUrl = $"http://localhost:5047/ticket?resid={model.ReservertionId}",
+                WebhookUrl = "https://1cd5-84-83-28-195.eu.ngrok.io/api/payments/mollieWebhook"
             };
 
             PaymentResponse paymentResponse = await paymentClient.CreatePaymentAsync(paymentRequest);
@@ -231,33 +231,5 @@ namespace BioscoopSysteemAPI.Controllers
 
             return Ok();
         }
-
-        // Kan waarschijnlijk verwijderd worden.
-        private void GenerateTickets(PaymentResponse payment)
-        {
-            // Generate a unique ticket ID
-            string ticketId = Guid.NewGuid().ToString();
-
-            // Create a ticket object with the ticket details
-            TicketModel ticket = new TicketModel()
-            {
-                Id = ticketId,
-                Price = payment.Amount.Value,
-                EventName = "Example Event",
-                EventDate = DateTime.Now.AddDays(7),
-                TicketType = "VIP"
-            };
-
-            // Generate a QR code with the ticket ID
-            QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode(ticketId, QRCodeGenerator.ECCLevel.Q);
-            QRCode qrCode = new QRCode(qrCodeData);
-
-            // Convert the QR code to a bitmap image
-            Bitmap qrCodeImage = qrCode.GetGraphic(20);
-
-            // TODO: save the ticket with the QR code image to a file or database
-        }
-
     }
 }

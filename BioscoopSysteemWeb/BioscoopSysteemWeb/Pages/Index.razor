@@ -101,6 +101,20 @@
     </ModalContent>
 </Modal>
 
+<Modal @ref="myTickets">
+    <ModalContent Centered>
+        <ModalHeader>
+            <ModalTitle>Get my tickets</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            <GetMyTickets></GetMyTickets>
+        </ModalBody>
+    </ModalContent>
+</Modal>
+
+<button class="btn btn-primary mt-3" @onclick="() => ShowMyTickets()">Get my tickets</button>
+
 @if (Films == null)
 {
     <h3>@Localizer["Movies are loading"]</h3>
@@ -142,6 +156,7 @@ else
 
     public IEnumerable<MovieReadDTO>? Films { get; set; }
     private Modal modalRef;
+    private Modal myTickets;
     private FilterDTO filter { get; set; } = new FilterDTO();
 
 
@@ -193,6 +208,11 @@ else
     {
         GetTicketInfoService.SetMovieId(movieId);
         return modalRef.Show();
+    }
+
+    private Task ShowMyTickets()
+    {
+        return myTickets.Show();
     }
 
     private Task HideModal()

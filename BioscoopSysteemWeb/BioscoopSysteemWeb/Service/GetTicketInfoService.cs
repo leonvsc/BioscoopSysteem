@@ -10,14 +10,12 @@ public class GetTicketInfoService
 
     public int GetMovieId()
     {
-        Console.WriteLine($"Returning movie ID {_movieId}");
         return _movieId;
     }
 
     public void SetMovieId(int movieId)
     {
         _movieId = movieId;
-        Console.WriteLine($"Movie ID set to {_movieId}");
     }
 
     public int GetTicketAmount()

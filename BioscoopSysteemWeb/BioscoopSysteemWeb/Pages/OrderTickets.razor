@@ -35,6 +35,24 @@
             </select>
             <ValidationMessage For="@(() => Reservation.Age)"/>
         </div>
+        
+        <div class="form-group">
+            <label for="age">Locatie:</label>
+            <select id="age" class="form-control" @bind="@Reservation.Location">
+                <option value="">Maak keuze</option>
+                <option value="Haarlem">Haarlem</option>
+                <option value="Amsterdam">Amsterdam</option>
+                <option value="Rotterdam">Rotterdam</option>
+                <option value="Den Haag">Den Haag</option>
+                <option value="Utrecht">Utrecht</option>
+                <option value="Arnhem">Arnhem</option>
+                <option value="Zwolle">Zwolle</option>
+                <option value="Maastricht">Maastricht</option>
+                <option value="Breda">Breda</option>
+                <option value="Eindhoven">Eindhoven</option>
+            </select>
+            <ValidationMessage For="@(() => Reservation.Location)"/>
+            </div>
 
         <Check TValue="bool" @bind-Checked="@Reservation.IsStudent">Student?</Check>
         <Check TValue="bool" @bind-Checked="@Reservation.WantsPopcorn">Popcorn arrangement?</Check>
@@ -106,7 +124,7 @@
         var addReservation = new ReservationModel
         {
             DateTime = DateTime.Now,
-            Location = "Haarlem",
+            Location = Reservation.Location,
             TicketAmount = Reservation.TicketAmount,
             Age = Reservation.Age,
             IsStudent = Reservation.IsStudent,
@@ -114,7 +132,7 @@
             WantsVIP = Reservation.WantsVIP,
             WantsKinderfeestje = Reservation.WantsKinderfeestje,
             TotalPrice = CalculatePrice(),
-            SeatId = 6,
+            SeatId = 3,
             MovieId = MovieId,
             VisitorId = 1
         };
