@@ -1,0 +1,104 @@
+﻿@page "/UpdateMovie"
+@attribute [Authorize(Roles = "Administration")]
+
+@using BioscoopSysteemWeb.Service
+@inject IMovieService MovieService
+@inject GetTicketInfoService GetTicketInfoService
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<h3>UpdateMovie</h3>
+
+@if (Movie == null)
+{
+    <h3>Film worden opgehaald</h3>
+}
+else
+{
+    <EditForm Model="_movie" OnValidSubmit="@Update">
+
+        <InputNumber @bind-Value="_movie.MovieId"></InputNumber>
+        
+        <div class="form-group">
+            <label>Name</label>
+            <InputText class="form-control" @bind-Value="_movie.Name" placeholder="@Movie.Name"/>
+            <ValidationMessage For="@(() => _movie.Name)"/>
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <InputText class="form-control" @bind-Value="_movie.Description" placeholder="@Movie.Description"/>
+            <ValidationMessage For="@(() => _movie.Description)"/>
+        </div>
+
+        <div class="form-group">
+            <label>Date</label>
+            <InputDate class="form-control" @bind-Value="_movie.Date"/>
+            <ValidationMessage For="@(() => _movie.Date)"/>
+        </div>
+
+        <div class="form-group">
+            <label>3D movie</label>
+            <InputCheckbox class="form-check-input" @bind-Value="_movie.Add3DMovie"/>
+            <ValidationMessage For="@(() => _movie.Add3DMovie)"/>
+        </div>
+
+        <div class="form-group">
+            <label>Price</label>
+            <InputNumber class="form-control" @bind-Value="_movie.Price"/>
+            <ValidationMessage For="@(() => _movie.Price)"/>
+        </div>
+
+        <div class="form-group">
+            <label>AllowedAge</label>
+            <InputNumber class="form-control" @bind-Value="_movieAge"/>
+            <ValidationMessage For="@(() => _movie.AllowedAge)"/>
+        </div>
+
+        <div class="form-group">
+            <label>ImageUrl</label>
+            <InputText class="form-control" @bind-Value="_movie.ImageUrl" placeholder="@Movie.ImageUrl"/>
+            <ValidationMessage For="@(() => _movie.ImageUrl)"/>
+        </div>
+
+        <button class="btn btn-primary mt-2" @onclick="() => _movie.AllowedAge = IntToByte(_movieAge)" type="submit">Add Movie</button>
+    </EditForm>
+}
+
+@code {
+    private int MovieId { get; set; }
+    public MovieReadDTO? Movie { get; set; }
+    private readonly MovieUpdateDTO _movie = new();
+    private int _movieAge;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _movie.Date = DateTime.Now;
+        MovieId = GetTicketInfoService.GetMovieId();
+    }
+  
+    protected override async Task OnInitializedAsync()
+    {
+        Movie = await MovieService.GetMovie(MovieId);
+    }
+
+    // private async void HandleValidSubmit()
+    // {
+    //     await Update(MovieId);
+    // }
+
+    private byte IntToByte(int age)
+    {
+        byte intBytes = (byte)age;
+        return intBytes;
+    }
+
+    private async Task Update()
+    {
+        var response = await Http.PutAsJsonAsync($"/api/movies/{MovieId}",_movie);
+        response.EnsureSuccessStatusCode();
+        NavigationManager.NavigateTo("/AdminPage");
+    }
+    
+}

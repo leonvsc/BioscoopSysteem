@@ -1,12 +1,13 @@
 using BioscoopSysteemWeb;
 using BioscoopSysteemWeb.Service;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-
+using BioscoopSysteemWeb.Service.Contracts;
 using Blazorise;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
-using BioscoopSysteemWeb.Service.Contracts;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using WeatherStation.Client.Shared;
 using BioscoopSysteemWeb.Service.LanguageService;
 using Microsoft.Extensions.Localization;
 using Microsoft.AspNetCore.Builder;
@@ -19,6 +20,12 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5059") });
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<IMailService, MailService>();
+
+builder.Services.AddOidcAuthentication(options =>
+{
+    builder.Configuration.Bind("Auth0", options.ProviderOptions);
+    options.ProviderOptions.ResponseType = "code";
+}).AddAccountClaimsPrincipalFactory<ArrayClaimsPrincipalFactory<RemoteUserAccount>>();
 
 builder.Services
     .AddBlazorise( options =>

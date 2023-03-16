@@ -1,0 +1,71 @@
+﻿@page "/AdminPage"
+@attribute [Authorize(Roles = "Administration")]
+@inject IStringLocalizer<AdminPage> Localizer
+@inject BiosLanguageNotifier BiosLanguageNotifier
+@implements IDisposable
+@inject IMovieService MovieService
+@using BioscoopSysteemWeb.Service
+@using System.Security.Claims
+@using BioscoopSysteemWeb.Service.LanguageService;
+@using Microsoft.Extensions.Localization;
+@inject GetTicketInfoService GetTicketInfoService
+
+<h3>@Localizer["Language"]</h3>
+<LanguageSelector/>
+
+<PageTitle>Index</PageTitle>
+
+<a href="/AddMovie"><button class="btn btn-primary">@Localizer["Add movie"]</button></a>
+
+@if (Films == null)
+{
+    <h3>@Localizer["Loading movies"]</h3>
+}
+else
+{
+    <div class="container d-flex align-items-center justify-content-center position-relative flex-wrap">
+
+        @foreach (var movie in Films)
+        {
+            <div class="card d-flex position-relative flex-column">
+                <div class='imgContainer'>
+                    <img src="@movie.ImageUrl">
+                </div>
+                <h4>@movie.Name</h4>
+                <a href="/UpdateMovie"><button class="btn btn-primary" @onclick="() => GetTicketInfoService.SetMovieId(movie.MovieId)">@Localizer["Update movie"]</button></a>
+                <div class="content">           
+                    <p><strong>@Localizer["Description:"] </strong>@movie.Description</p>
+                    <p><strong>@Localizer["Price:"] </strong>@movie.Price</p>
+                    <p><strong>@Localizer["Age:"] </strong>@movie.AllowedAge</p>
+                    <p><strong>3D: </strong>@movie.Add3DMovie</p>
+                    <p><strong>@Localizer["Date/Time:"] </strong>@movie.Date</p>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+
+
+@code {
+    public IEnumerable<MovieReadDTO>? Films { get; set; }
+    private Modal modalRef;
+
+    public void Dispose() => BiosLanguageNotifier.UnsubscribeLanguageChange(this);
+
+    protected override async Task OnInitializedAsync()
+    {
+        BiosLanguageNotifier.SubscribeLanguageChange(this);
+        Films = await MovieService.GetMovies();
+    }
+    
+    private Task ShowModal()
+    {
+        return modalRef.Show();
+    }
+
+    private Task HideModal()
+    {
+        return modalRef.Hide();
+    }
+}

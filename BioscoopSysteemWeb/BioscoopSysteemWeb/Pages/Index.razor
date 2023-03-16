@@ -111,6 +111,9 @@
 </div>
 
 <PageTitle>Index</PageTitle>
+<AuthorizeView Roles="Administration">
+    <a href="/AdminPage"><button class="btn btn-primary">Admin</button></a>
+</AuthorizeView>
 
 
 <Modal @ref="modalRef">
