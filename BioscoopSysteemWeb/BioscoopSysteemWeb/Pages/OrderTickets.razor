@@ -1,23 +1,32 @@
 @page "/OrderTickets"
 @using BioscoopSysteemWeb.Service
+@using BioscoopSysteemWeb.Service.LanguageService;
+@using Microsoft.Extensions.Localization;
 @inject GetTicketInfoService GetTicketInfoService
 @inject NavigationManager NavigationManager
+@inject IStringLocalizer<OrderTickets> Localizer
+@inject BiosLanguageNotifier BiosLanguageNotifier
+@implements IDisposable
 
-<PageTitle>Bestellen</PageTitle>
 
-<h1>Kaartjes bestellen</h1>
+<h3>@Localizer["Language"]</h3>
+<LanguageSelector />
 
-<p>Hier kunnen de kaartjes besteld worden</p>
+<PageTitle>@Localizer["Order"]</PageTitle>
+
+<h1>@Localizer["Order Tickets"]</h1>
+
+<p>@Localizer["Here you can order your tickets"]</p>
 <form onsubmit="@(() => OnSubmit(amount, CalculatePrice(), popcornAmount, paymentMethod))">
-    <label for="amount"><strong>Aantal tickets:</strong></label> 
+    <label for="amount"><strong>@Localizer["Amount of Tickets"]:</strong></label> 
     <br/>
     <input @bind="amount" type="number" id="amount" name="AantalTickets" class="form-control" required placeholder="Aantal..." min="1" max="10">
 
-    <label for="age-group"><strong>Leeftijd:</strong></label>
+    <label for="age-group"><strong>@Localizer["Age Group"]:</strong></label>
     <select @onchange="SelectedAgeChanged" name="age-group" id="age-group" class="form-select" required>
-        <option value="">Maak keuze</option>
-        <option value="t/m 11">t/m 11</option>
-        <option value="12 t/m 65">12 t/m 65</option>
+        <option value="">@Localizer["Choose"]</option>
+        <option value="t/m 11">@Localizer["To"]11</option>
+        <option value="12 t/m 65">12 @Localizer["To"] 65</option>
         <option value="65 +">65 +</option>
     </select>
     <Check TValue="bool" @bind-Checked="@Student">Student</Check>
@@ -28,7 +37,7 @@
         <input @bind="popcornAmount" type="number" id="popcornAmount" name="popcornAmount" class="form-control" min="0">
     }
     <br/>
-    <label class="form-check-label"><strong>Totaal:</strong></label>
+    <label class="form-check-label"><strong>@Localizer["Total"]:</strong></label>
     <input class="form-control" type="text" placeholder="€ @CalculatePrice()" readonly>
     <br/>
     @* <label for="PaymentType"><strong>Betaalmethode:</strong></label> *@
@@ -39,10 +48,14 @@
     @*     <option value="Creditcard">Creditcard</option> *@
     @* </select> *@
     @* <br/> *@
-    <button type="submit" class="btn btn-primary">Betalen</button>
+    <button type="submit" class="btn btn-primary">@Localizer["Pay"]</button>
 </form>
 
 @code {
+
+    protected override void OnInitialized() => BiosLanguageNotifier.SubscribeLanguageChange(this);
+    public void Dispose() => BiosLanguageNotifier.UnsubscribeLanguageChange(this);
+
     int amount = 0;
     int popcornAmount = 0;
     string paymentMethod = "";

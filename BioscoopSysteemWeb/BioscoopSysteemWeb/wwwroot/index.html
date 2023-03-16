@@ -18,7 +18,12 @@
     <link href="_content/Blazorise/blazorise.css" rel="stylesheet" />
     <link href="_content/Blazorise.Bootstrap/blazorise.bootstrap.css" rel="stylesheet" />
 </head>
-
+<style>
+    body{
+        display:flex;
+        flex-direction:column;
+    }
+</style>
 <body>
     <div id="app">
         <svg class="loading-progress">
@@ -33,6 +38,7 @@
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
+    
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="_content/Microsoft.AspNetCore.Components.WebAssembly.Authentication/AuthenticationService.js"></script>
     <script src="_content/Blazored.Modal/blazored.modal.js"></script>

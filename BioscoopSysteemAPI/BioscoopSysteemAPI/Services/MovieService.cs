@@ -1,70 +1,69 @@
-﻿/*using BioscoopSysteemAPI.Models;
+﻿using BioscoopSysteemAPI.Models;
 using BioscoopSysteemAPI.Dal.Repository;
 using System;
-
+using BioscoopSysteemAPI.DTOs;
+using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using System.Collections;
+using BioscoopSysteemAPI.Interfaces;
 
 namespace BioscoopSysteemAPI.Service
 {
 	public class MovieService
 	{
-		private readonly MovieRepository movieRepository;
 
-		public MovieService(MovieRepository movieRepository)
-		{
-			this.movieRepository = movieRepository;
-		}
-
-		public async Task <IEnumerable<Movie>> GetMovies()
-		{
-			var movies = await this.movieRepository.GetMoviesAsync();
-			if(movies != null)
-            {
-				return movies;
-            }
-			return null;
-		}
-
-
-		public async Task <Movie> GetMovie(int id)
+        public MovieService()
         {
-			var movie = await this.movieRepository.GetMovieByIdAsync(id);
-			if(movie != null)
-            {
-				return movie;
-            }
-			return null;
-        }		
-		
-		public async Task <Movie> Delete(int id)
+		}	
+
+		public List<Movie> GetFilteredMovie(FilterDTO filterDTO,List<Movie> movies)
 		{
-			var movies = await this.movieRepository.DeleteMovieAsync(id);
-			if(movies != null)
+            List<Movie> moviesToAdd = new List<Movie>() ;
+            //var movies = _movieRepository.GetMoviesList();
+            if (!movies.Any())
             {
-				return movies;
+                return null;
             }
-			return null;
-		}
+            foreach (Movie movie in movies)
+			{
+				var check = true;
+                if (filterDTO.genre != null && movie.Genre != filterDTO.genre.ToString())
+                {
+                    check = false;
+                }
+                if (filterDTO.search != null && !movie.Name.ToLower().Contains(filterDTO.search.ToLower()))
+                {
+                    check = false;
+                }
+                if (filterDTO.age != null && movie.AllowedAge > filterDTO.age)
+				{
+					check = false;
+				}
+                if (filterDTO.subtitles != null && movie.Subtitles != filterDTO.subtitles)
+                {
+                    check = false;
+                }
+                if (filterDTO.threeDee != null && movie.Add3DMovie != filterDTO.threeDee)
+				{
+					check = false;
+				}
+                if (filterDTO.specials != null && movie.Specials != filterDTO.specials.ToString())
+                {
+                    check = false;
+                }
+                if (filterDTO.language != null && movie.Language != filterDTO.language)
+                {
+                    check = false;
+                }
 
 
-		public async Task<Movie> Update(int id)
-        {
-			var movie = await this.movieRepository.PutMovieAsync(id);
-			if(movie != null)
-            {
-				return movie;
+                if (check)
+				{
+					moviesToAdd.Add(movie);
+				}
             }
-			return null;
-        }
-		
-		public async Task<Movie> Add(Movie movieInput)
-        {
-			var movie = await this.movieRepository.PostMovieAsync(movieInput);
-			if(movie != null)
-            {
-				return movie;
-            }
-			return null;
+			return moviesToAdd;
+
 		}
-	}
+    }
 }
-*/

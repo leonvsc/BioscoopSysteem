@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BioscoopSysteemAPI.DTOs;
+using System.ComponentModel.DataAnnotations;
 
 namespace BioscoopSysteemAPI.Models
 {
@@ -19,7 +20,10 @@ namespace BioscoopSysteemAPI.Models
         public byte AllowedAge { get; set; }
 
         [MaxLength(255)]
-        public string? ImageUrl { get; set; }
-
+        public string? ImageUrl { get; set; }       
+        public string Language { get; set; }
+        public bool Subtitles { get; set; }
+        public string Genre { get; set; }
+        public string Specials { get; set; }
     }
 }

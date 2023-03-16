@@ -4,17 +4,18 @@ namespace BioscoopSysteemAPI.DTOs.PaymentDTOs
 {
     public class PaymentDeleteDTO
     {
+        // Properties
         public int PaymentId { get; set; }
+        public string MollieId { get; set; }
 
-        public DateTime DateTime { get; set; }
+        public DateTime PaidAt { get; set; }
 
-        public int Amount { get; set; }
-
+        public decimal Amount { get; set; }
+        
         [MaxLength(50)]
         public string PaymentMethod { get; set; }
-
-        // Navigation Property
-
+        
+        public string PaymentStatus { get; set; }
         public int ReservationId { get; set; }
     }
 }
