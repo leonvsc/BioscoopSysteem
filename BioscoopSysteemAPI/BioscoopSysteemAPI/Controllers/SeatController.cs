@@ -3,6 +3,7 @@ using AutoMapper;
 using BioscoopSysteemAPI.DTOs.SeatDTOs;
 using BioscoopSysteemAPI.Interfaces;
 using BioscoopSysteemAPI.Models;
+using BioscoopSysteemAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
@@ -17,6 +18,7 @@ namespace BioscoopSysteemAPI.Controllers
         
         private readonly ISeatRepository _seatRepository;
         private readonly IMapper _mapper;
+ 
 
         public SeatController(ISeatRepository seatRepository, IMapper mapper )
         {
@@ -43,7 +45,7 @@ namespace BioscoopSysteemAPI.Controllers
                     return NotFound();
                 }
 
-                var dtoSeats = _mapper.Map<List<SeatReadDTO>>(domainSeats.Value);
+                var dtoSeats = _mapper.Map<List<SeatReadDTO>>(domainSeats);
 
                 return Ok(dtoSeats);
 
@@ -176,6 +178,39 @@ namespace BioscoopSysteemAPI.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
             }
+        }
+
+        // GET: api/Seats
+        /// <summary>
+        /// Get empty seats for selection.
+        /// </summary>
+        /// <response code="200">Succesfully returns the seat objects.</response>
+        /// <returns>A list of Seat objects.</returns>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpGet("/emptyseats")]
+        public async Task<ActionResult<IEnumerable<Seat>>> GetEmptySeatsForSelection()
+        {
+            try
+            {
+                var seat = new EmptySeatsForSelection(_seatRepository){ };
+
+                var domainSeats = await seat.GetEmptySeatsForSelection();
+                
+                return Ok(domainSeats);
+
+            /*    if (domainSeats == null)
+                {
+                    return NotFound();
+                }*/
+
+                
+
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
+            }
+
         }
 
     }

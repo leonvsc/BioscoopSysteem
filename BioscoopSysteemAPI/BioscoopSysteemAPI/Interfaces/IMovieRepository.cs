@@ -6,6 +6,7 @@ namespace BioscoopSysteemAPI.Interfaces
 {
     public interface IMovieRepository
     {
+        List<Movie> GetMoviesList();
         Task<ActionResult<IEnumerable<Movie>>> GetMoviesAsync();
         
         Task<ActionResult<Movie>> GetMovieByIdAsync(int id);
@@ -15,5 +16,6 @@ namespace BioscoopSysteemAPI.Interfaces
         Task<ActionResult<Movie>> PutMovieAsync(int id, Movie movie);
 
         Task<ActionResult<Movie>> DeleteMovieAsync(int id);
+        Task<IEnumerable<Room>> GetAllRoomsOfAMovieAsync(int id);
     }
 }

@@ -14,10 +14,10 @@ namespace BioscoopSysteemAPI.Dal.Repository
 
         public SeatRepository(CinemaDbContext cinemaDbContext)
         {
-            this._cinemaDbContext = cinemaDbContext;
+            _cinemaDbContext = cinemaDbContext;
         }
 
-        public async Task<ActionResult<IEnumerable<Seat>>> GetSeatsAsync()
+        public async Task<IEnumerable<Seat>> GetSeatsAsync()
         {
             var seats = await _cinemaDbContext.Seats.ToListAsync();
             return seats;
@@ -55,6 +55,15 @@ namespace BioscoopSysteemAPI.Dal.Repository
             await _cinemaDbContext.SaveChangesAsync();
 
             return domainSeat;
+        }
+
+        public async Task<IEnumerable<Seat>> GetEmptySeatsForSelectionAsync()
+        {
+            var getEmptySeatsForSelection = await _cinemaDbContext.Seats
+                .Where(s => s.MovieId == null)
+                .ToListAsync();
+
+            return getEmptySeatsForSelection;
         }
     }
 }
