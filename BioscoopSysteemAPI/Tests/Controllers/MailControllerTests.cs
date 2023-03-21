@@ -1,11 +1,10 @@
-using System.Net;
 using BioscoopSysteemAPI.Controllers;
 using BioscoopSysteemAPI.DTOs;
 using BioscoopSysteemAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
-namespace Tests.Controllers
+namespace BioscoopSysteemAPI.Tests.Controllers
 {
     [TestClass]
     public class MailControllerTests
