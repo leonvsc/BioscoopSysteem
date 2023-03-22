@@ -1,8 +1,10 @@
 using AutoMapper;
 using BioscoopSysteemAPI.Controllers;
 using BioscoopSysteemAPI.DTOs.MovieDTOs;
+using BioscoopSysteemAPI.DTOs.MovieDTOs;
 using BioscoopSysteemAPI.Interfaces;
 using BioscoopSysteemAPI.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -94,6 +96,81 @@ namespace BioscoopSysteemAPI.Tests.Controllers
 
             // Assert
             Assert.IsNotInstanceOfType(result.Result, typeof(OkResult));
+        }
+
+        [TestMethod]
+        public async Task PostMovie_Returns201Created_WhenValidMovieDtoIsProvided()
+        {
+            // Arrange
+            var movieCreateDto = new MovieCreateDTO();
+            var domainMovie = new Movie();
+            var movieId = 1;
+
+            _mockMapper.Setup(m => m.Map<Movie>(movieCreateDto)).Returns(domainMovie);
+            _mockMovieRepository.Setup(m => m.PostMovieAsync(domainMovie)).ReturnsAsync(new Movie
+            { MovieId = 1, 
+                Name = "ScaryMovie", 
+                Date = DateTime.Today, 
+                Add3DMovie = false, 
+                Description = "The return of unit testing", 
+                Price = 12, 
+                AllowedAge = 16, 
+                ImageUrl = "/Images/Movies/Movie1.jpeg", 
+                Genre = "Horror", 
+                Language = "English", 
+                Specials = "Ladies Night", 
+                Subtitles = true
+            });
+
+            var controller = new MovieController(_mockMovieRepository.Object, _mockMapper.Object);
+
+            // Act
+            var result = await controller.PostMovie(movieCreateDto);
+
+            // Assert
+            Assert.IsInstanceOfType(result.Result, typeof(CreatedAtActionResult));
+            var createdResult = result.Result as CreatedAtActionResult;
+            Assert.AreEqual("GetMovie", actual: createdResult.ActionName);
+            Assert.AreEqual(movieId, actual: createdResult.RouteValues["id"]);
+            Assert.AreEqual(movieCreateDto, actual: createdResult.Value);
+            Assert.AreEqual(StatusCodes.Status201Created, createdResult.StatusCode);
+        }
+
+        [TestMethod]
+        public async Task PostMovie_Returns204NoContent_WhenNullMovieDtoIsProvided()
+        {
+            // Arrange
+            MovieCreateDTO? movieCreateDto = null;
+
+            var controller = new MovieController(_mockMovieRepository.Object, _mockMapper.Object);
+
+            // Act
+            var result = await controller.PostMovie(movieCreateDto);
+
+            // Assert
+            Assert.IsInstanceOfType(result.Result, typeof(NoContentResult));
+            var noContentResult = result.Result as NoContentResult;
+            Assert.AreEqual(StatusCodes.Status204NoContent, actual: noContentResult.StatusCode);
+        }
+
+        [TestMethod]
+        public async Task PostMovie_Returns500InternalServerError_WhenExceptionIsThrown()
+        {
+            // Arrange
+            var movieCreateDto = new MovieCreateDTO();
+
+            _mockMapper.Setup(m => m.Map<Movie>(movieCreateDto)).Throws(new Exception());
+
+            var controller = new MovieController(_mockMovieRepository.Object, _mockMapper.Object);
+
+            // Act
+            var result = await controller.PostMovie(movieCreateDto);
+
+            // Assert
+            Assert.IsInstanceOfType(result.Result, typeof(ObjectResult));
+            var objectResult = result.Result as ObjectResult;
+            Assert.AreEqual(StatusCodes.Status500InternalServerError, actual: objectResult.StatusCode);
+            Assert.AreEqual("Error retrieving data from the database", objectResult.Value);
         }
     }
 }

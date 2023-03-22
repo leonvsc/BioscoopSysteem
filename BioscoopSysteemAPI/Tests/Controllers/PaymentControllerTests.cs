@@ -3,6 +3,7 @@ using BioscoopSysteemAPI.Controllers;
 using BioscoopSysteemAPI.DTOs.PaymentDTOs;
 using BioscoopSysteemAPI.Interfaces;
 using BioscoopSysteemAPI.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -94,6 +95,69 @@ namespace BioscoopSysteemAPI.Tests.Controllers
 
             // Assert
             Assert.IsNotInstanceOfType(result.Result, typeof(OkResult));
+        }
+
+        [TestMethod]
+        public async Task PostPayment_Returns201Created_WhenValidPaymentDtoIsProvided()
+        {
+            // Arrange
+            var paymentCreateDto = new PaymentCreateDTO();
+            var domainPayment = new Payment();
+            var paymentId = 1;
+
+            _mockMapper.Setup(m => m.Map<Payment>(paymentCreateDto)).Returns(domainPayment);
+            _mockPaymentRepository.Setup(m => m.PostPaymentAsync(domainPayment)).ReturnsAsync(new Payment
+            { PaymentId = 2, PaymentMethod = "Payment type 1", PaidAt = DateTime.Now, Amount = 13 });
+
+            var controller = new PaymentController(_mockPaymentRepository.Object, _mockMapper.Object);
+
+            // Act
+            var result = await controller.PostPayment(paymentCreateDto);
+
+            // Assert
+            Assert.IsInstanceOfType(result.Result, typeof(CreatedAtActionResult));
+            var createdResult = result.Result as CreatedAtActionResult;
+            Assert.AreEqual("GetPayment", actual: createdResult.ActionName);
+            Assert.AreEqual(paymentId, actual: createdResult.RouteValues["id"]);
+            Assert.AreEqual(paymentCreateDto, actual: createdResult.Value);
+            Assert.AreEqual(StatusCodes.Status201Created, createdResult.StatusCode);
+        }
+
+        [TestMethod]
+        public async Task PostPayment_Returns204NoContent_WhenNullPaymentDtoIsProvided()
+        {
+            // Arrange
+            PaymentCreateDTO? paymentCreateDto = null;
+
+            var controller = new PaymentController(_mockPaymentRepository.Object, _mockMapper.Object);
+
+            // Act
+            var result = await controller.PostPayment(paymentCreateDto);
+
+            // Assert
+            Assert.IsInstanceOfType(result.Result, typeof(NoContentResult));
+            var noContentResult = result.Result as NoContentResult;
+            Assert.AreEqual(StatusCodes.Status204NoContent, actual: noContentResult.StatusCode);
+        }
+
+        [TestMethod]
+        public async Task PostPayment_Returns500InternalServerError_WhenExceptionIsThrown()
+        {
+            // Arrange
+            var paymentCreateDto = new PaymentCreateDTO();
+
+            _mockMapper.Setup(m => m.Map<Payment>(paymentCreateDto)).Throws(new Exception());
+
+            var controller = new PaymentController(_mockPaymentRepository.Object, _mockMapper.Object);
+
+            // Act
+            var result = await controller.PostPayment(paymentCreateDto);
+
+            // Assert
+            Assert.IsInstanceOfType(result.Result, typeof(ObjectResult));
+            var objectResult = result.Result as ObjectResult;
+            Assert.AreEqual(StatusCodes.Status500InternalServerError, actual: objectResult.StatusCode);
+            Assert.AreEqual("Error retrieving data from the database", objectResult.Value);
         }
     }
 }

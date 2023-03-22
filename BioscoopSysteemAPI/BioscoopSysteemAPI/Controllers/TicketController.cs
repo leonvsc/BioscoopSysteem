@@ -38,7 +38,7 @@ namespace BioscoopSysteemAPI.Controllers
         /// <returns>A list of reservation objects.</returns>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TicketReadDTO>>> GetTicket()
+        public async Task<ActionResult<IEnumerable<TicketReadDTO>>> GetTickets()
         {
             try
             {
