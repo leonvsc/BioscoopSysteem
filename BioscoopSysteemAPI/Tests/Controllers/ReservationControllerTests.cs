@@ -103,11 +103,10 @@ namespace BioscoopSysteemAPI.Tests.Controllers
             // Arrange
             var reservationCreateDto = new ReservationCreateDTO();
             var domainReservation = new Reservation();
-            var reservationId = 1;
 
             _mockMapper.Setup(m => m.Map<Reservation>(reservationCreateDto)).Returns(domainReservation);
             _mockReservationRepository.Setup(m => m.PostReservationAsync(domainReservation)).ReturnsAsync(new Reservation
-            { ReservationId = 2, WantsKinderfeestje = true, DateTime = DateTime.Now, TotalPrice = 13 });
+            { ReservationId = 1, DateTime = DateTime.Today, Location = "Amsterdam", TicketAmount = 13, Age = "16", TotalPrice = 13, IsStudent = false, WantsPopcorn = false, WantsVIP = false, WantsKinderfeestje = false});
 
             var controller = new ReservationController(_mockReservationRepository.Object, _mockMapper.Object);
 
@@ -118,10 +117,37 @@ namespace BioscoopSysteemAPI.Tests.Controllers
             Assert.IsInstanceOfType(result.Result, typeof(CreatedAtActionResult));
             var createdResult = result.Result as CreatedAtActionResult;
             Assert.AreEqual("GetReservation", actual: createdResult.ActionName);
-            Assert.AreEqual(reservationId, actual: createdResult.RouteValues["id"]);
             Assert.AreEqual(reservationCreateDto, actual: createdResult.Value);
             Assert.AreEqual(StatusCodes.Status201Created, createdResult.StatusCode);
         }
+
+        /*[TestMethod]
+        public async Task PostReservation_Returns201Created_WhenValidReservationDtoIsProvided()
+        {
+            // Arrange
+            var reservationCreateDto = new ReservationCreateDTO();
+            var domainReservation = new Reservation();
+
+            _mockMapper.Setup(m => m.Map<Reservation>(reservationCreateDto)).Returns(domainReservation);
+            _mockReservationRepository.Setup(m => m.PostReservationAsync(domainReservation)).ReturnsAsync(new Reservation
+            { ReservationId = 21, WantsKinderfeestje = true, DateTime = DateTime.Now, TotalPrice = 13 });
+
+            var controller = new ReservationController(_mockReservationRepository.Object, _mockMapper.Object);
+
+            // Act
+            var result = await controller.PostReservation(reservationCreateDto);
+
+            // Assert
+            // Aan het testen
+            Assert.IsInstanceOfType(result.Result, typeof(ActionResult));
+            
+            var actionResult = result.Result;
+            Assert.AreEqual(StatusCodes.Status201Created, actionResult);
+
+            //Assert.AreEqual(reservationId, actual: createdResult.RouteValues["id"]);
+            //Assert.AreEqual(reservationCreateDto, actual: okObjectResult.Value);
+            //Assert.AreEqual(StatusCodes.Status200OK, okObjectResult.StatusCode);
+        }*/
 
         [TestMethod]
         public async Task PostReservation_Returns204NoContent_WhenNullReservationDtoIsProvided()

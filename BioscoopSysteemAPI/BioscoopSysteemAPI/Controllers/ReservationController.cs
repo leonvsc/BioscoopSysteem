@@ -1,5 +1,6 @@
 using System.Net.Mime;
 using AutoMapper;
+using BioscoopSysteemAPI.Dal.Repository;
 using BioscoopSysteemAPI.DTOs.ReservationDTOs;
 using BioscoopSysteemAPI.Interfaces;
 using BioscoopSysteemAPI.Models;
@@ -165,13 +166,10 @@ namespace BioscoopSysteemAPI.Controllers
                     return NoContent();
                 }
 
-                await _reservationRepository.PostReservationAsync(domainReservation);
+                int reservationId = _reservationRepository.PostReservationAsync(domainReservation).Id;
 
-                // Set the reservationId property in the domainReservation object
-                reservationDto.ReservationId = domainReservation.ReservationId;
+                return CreatedAtAction("GetReservation", new { id = reservationId }, reservationDto);
 
-                // return CreatedAtAction("GetReservation", new { id = domainReservation.ReservationId }, reservationDto);
-                return Ok(reservationDto.ReservationId);
             }
             catch (Exception)
             {

@@ -13,5 +13,6 @@ namespace BioscoopSysteemAPI.Interfaces
         Task<ActionResult<Reservation>> PutReservationAsync(int id, Reservation reservation);
 
         Task<ActionResult<Reservation>> DeleteReservationAsync(int id);
+        //Task<int> PostReservationAsync(int reservationId);
     }
 }

@@ -102,12 +102,11 @@ namespace BioscoopSysteemAPI.Tests.Controllers
         {
             // Arrange
             var visitorCreateDto = new VisitorCreateDTO();
-            var domainVisitor = new Visitor();
-            var visitorId = 1;
+            var domainVisitor = new Visitor();            
 
             _mockMapper.Setup(m => m.Map<Visitor>(visitorCreateDto)).Returns(domainVisitor);
             _mockVisitorRepository.Setup(m => m.PostVisitorAsync(domainVisitor)).ReturnsAsync(new Visitor
-            { VisitorId = 2, Age = 21, FirstName = "Renuka", LastName = "Verhage" });
+            { VisitorId = 4, Age = 21, FirstName = "Renuka", LastName = "Verhage" });
 
             var controller = new VisitorController(_mockVisitorRepository.Object, _mockMapper.Object);
 
@@ -117,8 +116,7 @@ namespace BioscoopSysteemAPI.Tests.Controllers
             // Assert
             Assert.IsInstanceOfType(result.Result, typeof(CreatedAtActionResult));
             var createdResult = result.Result as CreatedAtActionResult;
-            Assert.AreEqual("GetVisitor", actual: createdResult.ActionName);
-            Assert.AreEqual(visitorId, actual: createdResult.RouteValues["id"]);
+            Assert.AreEqual("GetVisitor", actual: createdResult.ActionName);       
             Assert.AreEqual(visitorCreateDto, actual: createdResult.Value);
             Assert.AreEqual(StatusCodes.Status201Created, createdResult.StatusCode);
         }

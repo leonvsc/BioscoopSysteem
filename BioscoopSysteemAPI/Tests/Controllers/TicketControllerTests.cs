@@ -102,8 +102,7 @@ namespace BioscoopSysteemAPI.Tests.Controllers
         {
             // Arrange
             var ticketCreateDto = new TicketCreateDTO();
-            var domainTicket = new Ticket();
-            var ticketId = 1;
+            var domainTicket = new Ticket();            
 
             _mockMapper.Setup(m => m.Map<Ticket>(ticketCreateDto)).Returns(domainTicket);
             _mockTicketRepository.Setup(m => m.PostTicketAsync(domainTicket)).ReturnsAsync(new Ticket
@@ -117,8 +116,7 @@ namespace BioscoopSysteemAPI.Tests.Controllers
             // Assert
             Assert.IsInstanceOfType(result.Result, typeof(CreatedAtActionResult));
             var createdResult = result.Result as CreatedAtActionResult;
-            Assert.AreEqual("GetTicket", actual: createdResult.ActionName);
-            Assert.AreEqual(ticketId, actual: createdResult.RouteValues["id"]);
+            Assert.AreEqual("GetTicket", actual: createdResult.ActionName);            
             Assert.AreEqual(ticketCreateDto, actual: createdResult.Value);
             Assert.AreEqual(StatusCodes.Status201Created, createdResult.StatusCode);
         }

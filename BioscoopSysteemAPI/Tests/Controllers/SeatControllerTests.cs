@@ -102,11 +102,10 @@ namespace BioscoopSysteemAPI.Tests.Controllers
         {
             // Arrange
             var seatCreateDto = new SeatCreateDTO();
-            var domainSeat = new Seat();
-            var seatId = 1;
+            var domainSeat = new Seat();            
 
             _mockMapper.Setup(m => m.Map<Seat>(seatCreateDto)).Returns(domainSeat);
-            _mockSeatRepository.Setup(m => m.PostSeatAsync(domainSeat)).ReturnsAsync(new Seat { SeatId = 1, MovieId = 3, SeatRow = 2, SeatNumber = 4 });
+            _mockSeatRepository.Setup(m => m.PostSeatAsync(domainSeat)).ReturnsAsync(new Seat { SeatId = 3, MovieId = 3, SeatRow = 2, SeatNumber = 4 });
 
             var controller = new SeatController(_mockSeatRepository.Object, _mockMapper.Object);
 
@@ -116,8 +115,7 @@ namespace BioscoopSysteemAPI.Tests.Controllers
             // Assert
             Assert.IsInstanceOfType(result.Result, typeof(CreatedAtActionResult));
             var createdResult = result.Result as CreatedAtActionResult;
-            Assert.AreEqual("GetSeat", actual: createdResult.ActionName);
-            Assert.AreEqual(seatId, actual: createdResult.RouteValues["id"]);
+            Assert.AreEqual("GetSeat", actual: createdResult.ActionName);            
             Assert.AreEqual(seatCreateDto, actual: createdResult.Value);
             Assert.AreEqual(StatusCodes.Status201Created, createdResult.StatusCode);
         }

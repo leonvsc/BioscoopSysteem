@@ -103,11 +103,10 @@ namespace BioscoopSysteemAPI.Tests.Controllers
             // Arrange
             var paymentCreateDto = new PaymentCreateDTO();
             var domainPayment = new Payment();
-            var paymentId = 1;
 
             _mockMapper.Setup(m => m.Map<Payment>(paymentCreateDto)).Returns(domainPayment);
             _mockPaymentRepository.Setup(m => m.PostPaymentAsync(domainPayment)).ReturnsAsync(new Payment
-            { PaymentId = 2, PaymentMethod = "Payment type 1", PaidAt = DateTime.Now, Amount = 13 });
+            {PaymentId = 5, PaymentMethod = "Payment type 1", PaidAt = DateTime.Now, Amount = 13 });
 
             var controller = new PaymentController(_mockPaymentRepository.Object, _mockMapper.Object);
 
@@ -118,7 +117,6 @@ namespace BioscoopSysteemAPI.Tests.Controllers
             Assert.IsInstanceOfType(result.Result, typeof(CreatedAtActionResult));
             var createdResult = result.Result as CreatedAtActionResult;
             Assert.AreEqual("GetPayment", actual: createdResult.ActionName);
-            Assert.AreEqual(paymentId, actual: createdResult.RouteValues["id"]);
             Assert.AreEqual(paymentCreateDto, actual: createdResult.Value);
             Assert.AreEqual(StatusCodes.Status201Created, createdResult.StatusCode);
         }

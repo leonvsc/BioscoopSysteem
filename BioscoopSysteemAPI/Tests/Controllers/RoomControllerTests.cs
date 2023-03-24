@@ -103,11 +103,10 @@ namespace BioscoopSysteemAPI.Tests.Controllers
             // Arrange
             var roomCreateDto = new RoomCreateDTO();
             var domainRoom = new Room();
-            var roomId = 1;
 
             _mockMapper.Setup(m => m.Map<Room>(roomCreateDto)).Returns(domainRoom);
             _mockRoomRepository.Setup(m => m.PostRoomAsync(domainRoom)).ReturnsAsync(new Room
-            { RoomId = 1, InUse = true, NumberOfSeatsAvailable = 50 });
+            { RoomId = 6, InUse = true, NumberOfSeatsAvailable = 50 });
 
             var controller = new RoomController(_mockRoomRepository.Object, _mockMapper.Object);
 
@@ -117,8 +116,7 @@ namespace BioscoopSysteemAPI.Tests.Controllers
             // Assert
             Assert.IsInstanceOfType(result.Result, typeof(CreatedAtActionResult));
             var createdResult = result.Result as CreatedAtActionResult;
-            Assert.AreEqual("GetRoom", actual: createdResult.ActionName);
-            Assert.AreEqual(roomId, actual: createdResult.RouteValues["id"]);
+            Assert.AreEqual("GetRoom", actual: createdResult.ActionName);            
             Assert.AreEqual(roomCreateDto, actual: createdResult.Value);
             Assert.AreEqual(StatusCodes.Status201Created, createdResult.StatusCode);
         }

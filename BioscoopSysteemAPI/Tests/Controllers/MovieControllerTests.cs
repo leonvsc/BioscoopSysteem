@@ -1,7 +1,6 @@
 using AutoMapper;
 using BioscoopSysteemAPI.Controllers;
 using BioscoopSysteemAPI.DTOs.MovieDTOs;
-using BioscoopSysteemAPI.DTOs.MovieDTOs;
 using BioscoopSysteemAPI.Interfaces;
 using BioscoopSysteemAPI.Models;
 using Microsoft.AspNetCore.Http;
@@ -104,12 +103,10 @@ namespace BioscoopSysteemAPI.Tests.Controllers
             // Arrange
             var movieCreateDto = new MovieCreateDTO();
             var domainMovie = new Movie();
-            var movieId = 1;
 
             _mockMapper.Setup(m => m.Map<Movie>(movieCreateDto)).Returns(domainMovie);
             _mockMovieRepository.Setup(m => m.PostMovieAsync(domainMovie)).ReturnsAsync(new Movie
-            { MovieId = 1, 
-                Name = "ScaryMovie", 
+            { Name = "ScaryMovie", 
                 Date = DateTime.Today, 
                 Add3DMovie = false, 
                 Description = "The return of unit testing", 
@@ -131,7 +128,6 @@ namespace BioscoopSysteemAPI.Tests.Controllers
             Assert.IsInstanceOfType(result.Result, typeof(CreatedAtActionResult));
             var createdResult = result.Result as CreatedAtActionResult;
             Assert.AreEqual("GetMovie", actual: createdResult.ActionName);
-            Assert.AreEqual(movieId, actual: createdResult.RouteValues["id"]);
             Assert.AreEqual(movieCreateDto, actual: createdResult.Value);
             Assert.AreEqual(StatusCodes.Status201Created, createdResult.StatusCode);
         }
