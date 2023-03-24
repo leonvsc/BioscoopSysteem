@@ -166,10 +166,13 @@ namespace BioscoopSysteemAPI.Controllers
                     return NoContent();
                 }
 
-                int reservationId = _reservationRepository.PostReservationAsync(domainReservation).Id;
+                await _reservationRepository.PostReservationAsync(domainReservation);
 
-                return CreatedAtAction("GetReservation", new { id = reservationId }, reservationDto);
+                // Set the reservationId property in the domainReservation object
+                reservationDto.ReservationId = domainReservation.ReservationId;
 
+                return CreatedAtAction("GetReservation", new { id = domainReservation.ReservationId }, reservationDto.ReservationId);
+                //return Ok(reservationDto.ReservationId);
             }
             catch (Exception)
             {

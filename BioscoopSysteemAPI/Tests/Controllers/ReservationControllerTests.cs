@@ -117,7 +117,7 @@ namespace BioscoopSysteemAPI.Tests.Controllers
             Assert.IsInstanceOfType(result.Result, typeof(CreatedAtActionResult));
             var createdResult = result.Result as CreatedAtActionResult;
             Assert.AreEqual("GetReservation", actual: createdResult.ActionName);
-            Assert.AreEqual(reservationCreateDto, actual: createdResult.Value);
+            Assert.AreEqual(reservationCreateDto.ReservationId, actual: createdResult.Value);
             Assert.AreEqual(StatusCodes.Status201Created, createdResult.StatusCode);
         }
 
