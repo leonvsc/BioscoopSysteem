@@ -1,0 +1,118 @@
+@page "/MovieDetails"
+@using BioscoopSysteemWeb.Service
+@using BioscoopSysteemWeb.Service.LanguageService;
+@using Microsoft.Extensions.Localization;
+@inject IMovieService MovieService
+@inject IModalService modal 
+@inject GetTicketInfoService GetTicketInfoService
+@inject IStringLocalizer<MovieDetails> Localizer
+@inject BiosLanguageNotifier BiosLanguageNotifier
+@implements IDisposable
+
+
+<h3>@Localizer["Language"]</h3>
+<LanguageSelector />
+
+
+<PageTitle>Details</PageTitle>
+
+<Modal @ref="modalRef">
+    <ModalContent Centered>
+        <ModalHeader>
+            <ModalTitle>@Localizer["Order Tickets"]</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            <OrderTickets MovieId="GetTicketInfoService.GetMovieId()" ></OrderTickets>
+        </ModalBody>
+    </ModalContent>
+</Modal>
+
+@if (Movie == null)
+{
+    <h3>Film worden opgehaald</h3>
+}
+else
+{
+
+  <div class="container">
+
+    <!-- Portfolio Item Heading -->
+    <h1 class="my-4">@Movie.Name
+    </h1>
+
+    <!-- Portfolio Item Row -->
+    <div class="row">
+
+      <div class="col-md-8" style="width: 750px; height: 500px">
+        <img class="img-fluid" src="@Movie.ImageUrl" alt="" style="max-height: 500px">
+      </div>
+
+      <div class="col-md-4">
+        <h3 class="my-3">@Localizer["Description"]:</h3>
+        <p>@Movie.Description</p>
+                <h3 class="my-3">@Localizer["Movie Details"]:</h3>
+        <ul>
+                    <li>@Localizer["Length of Movie"]: 130 min</li>
+                    <li>@Localizer["Time and Date"]: 27 feb 2023, 21:00</li>
+                    <li>@Localizer["3D Movie"]? Ja</li>
+                    <li>@Localizer["PG"]: @Movie.AllowedAge</li>
+        </ul>
+                <button class="btn btn-primary" @onclick="() => ShowModal(MovieId)">Kaartjes bestellen</button>
+        
+      </div>
+
+    </div>
+    <!-- /.row -->
+
+    <!-- Related Projects Row -->
+        <h3 class="my-4">@Localizer["Other Movies"]</h3>
+
+    <div class="row">
+      @if (Films != null)
+      {
+        foreach (var film in Films)
+        {
+          <div class="col-md-3 col-sm-6 mb-4" style="width: 500px; height: 300px">
+            @* <a href="MovieDetails" @onclick:preventDefault="true" @onclick:stopPropagation="true"> *@
+              <img class="img-fluid" src="@film.ImageUrl" alt="" style="max-height: 300px">
+            @* </a> *@
+          </div>
+        }
+      }
+
+    </div>
+    <!--/.row -->
+
+  </div>
+  <!-- /.container -->
+}
+
+@code {
+
+  public void Dispose() => BiosLanguageNotifier.UnsubscribeLanguageChange(this);
+
+  private int MovieId { get; set; }
+  public MovieReadDTO? Movie { get; set; }
+  public IEnumerable<MovieReadDTO>? Films { get; set; }
+  private Modal modalRef;
+
+
+  protected override void OnInitialized()
+  {
+    MovieId = GetTicketInfoService.GetMovieId();
+        BiosLanguageNotifier.SubscribeLanguageChange(this);
+  }
+  
+  protected override async Task OnInitializedAsync()
+  {
+    Movie = await MovieService.GetMovie(MovieId);
+    Films = await MovieService.GetMovies();
+  }
+  
+  private Task ShowModal(int movieId)
+  {
+    GetTicketInfoService.SetMovieId(movieId);
+    return modalRef.Show();
+  }
+}

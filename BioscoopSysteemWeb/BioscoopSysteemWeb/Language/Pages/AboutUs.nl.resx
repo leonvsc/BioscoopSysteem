@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About us" xml:space="preserve">
+    <value>Over ons</value>
+  </data>
+  <data name="Arrangements and services" xml:space="preserve">
+    <value>Arrangementen en diensten</value>
+  </data>
+  <data name="Come check us out for yourself and get the full cinema experience at 'The Popcorn Place'!" xml:space="preserve">
+    <value>Kom zelf kijken en beleef de volledige bioscoopervaring in 'The Popcorn Place'!</value>
+  </data>
+  <data name="Comfortable VIP seats" xml:space="preserve">
+    <value>Comfortabele VIP stoelen</value>
+  </data>
+  <data name="Concessions and Snacks" xml:space="preserve">
+    <value>Versnaperingen en snacks.</value>
+  </data>
+  <data name="Contact Us" xml:space="preserve">
+    <value>Contact opnemen</value>
+  </data>
+  <data name="Events and Special Screenings" xml:space="preserve">
+    <value>Evenementen en speciale vertoningen</value>
+  </data>
+  <data name="For the ultimate movie-going experience, consider becoming a member of our cinema. Membership includes perks such as discounted tickets, early access to screenings, and special invitations to members-only events. Visit our box office to learn more." xml:space="preserve">
+    <value>Overweeg om lid te worden van onze bioscoop voor de ultieme bioscoopervaring. Lidmaatschap omvat extraatjes zoals tickets met korting, vroege toegang tot vertoningen en speciale uitnodigingen voor evenementen die alleen voor leden zijn. Bezoek onze informatie balie voor meer informatie.</value>
+  </data>
+  <data name="Free snack/drink during the movie" xml:space="preserve">
+    <value>Gratis hapje/drankje tijden film</value>
+  </data>
+  <data name="Gift" xml:space="preserve">
+    <value>Cadeau</value>
+  </data>
+  <data name="Have a question or comment? We'd love to hear from you. You can reach us by phone at 555-1234 or email us at info@POP.com. You can also follow us on social media for the latest updates and news." xml:space="preserve">
+    <value>Heeft u een vraag of opmerking? We zouden graag van je horen. U kunt ons telefonisch bereiken op 555-1234 of een e-mail sturen naar info@POP.com. U kunt ons ook volgen op sociale media voor de laatste updates en nieuwtjes.</value>
+  </data>
+  <data name="In addition to our regular programming, we also host special events and screenings throughout the year. From Q&amp;A sessions with filmmakers to themed movie marathons, there's always something exciting happening at our cinema." xml:space="preserve">
+    <value>Naast onze reguliere programmering organiseren we het hele jaar door ook speciale evenementen en vertoningen. Van Q&amp;A-sessies met filmmakers tot thematische filmmarathons, er gebeurt altijd wel iets opwindends in onze bioscoop.</value>
+  </data>
+  <data name="Kids party:" xml:space="preserve">
+    <value>Kinderfeestje:</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Taal</value>
+  </data>
+  <data name="Large popcorn" xml:space="preserve">
+    <value>Grote popcorn</value>
+  </data>
+  <data name="Membership Program" xml:space="preserve">
+    <value>Lidmaatschap</value>
+  </data>
+  <data name="Movie" xml:space="preserve">
+    <value>Film</value>
+  </data>
+  <data name="No movie experience is complete without some delicious snacks. That's why we offer a wide selection of concessions, including popcorn, candy, and drinks. We also have a full-service bar, so you can enjoy a beer, wine, or cocktail with your movie." xml:space="preserve">
+    <value>Een filmervaring is niet compleet zonder wat heerlijke snacks. Daarom bieden we een ruime keuze aan versnaperingen, waaronder popcorn, snoep en drankjes. We hebben ook een volledige bar, zodat je kunt genieten van een biertje, wijntje of cocktail tijdens de film.</value>
+  </data>
+  <data name="Our Movie Selection" xml:space="preserve">
+    <value>Onze film selectie</value>
+  </data>
+  <data name="Popcorn" xml:space="preserve">
+    <value>Popcorn</value>
+  </data>
+  <data name="Popcorn arrangement:" xml:space="preserve">
+    <value>Popcorn arrangement:</value>
+  </data>
+  <data name="Route to the cinema" xml:space="preserve">
+    <value>Route naar de bioscoop</value>
+  </data>
+  <data name="Soft drink" xml:space="preserve">
+    <value>Frisdrank</value>
+  </data>
+  <data name="VIP arrangement:" xml:space="preserve">
+    <value>VIP aragement:</value>
+  </data>
+  <data name="VIP lounge" xml:space="preserve">
+    <value>VIP ruimte</value>
+  </data>
+  <data name="Wardrobe" xml:space="preserve">
+    <value>Gardarobe</value>
+  </data>
+  <data name="We are committed to bringing you the best movies from around the world. From blockbuster hits to independent films, we have something for everyone. Our programming team carefully curates our selection to ensure that you'll always find something new and exciting to watch." xml:space="preserve">
+    <value>We zijn toegewijd om je de beste films van over de hele wereld te bieden. Van kaskrakers tot onafhankelijke films, we hebben voor ieder wat wils. Ons programmatieteam selecteert zorgvuldig onze collectie om ervoor te zorgen dat je altijd iets nieuws en opwindends zult vinden om te bekijken.</value>
+  </data>
+  <data name="We are excited to announce the opening of our new cinema. Our state-of-the-art theaters feature the latest audio and visual technology, and our comfortable seating and spacious layout ensure that you'll be able to fully immerse yourself in the film." xml:space="preserve">
+    <value>We zijn enthousiast om de opening van onze nieuwe bioscoop aan te kondigen. Onze theaters met de nieuwste audio- en visuele technologie bieden een geavanceerde ervaring, en onze comfortabele zitplaatsen en ruime opstelling zorgen ervoor dat je je volledig kunt onderdompelen in de film.</value>
+  </data>
+  <data name="Welcome drink" xml:space="preserve">
+    <value>Welkomsdrankje</value>
+  </data>
+  <data name="Welcome to 'The Popcorn Place'!" xml:space="preserve">
+    <value>Welkom bij "The Popcorn Place"!</value>
+  </data>
+</root>

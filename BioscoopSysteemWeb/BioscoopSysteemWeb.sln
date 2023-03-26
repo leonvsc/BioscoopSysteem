@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BioscoopSysteemWeb", "BioscoopSysteemWeb\BioscoopSysteemWeb.csproj", "{AA8935B3-0496-4183-ABE0-786F75150273}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BioscoopSysteemAPI", "..\BioscoopSysteemAPI\BioscoopSysteemAPI\BioscoopSysteemAPI.csproj", "{47A4B6E2-557F-406B-9E92-E2B63CCEE8C2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BioscoopSysteemApi.Models", "..\BioscoopSysteemAPI\BioscoopSysteemApi.Models\BioscoopSysteemApi.Models.csproj", "{21297D7F-B90B-47E2-955A-2760A4D28AD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "..\BioscoopSysteemAPI\Tests\Tests.csproj", "{42CC1C27-905A-46DE-983B-B791FED76801}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AA8935B3-0496-4183-ABE0-786F75150273}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA8935B3-0496-4183-ABE0-786F75150273}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA8935B3-0496-4183-ABE0-786F75150273}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA8935B3-0496-4183-ABE0-786F75150273}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47A4B6E2-557F-406B-9E92-E2B63CCEE8C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47A4B6E2-557F-406B-9E92-E2B63CCEE8C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47A4B6E2-557F-406B-9E92-E2B63CCEE8C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47A4B6E2-557F-406B-9E92-E2B63CCEE8C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21297D7F-B90B-47E2-955A-2760A4D28AD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21297D7F-B90B-47E2-955A-2760A4D28AD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21297D7F-B90B-47E2-955A-2760A4D28AD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21297D7F-B90B-47E2-955A-2760A4D28AD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42CC1C27-905A-46DE-983B-B791FED76801}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42CC1C27-905A-46DE-983B-B791FED76801}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42CC1C27-905A-46DE-983B-B791FED76801}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42CC1C27-905A-46DE-983B-B791FED76801}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {31A46740-D0D4-4A0B-8AB1-FF1B06546500}
+	EndGlobalSection
+EndGlobal

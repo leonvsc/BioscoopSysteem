@@ -1,0 +1,27 @@
+﻿@using System.Globalization;
+@using System.Web;
+@inject BiosLanguageNotifier BiosLanguageNotifier
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+
+<select @onchange="OnChangeLanguage">
+    <option value="">Select</option>
+    <option value="nl">Nederlands</option>
+    <option value="en">English</option>
+</select>
+
+@code {
+    private void OnChangeLanguage(ChangeEventArgs e)
+    {
+        var uri = new Uri(NavigationManager.Uri);
+        var culture = CultureInfo.GetCultureInfo(e.Value as string);
+        var cultureEscaped = Uri.EscapeDataString(culture.Name);
+        var urlParameters = HttpUtility.ParseQueryString(uri.Query);
+        urlParameters["language"] = cultureEscaped;
+        string urlWithoutQuery = uri.GetComponents(UriComponents.Path, UriFormat.Unescaped);
+        NavigationManager.NavigateTo($"{urlWithoutQuery}?{urlParameters.ToString()}");
+        CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo(cultureEscaped);
+        CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(cultureEscaped);
+        BiosLanguageNotifier.NotifyLanguageChange();
+    }
+}
